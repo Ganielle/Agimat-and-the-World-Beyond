@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ground
+  - Enemy
+  - Rope
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Character
+  - Ground
+  - MonkeyBar
+  - Rope
+  - Charge
+  - Foreground
+  - PostProcessingEffect
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 394022243
+    locked: 0
+  - name: Middle Background
+    uniqueID: 785626265
+    locked: 0
+  - name: Middle FG 1st Layer
+    uniqueID: 1367714965
+    locked: 0
+  - name: Middle FG 2nd Layer
+    uniqueID: 3897151015
+    locked: 0
+  - name: Middle FG 3rd Layer
+    uniqueID: 3732558779
+    locked: 0
+  - name: PlatformBackPlayer
+    uniqueID: 3287650577
+    locked: 0
+  - name: Characters
+    uniqueID: 1149141413
+    locked: 0
+  - name: PlatformFrontPlayer
+    uniqueID: 1745753657
+    locked: 0
+  - name: Foreground
+    uniqueID: 3425231525
+    locked: 0

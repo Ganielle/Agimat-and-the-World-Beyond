@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78c06e46be97a7547b316c46c8716935, type: 3}
+  m_Name: PlayerRawData
+  m_EditorClassIdentifier: 
+  lessFriction: {fileID: 6200000, guid: dc89b3e7853392f458734c85b353d2a4, type: 2}
+  fullFriction: {fileID: 6200000, guid: df33940fcfb2f3047a4c940c73b745c9, type: 2}
+  noFriction: {fileID: 6200000, guid: ec1fe1715fc94a54182f31dd82092f8c, type: 2}
+  colliderNormalOffsetY: 0.03998756
+  colliderRopeOffsetY: -1.84
+  idleToTauntIdleTime: 50
+  tauntIdleToIdleTime: 25
+  movementSpeed: 10
+  sprintSpeed: 15
+  maxVelocityXOnGround: 8
+  pushForcePlayerWhenFootNotTouchingGround: 10
+  jumpStrength: 16
+  movementSpeedOnAir: 5
+  maxVelocityXOnAir: 10
+  maxJumpHeight: -30
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
+  variableJumpHeightMultiplier: 0.5
+  groundCheckRadius: 0.15
+  raycastGroundDistance: 5
+  floatShadowHeightOffset: 1.5
+  feetOffset: {x: 0, y: 0}
+  floorCheckOffsetHeight: 0.2
+  floorCheckOffsetWidth: 2
+  maxFloorCheckDist: 168.66
+  slopeCheckDistance: 5
+  wallCheckRadius: {x: 0.1, y: 2}
+  wallClimbCheckRadius: 0.125
+  wallSlideVelocity: 3
+  wallClimbVelocity: 3
+  wallJumpVelocity: 20
+  wallJumpTime: 0.9
+  delayToUseDash: 0.25
+  delayToCheckForGround: 0.15
+  delayToCheckForLedge: 0.2
+  wallJumpAngle: {x: 5, y: 10}
+  startOffset: {x: 0, y: 1.8}
+  stopOffset: {x: 1, y: 1.5}
+  monkeyBarRarCheckRadius: 0.15
+  monkeyBarVelocity: 2.5
+  mbStartOffset: {x: 0, y: 1.75}
+  monkeyBarJumpVelocity: 20
+  delayToCheckForMBAfterJump: 0.25
+  ropeCheckRadius: 0.1
+  ropeClimbVelocity: 1.5
+  ropeClimDownVelocity: 10
+  ropeSwingVelocity: 25
+  anchorX: 0.2
+  rightAngle: -30
+  leftAngle: -30
+  ropeJumpVelocity: 25
+  ropeJumpTime: 0.4
+  ropeJumpAngle: {x: 1, y: 2}
+  switchTime: 0.85
+  switchCooldown: 2
+  weaponSwitchTime: 0.25
+  dashCooldown: 1.2
+  maxHoldTime: 0.15
+  holdTimeScale: 1
+  dashTime: 0.15
+  dashVelocity: 60
+  drag: 20
+  dashEndYMultiplier: 0.2
+  distanceBetweenAfterImages: 0.5
+  dodgeVelocity: 25
+  dodgeCooldown: 0.5
+  healthRecoveryDelay: 2
+  startingHealthRecoverPerSecond: 2.5
+  manaRecoveryDelay: 1
+  startingManaRecoveryPerSecond: 1.5
+  firstSkillUsePercentage: 33.33
+  secondSkillUsePercentage: 66.66
+  thirdSkillUsePercentage: 100
+  staminaRecoveryDelay: 0.6
+  staminaRecoverWhenActive: 15
+  staminaRecoverWhenNotActive: 2
+  sprintStamina: 25
+  ledgeStamina: 5
+  wallGrabHoldStamina: 10
+  wallClimbingStamina: 15
+  dodgePercentage: 0.2
+  dashPercentage: 0.3
+  wallJumpPercentage: 0.2

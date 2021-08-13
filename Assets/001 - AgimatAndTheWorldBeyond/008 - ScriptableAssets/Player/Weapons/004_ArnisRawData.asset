@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f73805136262c645a3e23ec3cd669c4, type: 3}
+  m_Name: 004_ArnisRawData
+  m_EditorClassIdentifier: 
+  weaponID: 004
+  character: 1
+  damage: 10
+  boolNameInPlayerAnimator: arnisSwitch
+  gameplayUIWeapon: {fileID: 1111404094060170504, guid: 3adb1fe4cde201d48a71099d4a7f2094,
+    type: 3}

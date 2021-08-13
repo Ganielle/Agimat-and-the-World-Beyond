@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f73805136262c645a3e23ec3cd669c4, type: 3}
+  m_Name: 007_StaffRawData
+  m_EditorClassIdentifier: 
+  weaponID: 007
+  character: 2
+  damage: 10
+  boolNameInPlayerAnimator: staffSwitch
+  gameplayUIWeapon: {fileID: 5332422182580848886, guid: 9b6cee1c7178982448c0690aaeb2f86f,
+    type: 3}
