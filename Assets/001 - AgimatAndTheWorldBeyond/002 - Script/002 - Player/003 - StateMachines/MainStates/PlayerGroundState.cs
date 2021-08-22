@@ -44,10 +44,8 @@ public class PlayerGroundState : PlayerStatesController
     {
         base.PhysicsUpdate();
 
-        SlopeChecker(); 
-
         //  This is for near ledge
-        if (!isFootTouchGround && !statemachineController.core.groundPlayerController.isOnSlope)
+        if (!isFootTouchGround)
         {
             statemachineController.core.SetVelocityX(movementData.
                 pushForcePlayerWhenFootNotTouchingGround *
@@ -77,8 +75,7 @@ public class PlayerGroundState : PlayerStatesController
                 movementData.wallGrabHoldStamina)
                 statemachineChanger.ChangeState(statemachineController.wallGrabState);
 
-            else if (statemachineController.core.groundPlayerController.canWalkOnSlope &&
-                GameManager.instance.gameInputController.dashInput &&
+            else if (GameManager.instance.gameInputController.dashInput &&
                 !GameManager.instance.gameInputController.switchPlayerLeftInput &&
                 statemachineController.playerDashState.CheckIfCanDash() && (GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=
                 PlayerStats.AnimatorStateInfo.HIGHLAND && GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=
@@ -88,69 +85,6 @@ public class PlayerGroundState : PlayerStatesController
         }
     }
 
-    #region SLOPE
-
-    private void SlopeChecker()
-    {
-        statemachineController.core.groundPlayerController.CheckSlopeVertical(checkPos);
-        statemachineController.core.groundPlayerController.CheckSlopeHorizontal(checkPos);
-
-        if (isGrounded && statemachineController.core.groundPlayerController.slopeDownAngle <=
-            statemachineController.core.groundPlayerController.maxSlopeAngle)
-            canJump = true;
-        else
-            canJump = false;
-    }
-
-    public void StickToSlopeLanding()
-    {
-        Vector2 currentVelocity = statemachineController.core.GetCurrentVelocity;
-        Vector2 feetPosAfterTick = (Vector2) statemachineController.transform.position +
-            (Vector2) statemachineController.core.groundPlayerController.groundCheck.position +
-            currentVelocity * Time.deltaTime;
-
-        RaycastHit2D groundCheckAfterTick = Physics2D.Raycast(feetPosAfterTick +
-            Vector2.up * movementData.maxFloorCheckDist,
-            -Vector2.up, movementData.maxFloorCheckDist * 2f,
-            statemachineController.core.groundPlayerController.whatIsGround);
-
-        if (groundCheckAfterTick.collider != null)
-        {
-            Vector2 wantedFeetPosAfterTick = groundCheckAfterTick.point;
-
-            Debug.Log("detect ground");
-
-            if (wantedFeetPosAfterTick != feetPosAfterTick)
-            {
-
-                RaycastHit2D rampCornerCheck = Physics2D.Raycast(
-                        wantedFeetPosAfterTick
-                        - movementData.floorCheckOffsetHeight * Vector2.up
-                        - movementData.floorCheckOffsetWidth * Mathf.Sign(currentVelocity.x) * Vector2.right,
-                        Mathf.Sign(currentVelocity.x) * Vector2.right);
-
-                if (rampCornerCheck.collider != null)
-                {
-                    // put feet at x=corner position
-                    Vector2 cornerPos = new Vector2(rampCornerCheck.point.x,
-                            wantedFeetPosAfterTick.y);
-
-                    statemachineController.core.playerRB.position = cornerPos -
-                        movementData.feetOffset;
-
-                    Vector2 wantedVelocity = (wantedFeetPosAfterTick - cornerPos)
-                        / Time.deltaTime;
-
-                    statemachineController.core.SetVelocityX(wantedVelocity.x,
-                        wantedVelocity.y);
-                }
-                Debug.Log(wantedFeetPosAfterTick + "   " + feetPosAfterTick);
-            }
-        }
-    }
-
-    #endregion
-
     #region WEAPON SWITCHING
 
     private void SwitchWeapon()
@@ -159,7 +93,7 @@ public class PlayerGroundState : PlayerStatesController
             GameManager.instance.gameInputController.canSwitchWeapon &&
             GameManager.instance.gameInputController.GetWeaponSwitchInput == 2)
         {
-            statemachineController.core.ChangeWeapon();
+            statemachineController.core.weaponChangerController.ChangeWeapon();
 
             if (!isExitingState)
             {
@@ -181,7 +115,7 @@ public class PlayerGroundState : PlayerStatesController
 
     private void DoneSwitchingWeapon()
     {
-        if (Time.time >= statemachineController.lastShowWeaponSlotsTime + 5f
+        if (Time.time >= statemachineController.core.weaponChangerController.lastShowWeaponSlotsTime + 5f
             && GameManager.instance.gameInputController.GetWeaponSwitchInput != 0)
             GameManager.instance.gameInputController.ResetSwitchWeaponInput();
     }

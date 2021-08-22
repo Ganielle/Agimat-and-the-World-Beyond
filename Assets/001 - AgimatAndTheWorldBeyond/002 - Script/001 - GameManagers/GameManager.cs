@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     //  this is for calling the public reference variable in
-    //  every script
+    //  every script 
     public static GameManager instance;
 
     //  =======================================

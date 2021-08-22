@@ -58,15 +58,15 @@ public class PlayerMoveState : PlayerGroundState
         if (!isExitingState)
         {
             //  Slope slide
-            if (statemachineController.core.groundPlayerController.isOnSlope &&
-                !statemachineController.core.groundPlayerController.canWalkOnSlope)
-            {
-                statemachineController.steepSlopeSlide.SetLastDirection(statemachineController.core.GetFacingDirection);
-                statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
-            }
+            //if (statemachineController.core.groundPlayerController.isOnSlope &&
+            //    !statemachineController.core.groundPlayerController.canWalkOnSlope)
+            //{
+            //    statemachineController.steepSlopeSlide.SetLastDirection(statemachineController.core.GetFacingDirection);
+            //    statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
+            //}
 
             //  Running break
-            else if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0f)
+            if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0f)
             {
                 canReduceSpeed = true;
 
@@ -104,8 +104,6 @@ public class PlayerMoveState : PlayerGroundState
         statemachineController.core.SetVelocityX(movementData.movementSpeed *
          GameManager.instance.gameInputController.GetSetMovementNormalizeX,
          statemachineController.core.GetCurrentVelocity.y);
-
-        StickToSlopeLanding();
 
         //else if (statemachineController.core.groundPlayerController.isOnSlope &&
         //    statemachineController.core.groundPlayerController.canWalkOnSlope)

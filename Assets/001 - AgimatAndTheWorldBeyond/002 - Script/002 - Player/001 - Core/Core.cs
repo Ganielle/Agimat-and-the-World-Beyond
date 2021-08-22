@@ -15,6 +15,7 @@ public class Core : MonoBehaviour
     public Transform envCheckerXRot;
 
     [Header("Script References")]
+    public WeaponChangerController weaponChangerController;
     public StaminaController staminaController;
     public RopePlayerController ropePlayerController;
     public GroundPlayerController groundPlayerController;
@@ -87,67 +88,6 @@ public class Core : MonoBehaviour
         {
             GameManager.instance.PlayerStats.GetSetBattleState = PlayerStats.PlayerBattleState.ADVENTURING;
         }
-    }
-
-    #endregion
-
-    #region PLAYER WEAPONS
-
-    public void ChangeWeapon()
-    {
-        if (GameManager.instance.PlayerStats.GetSetPlayerCharacter == PlayerStats.PlayerCharacter.LUKAS)
-        {
-            if (GameManager.instance.PlayerInventory.GetLukasWeapons.Count > 1)
-            {
-                if (GameManager.instance.gameInputController.canSwitchWeapon &&
-                GameManager.instance.gameInputController.GetWeaponSwitchInput == 2)
-                {
-                    if (GameManager.instance.PlayerInventory.GetSetWeaponLukasSlotIndex <
-                        GameManager.instance.PlayerInventory.GetLukasWeapons.Count - 1)
-                        GameManager.instance.PlayerInventory.GetSetWeaponLukasSlotIndex++;
-
-                    else if (GameManager.instance.PlayerInventory.GetSetWeaponLukasSlotIndex ==
-                        GameManager.instance.PlayerInventory.GetLukasWeapons.Count - 1)
-                        GameManager.instance.PlayerInventory.GetSetWeaponLukasSlotIndex = 0;
-                }
-
-                WeaponIndexChanger(GameManager.instance.PlayerInventory.GetSetWeaponLukasSlotIndex,
-                    GameManager.instance.PlayerInventory.GetLukasWeapons);
-            }
-        }
-        else if (GameManager.instance.PlayerStats.GetSetPlayerCharacter == PlayerStats.PlayerCharacter.LILY)
-        {
-            if (GameManager.instance.PlayerInventory.GetLilyWeapons.Count > 1)
-            {
-                if (GameManager.instance.gameInputController.canSwitchWeapon &&
-                GameManager.instance.gameInputController.GetWeaponSwitchInput == 2)
-                {
-                    if (GameManager.instance.PlayerInventory.GetSetWeaponLilySlotIndex <
-                        GameManager.instance.PlayerInventory.GetLilyWeapons.Count - 1)
-                        GameManager.instance.PlayerInventory.GetSetWeaponLilySlotIndex++;
-
-                    else if (GameManager.instance.PlayerInventory.GetSetWeaponLilySlotIndex ==
-                        GameManager.instance.PlayerInventory.GetLilyWeapons.Count - 1)
-                        GameManager.instance.PlayerInventory.GetSetWeaponLilySlotIndex = 0;
-                }
-
-                WeaponIndexChanger(GameManager.instance.PlayerInventory.GetSetWeaponLilySlotIndex,
-                    GameManager.instance.PlayerInventory.GetLilyWeapons);
-            }
-        }
-    }
-
-    private void WeaponIndexChanger(int index, List<WeaponData> weaponDatas)
-    {
-        weaponDatas[index].GetSetEquipState = true;
-
-        GameManager.instance.PlayerStats.GetSetWeaponEquipBoolInPlayerAnim =
-            weaponDatas[index].GetSetWeaponBoolNameInPlayerAnim;
-
-        if (index == 0)
-            weaponDatas[weaponDatas.Count - 1].GetSetEquipState = false;
-        else if (index > 0)
-            weaponDatas[index - 1].GetSetEquipState = false;
     }
 
     #endregion

@@ -41,9 +41,6 @@ public class PlayerStateMachinesController : MonoBehaviour
     public PlayerDodgeState playerDodgeState;
     public PlayerWeaponSwitchState weaponSwitchState;
 
-    //  Switching Weapons
-    [ReadOnly] public float lastShowWeaponSlotsTime;
-
     private void Awake()
     {
         stateMachine = new PlayerStateMachineChanger();
@@ -85,19 +82,6 @@ public class PlayerStateMachinesController : MonoBehaviour
         playerDashState.ResetCanDash();
         playerDodgeState.ResetDodge();
         ledgeClimbState.ResetCanLedgeClimb();
-
-        GameManager.instance.gameInputController.onSwitchWeaponInputChange += WeaponInputChange;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.instance.gameInputController.onSwitchWeaponInputChange -= WeaponInputChange;
-    }
-
-    private void WeaponInputChange(object sender, EventArgs e)
-    {
-        if (GameManager.instance.gameInputController.GetWeaponSwitchInput > 0)
-            lastShowWeaponSlotsTime = Time.time;
     }
 
     private void Start()

@@ -195,14 +195,14 @@ public class PlayerInAirState : PlayerStatesController
             GameManager.instance.gameInputController.GetWeaponSwitchInput == 2 &&
             statemachineController.weaponSwitchState.CheckIfCanWeaponSwitch())
         {
-            statemachineController.core.ChangeWeapon();
+            statemachineController.core.weaponChangerController.ChangeWeapon();
             GameManager.instance.gameInputController.UseCanSwitchWeaponInput();
         }
     }
 
     private void DoneSwitchingWeapon()
     {
-        if (Time.time >= statemachineController.lastShowWeaponSlotsTime + 5f
+        if (Time.time >= statemachineController.core.weaponChangerController.lastShowWeaponSlotsTime + 5f
             && GameManager.instance.gameInputController.GetWeaponSwitchInput != 0)
             GameManager.instance.gameInputController.ResetSwitchWeaponInput();
     }

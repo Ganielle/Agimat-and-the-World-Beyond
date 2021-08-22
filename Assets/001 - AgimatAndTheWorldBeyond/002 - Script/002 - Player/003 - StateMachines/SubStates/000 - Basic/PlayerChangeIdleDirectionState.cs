@@ -71,9 +71,7 @@ public class PlayerChangeIdleDirectionState : PlayerGroundState
     {
         base.PhysicsUpdate();
 
-
-        if (statemachineController.core.groundPlayerController.canWalkOnSlope)
-            statemachineController.core.SetVelocityZero();
+        statemachineController.core.SetVelocityZero();
     }
 
     public void SpriteDirectionAfterAnimation(int direction) => this.direction = direction;

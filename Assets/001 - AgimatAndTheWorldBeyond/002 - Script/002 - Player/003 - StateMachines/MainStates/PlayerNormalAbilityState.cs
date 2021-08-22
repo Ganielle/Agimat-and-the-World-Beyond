@@ -60,12 +60,4 @@ public class PlayerNormalAbilityState : PlayerStatesController
             }
         }
     }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-
-        statemachineController.core.groundPlayerController.CheckSlopeVertical(checkSlopePos);
-        statemachineController.core.groundPlayerController.CheckSlopeHorizontal(checkSlopePos);
-    }
 }

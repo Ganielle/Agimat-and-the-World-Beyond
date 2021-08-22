@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class GroundPlayerController : MonoBehaviour
 {
+    //  TODO: CHECK SLOPE CONTROLLER
+
     [SerializeField] private Core core;
     [SerializeField] private PlayerRawData playerRawData;
     [SerializeField] private Rigidbody2D playerRB;
-    
 
     [Header("Ground")]
     public float maxSlopeAngle;
@@ -26,18 +27,20 @@ public class GroundPlayerController : MonoBehaviour
     public Transform ledgeCheck;
     
     [Header("ReadOnly")]
-    [ReadOnly] public Vector2 slopeNormalPerp;
-    [ReadOnly] public bool isOnSlope;
-    [ReadOnly] public bool canWalkOnSlope;
-    [ReadOnly] public float slopeDownAngle;
-    [ReadOnly] public float slopeDownAngleOld;
-    [ReadOnly] public float slopeSlideAngle;
+    [ReadOnly] public Vector2 slopeForward;
+    [ReadOnly] public float groundAngle;
+    //[ReadOnly] public Vector2 slopeNormalPerp;
+    //[ReadOnly] public bool isOnSlope;
+    //[ReadOnly] public bool canWalkOnSlope;
+    //[ReadOnly] public float slopeDownAngle;
+    //[ReadOnly] public float slopeDownAngleOld;
+    //[ReadOnly] public float slopeSlideAngle;
 
     //  PRIVATE VARIABLES
-    private RaycastHit2D hitInfo;
-    private RaycastHit2D slopeHit;
-    private RaycastHit2D slopeHitFront;
-    private RaycastHit2D slopeHitBack;
+    //private RaycastHit2D hitInfo;
+    //private RaycastHit2D slopeHit;
+    //private RaycastHit2D slopeHitFront;
+    //private RaycastHit2D slopeHitBack;
 
     #region PHYSICS
 
@@ -104,61 +107,28 @@ public class GroundPlayerController : MonoBehaviour
         return core.GetWorkspace;
     }
 
-    public void CheckSlopeHorizontal(Vector2 checkPos)
+    public void CalculateSlopeForward()
     {
-        slopeHitFront = Physics2D.Raycast(checkPos,
-            transform.right, playerRawData.slopeCheckDistance, whatIsGround);
-        slopeHitBack = Physics2D.Raycast(checkPos,
-            -transform.right, playerRawData.slopeCheckDistance, whatIsGround);
+        if (CheckIfTouchGround)
+        {
+            slopeForward = transform.forward;
+            return;
+        }
 
-        if (slopeHitFront && slopeDownAngle > minimumSlopeAngle)
-        {
-            isOnSlope = true;
-            slopeSlideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
-        }
-        else if (slopeHitBack && slopeDownAngle > minimumSlopeAngle)
-        {
-            isOnSlope = true;
-            slopeSlideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
-        }
-        else
-        {
-            slopeSlideAngle = 0f;
-            isOnSlope = false;
-        }
+        slopeForward = Vector3.Cross(Physics2D.Raycast(transform.position, Vector2.down, playerRawData.slopeCheckDistance).normal,
+            -transform.right);
     }
 
-    public void CheckSlopeVertical(Vector2 checkPos)
+    public void CalculateGroundAngle()
     {
-        slopeHit = Physics2D.Raycast(checkPos, Vector2.down, playerRawData.slopeCheckDistance,
-            whatIsGround);
-
-        if (slopeHit)
+        if (CheckIfTouchGround)
         {
-            slopeNormalPerp = Vector2.Perpendicular(slopeHit.normal).normalized;
-
-            slopeDownAngle = Vector2.Angle(slopeHit.normal, Vector2.up);
-
-            if (slopeDownAngle != slopeDownAngleOld &&
-                slopeDownAngle > minimumSlopeAngle)
-                isOnSlope = true;
-
-            slopeDownAngleOld = slopeDownAngle;
-
-            Debug.DrawRay(slopeHit.point, slopeHit.normal, Color.green);
-            Debug.DrawRay(slopeHit.point, slopeNormalPerp, Color.red);
+            groundAngle = 90f;
+            return;
         }
 
-        if (slopeDownAngle > maxSlopeAngle || slopeSlideAngle > maxSlopeAngle)
-            canWalkOnSlope = false;
-        else
-            canWalkOnSlope = true;
-
-        if (isOnSlope && GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0
-            && canWalkOnSlope)
-            PhysicsMaterialChanger(playerRawData.fullFriction);
-        else
-            PhysicsMaterialChanger(playerRawData.lessFriction);
+        groundAngle = Vector3.Angle(Physics2D.Raycast(transform.position, Vector2.down, playerRawData.slopeCheckDistance).normal,
+            transform.forward);
     }
 
     #endregion

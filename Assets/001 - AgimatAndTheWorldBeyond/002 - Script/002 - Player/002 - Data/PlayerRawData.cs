@@ -42,6 +42,8 @@ public class PlayerRawData : ScriptableObject
 
     [Header("Slope")]
     public float slopeCheckDistance;
+    public float maxSlopeAngle;
+    public float onSlopeAngle;
 
     [Header("Wall Checker")]
     public Vector2 wallCheckRadius = new Vector2(0.1f, 0.1f);

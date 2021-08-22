@@ -40,8 +40,7 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.PhysicsUpdate();
 
-        if (statemachineController.core.groundPlayerController.canWalkOnSlope)
-            statemachineController.core.SetVelocityZero();
+        statemachineController.core.SetVelocityZero();
     }
 
     private void SettingsSetter()
@@ -57,14 +56,14 @@ public class PlayerIdleState : PlayerGroundState
         {
 
             //  Slope slide
-            if (statemachineController.core.groundPlayerController.isOnSlope &&
-                !statemachineController.core.groundPlayerController.canWalkOnSlope)
-            {
-                statemachineController.steepSlopeSlide.SetLastDirection(statemachineController.core.GetFacingDirection);
-                statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
-            }
+            //if (statemachineController.core.groundPlayerController.isOnSlope &&
+            //    !statemachineController.core.groundPlayerController.canWalkOnSlope)
+            //{
+            //    statemachineController.steepSlopeSlide.SetLastDirection(statemachineController.core.GetFacingDirection);
+            //    statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
+            //}
 
-            else if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0f)
+            if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0f)
             {
                 if (GameManager.instance.gameInputController.GetSetMovementNormalizeX !=
                     statemachineController.core.GetFacingDirection)
