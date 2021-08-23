@@ -40,7 +40,8 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.PhysicsUpdate();
 
-        statemachineController.core.SetVelocityZero();
+        if (statemachineController.core.groundPlayerController.canWalkOnSlope)
+            statemachineController.core.SetVelocityZero();
     }
 
     private void SettingsSetter()
@@ -54,57 +55,60 @@ public class PlayerIdleState : PlayerGroundState
     {
         if (!isExitingState)
         {
-
             //  Slope slide
-            //if (statemachineController.core.groundPlayerController.isOnSlope &&
-            //    !statemachineController.core.groundPlayerController.canWalkOnSlope)
-            //{
-            //    statemachineController.steepSlopeSlide.SetLastDirection(statemachineController.core.GetFacingDirection);
-            //    statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
-            //}
+            if (!statemachineController.core.groundPlayerController.canWalkOnSlope)
+                statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
 
-            if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0f)
+            else if (statemachineController.core.groundPlayerController.canWalkOnSlope)
             {
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX !=
-                    statemachineController.core.GetFacingDirection)
+                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0f)
                 {
-                    statemachineController.changeIdleDirectionState.SpriteDirectionAfterAnimation(
-                        GameManager.instance.gameInputController.GetSetMovementNormalizeX);
-                    statemachineChanger.ChangeState(statemachineController.changeIdleDirectionState);
+                    if (GameManager.instance.gameInputController.GetSetMovementNormalizeX !=
+                        statemachineController.core.GetFacingDirection)
+                    {
+                        statemachineController.changeIdleDirectionState.SpriteDirectionAfterAnimation(
+                            GameManager.instance.gameInputController.GetSetMovementNormalizeX);
+                        statemachineChanger.ChangeState(statemachineController.changeIdleDirectionState);
+                    }
+
+                    else
+                        statemachineChanger.ChangeState(statemachineController.moveState);
                 }
 
-                else
-                    statemachineChanger.ChangeState(statemachineController.moveState);
+                else if (GameManager.instance.gameInputController.jumpInput &&
+                    statemachineController.core.groundPlayerController.canWalkOnSlope)
+                {
+                    statemachineChanger.ChangeState(statemachineController.jumpState);
+                    GameManager.instance.gameInputController.UseJumpInput();
+                }
+
+                else if (canTauntIdle)
+                    statemachineChanger.ChangeState(statemachineController.tauntIdleState);
+
+                else if (!isAnimationFinished &&
+                    GameManager.instance.gameInputController.movementNormalizeY == 1f)
+                    statemachineChanger.ChangeState(statemachineController.lookingUpState);
+
+                else if (!isAnimationFinished &&
+                    GameManager.instance.gameInputController.movementNormalizeY == -1)
+                    statemachineChanger.ChangeState(statemachineController.lookingDownState);
+
+                else if (GameManager.instance.gameInputController.dodgeInput &&
+                    statemachineController.playerDodgeState.CheckIfCanDodge())
+                    statemachineChanger.ChangeState(statemachineController.playerDodgeState);
+
+                else if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0 &&
+                    GameManager.instance.gameInputController.switchPlayerLeftInput &&
+                    GameManager.instance.gameInputController.switchPlayerRightInput &&
+                    statemachineController.switchPlayerState.CheckIfCanSwitch())
+                    statemachineChanger.ChangeState(statemachineController.switchPlayerState);
+
+                else if (!isFootTouchGround)
+                {
+                    statemachineController.nearLedgeState.SetLastDirection(statemachineController.core.GetFacingDirection);
+                    statemachineChanger.ChangeState(statemachineController.nearLedgeState);
+                }
             }
-
-            else if (canTauntIdle)
-                statemachineChanger.ChangeState(statemachineController.tauntIdleState);
-
-            else if (!isAnimationFinished &&
-                GameManager.instance.gameInputController.movementNormalizeY == 1f)
-                statemachineChanger.ChangeState(statemachineController.lookingUpState);
-
-            else if (!isAnimationFinished &&
-                GameManager.instance.gameInputController.movementNormalizeY == -1)
-                statemachineChanger.ChangeState(statemachineController.lookingDownState);
-
-            else if (GameManager.instance.gameInputController.jumpInput &&
-                canJump)
-            {
-                statemachineChanger.ChangeState(statemachineController.jumpState);
-                GameManager.instance.gameInputController.UseJumpInput();
-            }
-
-            else if (GameManager.instance.gameInputController.dodgeInput &&
-                statemachineController.playerDodgeState.CheckIfCanDodge())
-                statemachineChanger.ChangeState(statemachineController.playerDodgeState);
-
-            else if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0 &&
-                GameManager.instance.gameInputController.switchPlayerLeftInput &&
-                GameManager.instance.gameInputController.switchPlayerRightInput &&
-                statemachineController.switchPlayerState.CheckIfCanSwitch())
-                statemachineChanger.ChangeState(statemachineController.switchPlayerState);
-
         }
     }
 

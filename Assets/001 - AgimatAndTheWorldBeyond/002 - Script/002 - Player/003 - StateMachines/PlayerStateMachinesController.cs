@@ -22,6 +22,7 @@ public class PlayerStateMachinesController : MonoBehaviour
     public PlayerLowLandState lowLandState;
     public PlayerHighLandState highLandState;
     public PlayerInAirState inAirState;
+    public PlayerNearLedgeState nearLedgeState;
     public PlayerWallSlideState wallSlideState;
     public PlayerWallGrabState wallGrabState;
     public PlayerWallClimbState wallClimbState;
@@ -57,6 +58,7 @@ public class PlayerStateMachinesController : MonoBehaviour
         inAirState = new PlayerInAirState(this, statemachineChanger, core.playerRawData, "inAir");
         lowLandState = new PlayerLowLandState(this, statemachineChanger, core.playerRawData, "lowLand");
         highLandState = new PlayerHighLandState(this, statemachineChanger, core.playerRawData, "highLand");
+        nearLedgeState = new PlayerNearLedgeState(this, statemachineChanger, core.playerRawData, "nearLedge");
         wallSlideState = new PlayerWallSlideState(this, statemachineChanger, core.playerRawData, "wallSlide");
         wallClimbState = new PlayerWallClimbState(this, statemachineChanger, core.playerRawData, "wallClimb");
         wallGrabState = new PlayerWallGrabState(this, statemachineChanger, core.playerRawData, "wallGrab");
@@ -98,10 +100,7 @@ public class PlayerStateMachinesController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //  Slope Calculation
-        core.groundPlayerController.CalculateSlopeForward();
-        core.groundPlayerController.CalculateGroundAngle();
-
         statemachineChanger.CurrentState.PhysicsUpdate();
+
     }
 }

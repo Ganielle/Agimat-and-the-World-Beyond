@@ -44,9 +44,10 @@ public class PlayerMoveState : PlayerGroundState
     {
         base.PhysicsUpdate();
 
-        ReduceVelocityOnX();
         MovePlayer();
         statemachineController.core.groundPlayerController.SlopeMovement();
+
+        ReduceVelocity();
     }
 
     private void SettingsSetter()
@@ -59,79 +60,78 @@ public class PlayerMoveState : PlayerGroundState
         if (!isExitingState)
         {
             //  Slope slide
-            //if (statemachineController.core.groundPlayerController.isOnSlope &&
-            //    !statemachineController.core.groundPlayerController.canWalkOnSlope)
-            //{
-            //    statemachineController.steepSlopeSlide.SetLastDirection(statemachineController.core.GetFacingDirection);
-            //    statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
-            //}
+            if (!statemachineController.core.groundPlayerController.canWalkOnSlope)
+                statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
 
-            //  Running break
-            if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0f)
+            else
             {
-                canReduceSpeed = true;
-
-                if (statemachineController.core.GetCurrentVelocity.x == 0f)
-                    statemachineChanger.ChangeState(statemachineController.idleState);
-
-                else if (canBreakRun && lastDirection == statemachineController.core.GetFacingDirection &&
-                    statemachineController.core.GetCurrentVelocity.x != 0f)
+                //  Running break
+                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0f)
                 {
-                    statemachineController.runningBreakState.SetCurrentDirection(lastDirection);
-                    statemachineChanger.ChangeState(statemachineController.runningBreakState);
-                    canBreakRun = false;
+                    canReduceSpeed = true;
+
+                    if (statemachineController.core.GetCurrentVelocity.x == 0 && canBreakRun)
+                    {
+                        statemachineController.runningBreakState.SetCurrentDirection(lastDirection);
+                        statemachineChanger.ChangeState(statemachineController.runningBreakState);
+                        canBreakRun = false;
+                    }
+
+                    else if (statemachineController.core.GetCurrentVelocity.x == 0)
+                        statemachineChanger.ChangeState(statemachineController.idleState);
                 }
+
+                else if (GameManager.instance.gameInputController.jumpInput &&
+                    statemachineController.core.groundPlayerController.canWalkOnSlope)
+                {
+                    statemachineChanger.ChangeState(statemachineController.jumpState);
+                    GameManager.instance.gameInputController.UseJumpInput();
+                }
+
+                else if (GameManager.instance.gameInputController.dodgeInput
+                    && statemachineController.playerDodgeState.CheckIfCanDodge() &&
+                    GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=
+                    PlayerStats.AnimatorStateInfo.HIGHLAND)
+                    statemachineChanger.ChangeState(statemachineController.playerDodgeState);
             }
-
-
-            else if (GameManager.instance.gameInputController.jumpInput && canJump)
-            {
-                statemachineChanger.ChangeState(statemachineController.jumpState);
-                GameManager.instance.gameInputController.UseJumpInput();
-            }
-
-            else if (GameManager.instance.gameInputController.dodgeInput
-                && statemachineController.playerDodgeState.CheckIfCanDodge() &&
-                GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=
-                PlayerStats.AnimatorStateInfo.HIGHLAND)
-                statemachineChanger.ChangeState(statemachineController.playerDodgeState);
         }
     }
 
     private void MovePlayer()
     {
-        //if (!statemachineController.core.groundPlayerController.isOnSlope)
-
         statemachineController.core.SetVelocityX(movementData.movementSpeed *
          GameManager.instance.gameInputController.GetSetMovementNormalizeX,
          statemachineController.core.GetCurrentVelocity.y);
-
-        //else if (statemachineController.core.groundPlayerController.isOnSlope &&
-        //    statemachineController.core.groundPlayerController.canWalkOnSlope)
-        //{
-        //    statemachineController.core.SetVelocityX(movementData.movementSpeed *
-        //    statemachineController.core.groundPlayerController.slopeNormalPerp.x *
-        //    -GameManager.instance.gameInputController.GetSetMovementNormalizeX,
-        //    movementData.movementSpeed *
-        //    statemachineController.core.groundPlayerController.slopeNormalPerp.y *
-        //    -GameManager.instance.gameInputController.GetSetMovementNormalizeX);
-        //}
     }
 
-    private void ReduceVelocityOnX()
+    private void ReduceVelocity()
     {
         if (canReduceSpeed)
         {
-            if (statemachineController.core.GetCurrentVelocity.x != 0f)
-                statemachineController.core.SetVelocityX(
-                statemachineController.core.GetCurrentVelocity.x -= 25f * Time.fixedDeltaTime,
-                statemachineController.core.GetCurrentVelocity.y);
-
-            else
+            //  right
+            if (statemachineController.core.GetFacingDirection == 1)
             {
-                statemachineController.core.GetCurrentVelocity.x = 0f;
-                canReduceSpeed = false;
+                statemachineController.core.GetCurrentVelocity.x -= 100f * Time.deltaTime;
+
+                if (statemachineController.core.GetCurrentVelocity.x <= 0)
+                {
+                    statemachineController.core.GetCurrentVelocity.x = 0f;
+                    canReduceSpeed = false;
+                }
             }
+            //  left
+            else if (statemachineController.core.GetFacingDirection == -1)
+            {
+                statemachineController.core.GetCurrentVelocity.x += 100f * Time.deltaTime;
+
+                if (statemachineController.core.GetCurrentVelocity.x >= 0)
+                {
+                    statemachineController.core.GetCurrentVelocity.x = 0f;
+                    canReduceSpeed = false;
+                }
+            }
+            statemachineController.core.SetVelocityX(statemachineController.core.GetCurrentVelocity.x,
+                statemachineController.core.GetCurrentVelocity.y);
         }
     }
 }

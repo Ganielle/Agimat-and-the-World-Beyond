@@ -30,6 +30,8 @@ public class GroundPlayerController : MonoBehaviour
     [ReadOnly] public Vector2 forceOnSlope;
     [ReadOnly] public Vector3 slopeForward;
     [ReadOnly] public float groundAngle;
+    [ReadOnly] public bool isOnSlope;
+    [ReadOnly] public bool canWalkOnSlope;
     //[ReadOnly] public Vector2 slopeNormalPerp;
     //[ReadOnly] public bool isOnSlope;
     //[ReadOnly] public bool canWalkOnSlope;
@@ -135,18 +137,44 @@ public class GroundPlayerController : MonoBehaviour
         if (groundAngle <= maxSlopeAngle)
             core.playerRB.sharedMaterial = playerRawData.noFriction;
 
-        //  On flat surface, less friction for sticking on ground effect
-        else if (groundAngle > minimumSlopeAngle)
+        //  On flat surface or walkable, less friction for sticking on ground effect
+        else if (groundAngle > maxSlopeAngle)
             core.playerRB.sharedMaterial = playerRawData.lessFriction;
+    }
+
+    public void SlopeChecker()
+    {
+        //  Higher slope, on slope but cannot move
+        if (groundAngle <= maxSlopeAngle)
+        {
+            isOnSlope = true;
+            canWalkOnSlope = false;
+        }
+
+        //  On flat surface or walkable slope, on slope but can move
+        else if (groundAngle > minimumSlopeAngle)
+        {
+            isOnSlope = true;
+            canWalkOnSlope = true;
+        }
+
+        else if (groundAngle == 0)
+        {
+            isOnSlope = false;
+            canWalkOnSlope = false;
+        }
     }
 
     public void SlopeMovement()
     {
         if (CheckIfTouchGround)
         {
-            if (groundAngle <= minimumSlopeAngle && groundAngle >= maxSlopeAngle)
+            if (groundAngle <= minimumSlopeAngle)
             {
-                core.playerRB.sharedMaterial = playerRawData.noFriction;
+                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0f)
+                    core.playerRB.sharedMaterial = playerRawData.noFriction;
+                else
+                    core.playerRB.sharedMaterial = playerRawData.lessFriction;
 
                 float moveDistance = Mathf.Abs(core.GetCurrentVelocity.x);
                 float horizontalOnSlope = Mathf.Cos(groundAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(core.GetCurrentVelocity.x);

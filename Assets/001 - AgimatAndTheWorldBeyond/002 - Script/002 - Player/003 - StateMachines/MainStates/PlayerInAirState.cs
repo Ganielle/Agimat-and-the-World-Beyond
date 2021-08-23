@@ -59,9 +59,6 @@ public class PlayerInAirState : PlayerStatesController
     {
         base.LogicUpdate();
 
-        SwitchWeapon();
-        DoneSwitchingWeapon();
-
         AnimationChanger();
         CheckAnimationState();
         CheckIfReachMaxVelocity();
@@ -183,29 +180,6 @@ public class PlayerInAirState : PlayerStatesController
     }
 
     public void SetIsJumping() => isJumping = true;
-
-    #endregion
-
-    #region WEAPON SWITCH
-
-
-    private void SwitchWeapon()
-    {
-        if (GameManager.instance.gameInputController.canSwitchWeapon &&
-            GameManager.instance.gameInputController.GetWeaponSwitchInput == 2 &&
-            statemachineController.weaponSwitchState.CheckIfCanWeaponSwitch())
-        {
-            statemachineController.core.weaponChangerController.ChangeWeapon();
-            GameManager.instance.gameInputController.UseCanSwitchWeaponInput();
-        }
-    }
-
-    private void DoneSwitchingWeapon()
-    {
-        if (Time.time >= statemachineController.core.weaponChangerController.lastShowWeaponSlotsTime + 5f
-            && GameManager.instance.gameInputController.GetWeaponSwitchInput != 0)
-            GameManager.instance.gameInputController.ResetSwitchWeaponInput();
-    }
 
     #endregion
 }

@@ -26,15 +26,6 @@ public class PlayerDashState : PlayerAbilityState
         SettingsSetter();
     }
 
-    public override void Exit()
-    {
-        base.Exit();
-
-        if (statemachineController.core.GetCurrentVelocity.y > 0)
-            statemachineController.core.SetVelocityY(statemachineController.core.GetCurrentVelocity.y *
-            movementData.dashEndYMultiplier);
-    }
-
     public override void DoChecks()
     {
         base.DoChecks();
@@ -82,10 +73,16 @@ public class PlayerDashState : PlayerAbilityState
         {
             ChangeAnimationBaseOnVelocity();
 
-            if (isHolding)
-                DashCharge();
+
+            if (isAbilityDone)
+                statemachineController.core.SetVelocityZero();
             else
-                DashBurst();
+            {
+                if (isHolding)
+                    DashCharge();
+                else if (!isHolding)
+                    DashBurst();
+            }
         }
     }
 
@@ -119,8 +116,6 @@ public class PlayerDashState : PlayerAbilityState
             Vector2 feetPosAfterTick = (Vector2)statemachineController.transform.position + feetOffset +
                 statemachineController.core.GetCurrentVelocity * Time.deltaTime;
 
-            Debug.Log(feetOffset);
-
             float maxFloorCheckDist = 1.0f;
 
             RaycastHit2D groundCheckAfterTick = Physics2D.Raycast(feetPosAfterTick + Vector2.up *
@@ -132,17 +127,13 @@ public class PlayerDashState : PlayerAbilityState
             {
                 Vector2 wantedFeetPosAfterTick = groundCheckAfterTick.point;
 
-                Debug.Log("ground check after tick true");
-
-                Debug.Log(wantedFeetPosAfterTick == feetPosAfterTick);
-
                 if (wantedFeetPosAfterTick != feetPosAfterTick)
                 {
                     //statemachineController.core.SetVelocityZero();
 
                     // look for corner of ramp+landing. 
                     // Offsets ensure we don't raycast from inside/above it
-                    float floorCheckOffsetHeight = 0.01f;
+                    float floorCheckOffsetHeight = 0.25f;
                     float floorCheckOffsetWidth = 0.5f;
                     RaycastHit2D rampCornerCheck = Physics2D.Raycast(
                             wantedFeetPosAfterTick
@@ -157,12 +148,16 @@ public class PlayerDashState : PlayerAbilityState
                         Vector2 cornerPos = new Vector2(rampCornerCheck.point.x,
                                 wantedFeetPosAfterTick.y);
 
+                        Debug.Log(cornerPos);
+
+                        statemachineController.core.playerRB.position = cornerPos
+                            - feetOffset;
                         // adjust velocity so that physics will take them from corner 
                         // to landing position
                         Vector2 wantedVelocity = (wantedFeetPosAfterTick - cornerPos)
-                                / Time.fixedDeltaTime;
+                                / Time.deltaTime;
 
-                        statemachineController.core.SetVelocityDash(wantedVelocity.x * statemachineController.core.GetFacingDirection, dashIndirection);
+                        statemachineController.core.playerRB.velocity = wantedVelocity;
                     }
                 }
             }
@@ -226,6 +221,7 @@ public class PlayerDashState : PlayerAbilityState
             canDash = true;
 
             lastDashTime = Time.time;
+
 
         }
         //  DONE ABILITY IF TOUCHING WALL

@@ -15,13 +15,14 @@ public class PlayerLowLandState : PlayerGroundState
         base.Enter();
 
         GameManager.instance.PlayerStats.GetSetAnimatorStateInfo = PlayerStats.AnimatorStateInfo.LOWLAND;
+
+        if (statemachineController.core.groundPlayerController.canWalkOnSlope)
+            statemachineController.core.SetVelocityZero();
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        statemachineController.core.SetVelocityX(0f, statemachineController.core.GetCurrentVelocity.y);
 
         if (!isExitingState)
         {
@@ -30,8 +31,10 @@ public class PlayerLowLandState : PlayerGroundState
                 if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0)
                     statemachineChanger.ChangeState(statemachineController.moveState);
 
-                //  Slope slide
-                    //statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
+                //Slope slide
+                if (statemachineController.core.groundPlayerController.isOnSlope &&
+                    !statemachineController.core.groundPlayerController.canWalkOnSlope)
+                    statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
             }
             else
             {
@@ -39,5 +42,12 @@ public class PlayerLowLandState : PlayerGroundState
                     statemachineChanger.ChangeState(statemachineController.idleState);
             }
         }
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+
+        statemachineController.core.SetVelocityZero();
     }
 }

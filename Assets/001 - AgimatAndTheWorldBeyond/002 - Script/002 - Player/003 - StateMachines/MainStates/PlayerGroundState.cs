@@ -7,7 +7,6 @@ public class PlayerGroundState : PlayerStatesController
     protected bool isGrounded;
     protected bool isTouchingWall;
     protected bool isFootTouchGround;
-    protected bool canJump;
     protected Vector2 checkPos;
 
     private bool isTouchingLedge;
@@ -29,6 +28,7 @@ public class PlayerGroundState : PlayerStatesController
         checkPos = statemachineController.transform.position - (Vector3)(new Vector2(0f,
             statemachineController.core.colliderSize.y / 2));
 
+        statemachineController.core.groundPlayerController.SlopeChecker();
     }
 
     public override void LogicUpdate()
@@ -45,14 +45,10 @@ public class PlayerGroundState : PlayerStatesController
     {
         base.PhysicsUpdate();
 
-        //  This is for near ledge
-        if (!isFootTouchGround)
-        {
-            statemachineController.core.SetVelocityX(movementData.
-                pushForcePlayerWhenFootNotTouchingGround *
-                statemachineController.core.GetFacingDirection,
-                statemachineController.core.GetCurrentVelocity.y);
-        }
+        //  Slope Calculation
+        statemachineController.core.groundPlayerController.CalculateSlopeForward();
+        statemachineController.core.groundPlayerController.CalculateGroundAngle();
+
     }
 
     private void AnimationChanger()
@@ -76,7 +72,8 @@ public class PlayerGroundState : PlayerStatesController
                 movementData.wallGrabHoldStamina)
                 statemachineChanger.ChangeState(statemachineController.wallGrabState);
 
-            else if (GameManager.instance.gameInputController.dashInput &&
+            else if (statemachineController.core.groundPlayerController.canWalkOnSlope &&
+                GameManager.instance.gameInputController.dashInput &&
                 !GameManager.instance.gameInputController.switchPlayerLeftInput &&
                 statemachineController.playerDashState.CheckIfCanDash() && (GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=
                 PlayerStats.AnimatorStateInfo.HIGHLAND && GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=

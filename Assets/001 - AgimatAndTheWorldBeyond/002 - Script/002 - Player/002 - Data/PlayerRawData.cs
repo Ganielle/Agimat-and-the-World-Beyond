@@ -20,7 +20,7 @@ public class PlayerRawData : ScriptableObject
     public float movementSpeed = 10f;
     public float sprintSpeed = 15f;
     public float maxVelocityXOnGround = 7.5f;
-    public float pushForcePlayerWhenFootNotTouchingGround = 10f;
+    //public float pushForcePlayerWhenFootNotTouchingGround = 10f;
 
     [Header("JUMP STATE")]
     public float jumpStrength = 15f;
