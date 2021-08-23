@@ -3,6 +3,7 @@ Library
 Logs
 MONO_Release
 obj
+Temp
 .vs
 *.sln
 *.csproj

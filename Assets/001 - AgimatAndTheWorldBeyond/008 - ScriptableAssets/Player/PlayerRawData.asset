@@ -37,7 +37,8 @@ MonoBehaviour:
   floorCheckOffsetHeight: 0.2
   floorCheckOffsetWidth: 2
   maxFloorCheckDist: 168.66
-  slopeCheckDistance: 5
+  slopeCheckDistance: 2.5
+  slopeForce: 2.5
   wallCheckRadius: {x: 0.1, y: 2}
   wallClimbCheckRadius: 0.125
   wallSlideVelocity: 3

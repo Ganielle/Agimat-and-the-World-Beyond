@@ -36,8 +36,9 @@ public class PlayerGroundState : PlayerStatesController
         base.LogicUpdate();
 
         AnimationChanger();
-        SwitchWeapon();
-        DoneSwitchingWeapon();
+
+        //statemachineController.core.weaponChangerController.DoneSwitchingWeapon();
+        //statemachineController.core.weaponChangerController.SwitchWeapon();
     }
 
     public override void PhysicsUpdate()
@@ -84,41 +85,4 @@ public class PlayerGroundState : PlayerStatesController
                 statemachineChanger.ChangeState(statemachineController.playerDashState);
         }
     }
-
-    #region WEAPON SWITCHING
-
-    private void SwitchWeapon()
-    {
-        if (statemachineController.weaponSwitchState.CheckIfCanWeaponSwitch() &&
-            GameManager.instance.gameInputController.canSwitchWeapon &&
-            GameManager.instance.gameInputController.GetWeaponSwitchInput == 2)
-        {
-            statemachineController.core.weaponChangerController.ChangeWeapon();
-
-            if (!isExitingState)
-            {
-                if (isGrounded &&
-                    (GameManager.instance.PlayerStats.GetSetAnimatorStateInfo ==
-                    PlayerStats.AnimatorStateInfo.IDLE ||
-                    GameManager.instance.PlayerStats.GetSetAnimatorStateInfo ==
-                    PlayerStats.AnimatorStateInfo.SWITCHWEAPON))
-                {
-                    statemachineController.weaponSwitchState.animBoolName =
-                        GameManager.instance.PlayerStats.GetSetWeaponEquipBoolInPlayerAnim;
-                    statemachineChanger.ChangeState(statemachineController.weaponSwitchState);
-                }
-            }
-
-            GameManager.instance.gameInputController.UseCanSwitchWeaponInput();
-        }
-    }
-
-    private void DoneSwitchingWeapon()
-    {
-        if (Time.time >= statemachineController.core.weaponChangerController.lastShowWeaponSlotsTime + 5f
-            && GameManager.instance.gameInputController.GetWeaponSwitchInput != 0)
-            GameManager.instance.gameInputController.ResetSwitchWeaponInput();
-    }
-
-    #endregion
 }

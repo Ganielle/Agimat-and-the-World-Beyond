@@ -9,7 +9,7 @@ public class PlayerStateMachinesController : MonoBehaviour
     public Core core;
 
     //  StateMachines
-    public PlayerStateMachineChanger stateMachine;
+    public PlayerStateMachineChanger statemachineChanger;
     public PlayerIdleState idleState;
     public PlayerLookUpState lookingUpState;
     public PlayerLookingDownState lookingDownState;
@@ -43,38 +43,38 @@ public class PlayerStateMachinesController : MonoBehaviour
 
     private void Awake()
     {
-        stateMachine = new PlayerStateMachineChanger();
-        idleState = new PlayerIdleState(this, stateMachine, core.playerRawData, "idle");
-        lookingUpState = new PlayerLookUpState(this, stateMachine, core.playerRawData, "lookingUp");
-        lookingDownState = new PlayerLookingDownState(this, stateMachine, core.playerRawData, "lookingDown");
-        tauntIdleState = new PlayerTauntIdleState(this, stateMachine, core.playerRawData, "tauntIdle");
-        changeIdleDirectionState = new PlayerChangeIdleDirectionState(this, stateMachine,
+        statemachineChanger = new PlayerStateMachineChanger();
+        idleState = new PlayerIdleState(this, statemachineChanger, core.playerRawData, "idle");
+        lookingUpState = new PlayerLookUpState(this, statemachineChanger, core.playerRawData, "lookingUp");
+        lookingDownState = new PlayerLookingDownState(this, statemachineChanger, core.playerRawData, "lookingDown");
+        tauntIdleState = new PlayerTauntIdleState(this, statemachineChanger, core.playerRawData, "tauntIdle");
+        changeIdleDirectionState = new PlayerChangeIdleDirectionState(this, statemachineChanger,
             core.playerRawData, "idleChangeDirection");
-        moveState = new PlayerMoveState(this, stateMachine, core.playerRawData, "move");
-        steepSlopeSlide = new PlayerSteepSlopeSlideState(this, stateMachine, core.playerRawData, "slopeSlide");
-        runningBreakState = new PlayerRunningBreak(this, stateMachine, core.playerRawData, "runningBreak");
-        jumpState = new PlayerJumpState(this, stateMachine, core.playerRawData, "inAir");
-        inAirState = new PlayerInAirState(this, stateMachine, core.playerRawData, "inAir");
-        lowLandState = new PlayerLowLandState(this, stateMachine, core.playerRawData, "lowLand");
-        highLandState = new PlayerHighLandState(this, stateMachine, core.playerRawData, "highLand");
-        wallSlideState = new PlayerWallSlideState(this, stateMachine, core.playerRawData, "wallSlide");
-        wallClimbState = new PlayerWallClimbState(this, stateMachine, core.playerRawData, "wallClimb");
-        wallGrabState = new PlayerWallGrabState(this, stateMachine, core.playerRawData, "wallGrab");
-        wallJumpState = new PlayerWallJumpState(this, stateMachine, core.playerRawData, "inAir");
-        ledgeClimbState = new PlayerLedgeClimbState(this, stateMachine, core.playerRawData, "ledgeClimbState");
-        monkeyBarGrab = new PlayerMonkeyBarGrabState(this, stateMachine, core.playerRawData, "monkeyBarIdle");
-        monkeyBarMove = new PlayerMonkeyBarMove(this, stateMachine, core.playerRawData, "monkeyBarMove");
-        monkeyBarJump = new PlayerMonkeyBarJumpState(this, stateMachine, core.playerRawData, "inAir");
-        ropeStartGrab = new PlayerRopeStartGrabState(this, stateMachine, core.playerRawData, "ropeStartGrab");
-        ropeGrabSwing = new PlayerRopeGrabSwingState(this, stateMachine, core.playerRawData, "ropeGrabSwing");
-        ropeClimbUp = new PlayerRopeClimbUpState(this, stateMachine, core.playerRawData, "ropeClimb");
-        ropeClimbDown = new PlayerRopeClimbDownState(this, stateMachine, core.playerRawData, "ropeSlide");
-        ropeJumpState = new PlayerRopeJump(this, stateMachine, core.playerRawData, "inAir");
-        switchPlayerState = new PlayerSwitchState(this, stateMachine, core.playerRawData, "currentSwitching");
-        playerDashState = new PlayerDashState(this, stateMachine, core.playerRawData, "chargeDash");
-        playerSprintState = new PlayerSprintState(this, stateMachine, core.playerRawData, "sprinting");
-        playerDodgeState = new PlayerDodgeState(this, stateMachine, core.playerRawData, "dodge");
-        weaponSwitchState = new PlayerWeaponSwitchState(this, stateMachine, core.playerRawData,
+        moveState = new PlayerMoveState(this, statemachineChanger, core.playerRawData, "move");
+        steepSlopeSlide = new PlayerSteepSlopeSlideState(this, statemachineChanger, core.playerRawData, "slopeSlide");
+        runningBreakState = new PlayerRunningBreak(this, statemachineChanger, core.playerRawData, "runningBreak");
+        jumpState = new PlayerJumpState(this, statemachineChanger, core.playerRawData, "inAir");
+        inAirState = new PlayerInAirState(this, statemachineChanger, core.playerRawData, "inAir");
+        lowLandState = new PlayerLowLandState(this, statemachineChanger, core.playerRawData, "lowLand");
+        highLandState = new PlayerHighLandState(this, statemachineChanger, core.playerRawData, "highLand");
+        wallSlideState = new PlayerWallSlideState(this, statemachineChanger, core.playerRawData, "wallSlide");
+        wallClimbState = new PlayerWallClimbState(this, statemachineChanger, core.playerRawData, "wallClimb");
+        wallGrabState = new PlayerWallGrabState(this, statemachineChanger, core.playerRawData, "wallGrab");
+        wallJumpState = new PlayerWallJumpState(this, statemachineChanger, core.playerRawData, "inAir");
+        ledgeClimbState = new PlayerLedgeClimbState(this, statemachineChanger, core.playerRawData, "ledgeClimbState");
+        monkeyBarGrab = new PlayerMonkeyBarGrabState(this, statemachineChanger, core.playerRawData, "monkeyBarIdle");
+        monkeyBarMove = new PlayerMonkeyBarMove(this, statemachineChanger, core.playerRawData, "monkeyBarMove");
+        monkeyBarJump = new PlayerMonkeyBarJumpState(this, statemachineChanger, core.playerRawData, "inAir");
+        ropeStartGrab = new PlayerRopeStartGrabState(this, statemachineChanger, core.playerRawData, "ropeStartGrab");
+        ropeGrabSwing = new PlayerRopeGrabSwingState(this, statemachineChanger, core.playerRawData, "ropeGrabSwing");
+        ropeClimbUp = new PlayerRopeClimbUpState(this, statemachineChanger, core.playerRawData, "ropeClimb");
+        ropeClimbDown = new PlayerRopeClimbDownState(this, statemachineChanger, core.playerRawData, "ropeSlide");
+        ropeJumpState = new PlayerRopeJump(this, statemachineChanger, core.playerRawData, "inAir");
+        switchPlayerState = new PlayerSwitchState(this, statemachineChanger, core.playerRawData, "currentSwitching");
+        playerDashState = new PlayerDashState(this, statemachineChanger, core.playerRawData, "chargeDash");
+        playerSprintState = new PlayerSprintState(this, statemachineChanger, core.playerRawData, "sprinting");
+        playerDodgeState = new PlayerDodgeState(this, statemachineChanger, core.playerRawData, "dodge");
+        weaponSwitchState = new PlayerWeaponSwitchState(this, statemachineChanger, core.playerRawData,
             GameManager.instance.PlayerStats.GetSetWeaponEquipBoolInPlayerAnim);
 
         switchPlayerState.ResetSwitch();
@@ -87,17 +87,21 @@ public class PlayerStateMachinesController : MonoBehaviour
     private void Start()
     {
         //Time.timeScale = 0.1f;
-        stateMachine.Initialize(idleState);
+        statemachineChanger.Initialize(idleState);
     }
 
     private void Update()
     {
         core.CurrentVelocitySetter();
-        stateMachine.CurrentState.LogicUpdate();
+        statemachineChanger.CurrentState.LogicUpdate();
     }
 
     private void FixedUpdate()
     {
-        stateMachine.CurrentState.PhysicsUpdate();
+        //  Slope Calculation
+        core.groundPlayerController.CalculateSlopeForward();
+        core.groundPlayerController.CalculateGroundAngle();
+
+        statemachineChanger.CurrentState.PhysicsUpdate();
     }
 }

@@ -8,9 +8,9 @@ public class PlayerAnimatorEventController : MonoBehaviour
     [SerializeField] private Collider2D playerHitbox;
     [SerializeField] private SpriteRenderer sr;
 
-    public void AnimationTrigger() => movementController.stateMachine.CurrentState.AnimationTrigger();
+    public void AnimationTrigger() => movementController.statemachineChanger.CurrentState.AnimationTrigger();
 
-    public void AnimationFinishTrigger() => movementController.stateMachine.CurrentState.AnimationFinishTrigger();
+    public void AnimationFinishTrigger() => movementController.statemachineChanger.CurrentState.AnimationFinishTrigger();
 
     public void DisableEnvironmentCollider(bool stats) => playerHitbox.enabled = stats;
 

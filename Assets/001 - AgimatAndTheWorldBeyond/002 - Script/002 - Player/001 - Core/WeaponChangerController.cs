@@ -6,6 +6,9 @@ using MyBox;
 
 public class WeaponChangerController : MonoBehaviour
 {
+    [SerializeField] private Core core;
+
+    [Header("DEBUGGER")]
     //  Switching Weapons
     [ReadOnly] public float lastShowWeaponSlotsTime;
 
@@ -25,6 +28,7 @@ public class WeaponChangerController : MonoBehaviour
             lastShowWeaponSlotsTime = Time.time;
     }
 
+    //  This is for changing weapon in inventory
     public void ChangeWeapon()
     {
         if (GameManager.instance.PlayerStats.GetSetPlayerCharacter == PlayerStats.PlayerCharacter.LUKAS)
@@ -80,5 +84,36 @@ public class WeaponChangerController : MonoBehaviour
             weaponDatas[weaponDatas.Count - 1].GetSetEquipState = false;
         else if (index > 0)
             weaponDatas[index - 1].GetSetEquipState = false;
+    }
+
+    //  This is for showing animation
+    public void SwitchWeapon()
+    {
+        if (core.statemachineController.weaponSwitchState.CheckIfCanWeaponSwitch() &&
+            GameManager.instance.gameInputController.canSwitchWeapon &&
+            GameManager.instance.gameInputController.GetWeaponSwitchInput == 2)
+        {
+            core.statemachineController.core.weaponChangerController.ChangeWeapon();
+
+            if (core.groundPlayerController.CheckIfTouchGround &&
+                    (GameManager.instance.PlayerStats.GetSetAnimatorStateInfo ==
+                    PlayerStats.AnimatorStateInfo.IDLE ||
+                    GameManager.instance.PlayerStats.GetSetAnimatorStateInfo ==
+                    PlayerStats.AnimatorStateInfo.SWITCHWEAPON))
+            {
+                core.statemachineController.weaponSwitchState.animBoolName =
+                    GameManager.instance.PlayerStats.GetSetWeaponEquipBoolInPlayerAnim;
+                core.statemachineController.statemachineChanger.ChangeState(core.statemachineController.weaponSwitchState);
+            }
+
+            GameManager.instance.gameInputController.UseCanSwitchWeaponInput();
+        }
+    }
+
+    public void DoneSwitchingWeapon()
+    {
+        if (Time.time >= lastShowWeaponSlotsTime + 5f
+            && GameManager.instance.gameInputController.GetWeaponSwitchInput != 0)
+            GameManager.instance.gameInputController.ResetSwitchWeaponInput();
     }
 }

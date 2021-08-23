@@ -25,9 +25,10 @@ public class GroundPlayerController : MonoBehaviour
     public Transform wallCheck;
     public Transform wallClimbCheck;
     public Transform ledgeCheck;
-    
+
     [Header("ReadOnly")]
-    [ReadOnly] public Vector2 slopeForward;
+    [ReadOnly] public Vector2 forceOnSlope;
+    [ReadOnly] public Vector3 slopeForward;
     [ReadOnly] public float groundAngle;
     //[ReadOnly] public Vector2 slopeNormalPerp;
     //[ReadOnly] public bool isOnSlope;
@@ -109,26 +110,55 @@ public class GroundPlayerController : MonoBehaviour
 
     public void CalculateSlopeForward()
     {
-        if (CheckIfTouchGround)
+        if (!CheckIfTouchGround)
         {
             slopeForward = transform.forward;
             return;
         }
 
-        slopeForward = Vector3.Cross(Physics2D.Raycast(transform.position, Vector2.down, playerRawData.slopeCheckDistance).normal,
-            -transform.right);
+        slopeForward = Vector3.Cross(Physics2D.Raycast(transform.position, Vector2.down, playerRawData.slopeCheckDistance,
+            whatIsGround).normal, transform.forward * core.GetFacingDirection);
     }
 
     public void CalculateGroundAngle()
     {
-        if (CheckIfTouchGround)
+        if (!CheckIfTouchGround)
         {
             groundAngle = 90f;
             return;
         }
 
-        groundAngle = Vector3.Angle(Physics2D.Raycast(transform.position, Vector2.down, playerRawData.slopeCheckDistance).normal,
-            transform.forward);
+        groundAngle = Vector2.Angle(Physics2D.Raycast(transform.position, Vector2.down, playerRawData.slopeCheckDistance,
+            whatIsGround).normal, -transform.up);
+
+        //  Higher slope, no friction for sliding effect
+        if (groundAngle <= maxSlopeAngle)
+            core.playerRB.sharedMaterial = playerRawData.noFriction;
+
+        //  On flat surface, less friction for sticking on ground effect
+        else if (groundAngle > minimumSlopeAngle)
+            core.playerRB.sharedMaterial = playerRawData.lessFriction;
+    }
+
+    public void SlopeMovement()
+    {
+        if (CheckIfTouchGround)
+        {
+            if (groundAngle <= minimumSlopeAngle && groundAngle >= maxSlopeAngle)
+            {
+                core.playerRB.sharedMaterial = playerRawData.noFriction;
+
+                float moveDistance = Mathf.Abs(core.GetCurrentVelocity.x);
+                float horizontalOnSlope = Mathf.Cos(groundAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(core.GetCurrentVelocity.x);
+                float verticalOnSlope = Mathf.Sin(groundAngle * Mathf.Deg2Rad) * moveDistance;
+
+                if (horizontalOnSlope != 0)
+                    core.SetVelocityX(-horizontalOnSlope , core.GetCurrentVelocity.y);
+
+                if (CheckIfTouchGround && verticalOnSlope != 0)
+                    core.SetVelocityY(-verticalOnSlope);
+            }
+        }
     }
 
     #endregion
@@ -148,6 +178,12 @@ public class GroundPlayerController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawRay(playerPlatformHeightCheck.position, Vector2.right *
             playerRawData.wallClimbCheckRadius * core.GetFacingDirection);
+
+        //  Slope Checker
+        Debug.DrawLine(transform.position, transform.position + slopeForward * 
+            playerRawData.slopeCheckDistance, Color.blue);
+        Debug.DrawLine(transform.position, (Vector2) transform.position + Vector2.down * 
+            playerRawData.slopeCheckDistance, Color.yellow);
 
         //  Wall Climbing
         Gizmos.color = Color.red;

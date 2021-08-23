@@ -10,6 +10,7 @@ public class Core : MonoBehaviour
     public PlayerRawData playerRawData;
     public Rigidbody2D playerRB;
     public Collider2D playerCollider;
+    public Collider2D feetOffsetCollider;
     public Transform parentPlayer;
     public Transform childPlayer;
     public Transform envCheckerXRot;
@@ -19,6 +20,7 @@ public class Core : MonoBehaviour
     public StaminaController staminaController;
     public RopePlayerController ropePlayerController;
     public GroundPlayerController groundPlayerController;
+    public PlayerStateMachinesController statemachineController;
 
     public GameObject shadowPlayer;
 

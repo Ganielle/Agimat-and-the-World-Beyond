@@ -5,24 +5,24 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerMovementData", menuName = "Agimat and the World Beyond/Player Data/Movement Data")]
 public class PlayerRawData : ScriptableObject
 {
-    [Header("Physics Material")]
+    [Header("PHYSICS MATERIAL")]
     public PhysicsMaterial2D lessFriction;
     public PhysicsMaterial2D fullFriction;
     public PhysicsMaterial2D noFriction;
     public float colliderNormalOffsetY;
     public float colliderRopeOffsetY;
 
-    [Header("Taunt Idle")]
+    [Header("TAUNT IDLE")]
     public float idleToTauntIdleTime = 10f;
     public float tauntIdleToIdleTime = 10f;
 
-    [Header("Move State")]
+    [Header("MOVE STATE")]
     public float movementSpeed = 10f;
     public float sprintSpeed = 15f;
     public float maxVelocityXOnGround = 7.5f;
     public float pushForcePlayerWhenFootNotTouchingGround = 10f;
 
-    [Header("Jump")]
+    [Header("JUMP STATE")]
     public float jumpStrength = 15f;
     public float movementSpeedOnAir = 5;
     public float maxVelocityXOnAir = 10f;
@@ -31,7 +31,7 @@ public class PlayerRawData : ScriptableObject
     public float lowJumpMultiplier = 2f;
     public float variableJumpHeightMultiplier = 0.5f;
 
-    [Header("Ground Checker")]
+    [Header("GROUND CHECKER")]
     public float groundCheckRadius = 3f;
     public float raycastGroundDistance = 3f;
     public float floatShadowHeightOffset = 5f;
@@ -40,18 +40,17 @@ public class PlayerRawData : ScriptableObject
     public float floorCheckOffsetWidth = 0.5f;
     public float maxFloorCheckDist = 1.0f;
 
-    [Header("Slope")]
+    [Header("SLOPE MOVEMENT")]
     public float slopeCheckDistance;
-    public float maxSlopeAngle;
-    public float onSlopeAngle;
+    public float slopeForce;
 
-    [Header("Wall Checker")]
+    [Header("WALL CHECKER")]
     public Vector2 wallCheckRadius = new Vector2(0.1f, 0.1f);
     public float wallClimbCheckRadius = 1f;
     public float wallSlideVelocity = 3f;
     public float wallClimbVelocity = 3f;
 
-    [Header("Wall Jump")]
+    [Header("WALL JUMP")]
     public float wallJumpVelocity = 20f;
     public float wallJumpTime = 0.4f;
     public float delayToUseDash = 0.25f;
@@ -59,18 +58,18 @@ public class PlayerRawData : ScriptableObject
     public float delayToCheckForLedge = 0.25f;
     public Vector2 wallJumpAngle = new Vector2(1, 2);
 
-    [Header("Ledge climb state")]
+    [Header("LEDGE CLIMB")]
     public Vector2 startOffset;
     public Vector2 stopOffset;
 
-    [Header("MonkeyBar state")]
+    [Header("MONKEY BAR")]
     public float monkeyBarRarCheckRadius = 1f;
     public float monkeyBarVelocity = 3f;
     public Vector2 mbStartOffset;
     public float monkeyBarJumpVelocity = 20f;
     public float delayToCheckForMBAfterJump = 0.25f;
 
-    [Header("Rope State")]
+    [Header("ROPE MOVEMENT")]
     public float ropeCheckRadius = 0.1f;
     public float ropeClimbVelocity = 0.05f;
     public float ropeClimDownVelocity = 0.5f;
@@ -82,12 +81,12 @@ public class PlayerRawData : ScriptableObject
     public float ropeJumpTime = 0.4f;
     public Vector2 ropeJumpAngle = new Vector2(1, 2);
 
-    [Header("Switching")]
+    [Header("SWITCH CHARACTER")]
     public float switchTime = 0.85f;
     public float switchCooldown = 2f;
     public float weaponSwitchTime = 0.15f;
 
-    [Header("Dash")]
+    [Header("DASH ABILITY")]
     public float dashCooldown = 1f;
     public float maxHoldTime = 1f;
     public float holdTimeScale = 0.25f;
@@ -97,22 +96,22 @@ public class PlayerRawData : ScriptableObject
     public float dashEndYMultiplier = 0.2f;
     public float distanceBetweenAfterImages = 0.5f;
 
-    [Header("Dodge")]
+    [Header("DODGE ABILITY")]
     public float dodgeVelocity = 5f;
     public float dodgeCooldown = 0.5f;
 
-    [Header("Health")]
+    [Header("HEALTH")]
     public float healthRecoveryDelay = 1f;
     public float startingHealthRecoverPerSecond = 2.5f;
 
-    [Header("Mana")]
+    [Header("MANA")]
     public float manaRecoveryDelay = 1f;
     public float startingManaRecoveryPerSecond = 1.5f;
     public float firstSkillUsePercentage = 33.33f;
     public float secondSkillUsePercentage = 66.66f;
     public float thirdSkillUsePercentage = 100f;
 
-    [Header("Stamina")]
+    [Header("STAMINA")]
     public float staminaRecoveryDelay = 0.5f;
     public float staminaRecoverWhenActive = 15f;
     public float staminaRecoverWhenNotActive = 2f;

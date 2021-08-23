@@ -46,6 +46,7 @@ public class PlayerMoveState : PlayerGroundState
 
         ReduceVelocityOnX();
         MovePlayer();
+        statemachineController.core.groundPlayerController.SlopeMovement();
     }
 
     private void SettingsSetter()
@@ -123,7 +124,7 @@ public class PlayerMoveState : PlayerGroundState
         {
             if (statemachineController.core.GetCurrentVelocity.x != 0f)
                 statemachineController.core.SetVelocityX(
-                statemachineController.core.GetCurrentVelocity.x -= 5f * Time.fixedDeltaTime,
+                statemachineController.core.GetCurrentVelocity.x -= 25f * Time.fixedDeltaTime,
                 statemachineController.core.GetCurrentVelocity.y);
 
             else

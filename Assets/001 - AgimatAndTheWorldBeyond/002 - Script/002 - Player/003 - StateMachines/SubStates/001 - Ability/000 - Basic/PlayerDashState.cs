@@ -55,9 +55,8 @@ public class PlayerDashState : PlayerAbilityState
         base.PhysicsUpdate();
 
         PlayerDashMove();
+        SetPositionAfterTick();
     }
-
-    #region DASH FUNCTIONS
 
     private void SettingsSetter()
     {
@@ -75,96 +74,32 @@ public class PlayerDashState : PlayerAbilityState
         statemachineController.core.dashDirectionIndicator.gameObject.SetActive(true);
     }
 
+    #region ANIMATION
+
     private void AnimationChanger()
     {
         if (!isExitingState)
         {
-            //  ANIMATION
-            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetFloat("yVelocity",
-                statemachineController.core.GetCurrentVelocity.y);
-            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetFloat("xVelocity",
-                Mathf.Abs(statemachineController.core.GetCurrentVelocity.x));
+            ChangeAnimationBaseOnVelocity();
 
             if (isHolding)
-            {
-                //  ANIMATION STATE INFO
-                GameManager.instance.PlayerStats.GetSetAnimatorStateInfo = PlayerStats.AnimatorStateInfo.DASHCHARGE;
-
-                if (GameManager.instance.gameInputController.rawDashDirectionInput != Vector2.zero)
-                {
-                    dashIndirection = GameManager.instance.gameInputController.dashDirectionInput;
-                }
-
-                //  Rotation of arrow and direction of dash
-                angle = Vector2.SignedAngle(Vector2.right, dashIndirection);
-                statemachineController.core.dashDirectionIndicator.rotation = Quaternion.Euler(0f, 0f, angle);
-
-                if (GameManager.instance.gameInputController.dashInputStop || Time.time >= startTime + movementData.maxHoldTime)
-                {
-
-                    GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("chargeDash", false);
-                    GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("burstDash", true);
-                    isHolding = false;
-                    startTime = Time.time;
-                    statemachineController.core.CheckIfShouldFlip(Mathf.RoundToInt(dashIndirection.x));
-                    statemachineController.core.playerRB.drag = movementData.drag;
-                    statemachineController.core.SetVelocityDash(movementData.dashVelocity, dashIndirection);
-
-                    lastDirection = statemachineController.transform.eulerAngles;
-
-                    statemachineController.core.childPlayer.Rotate(0f, statemachineController.transform.rotation.y,
-                         DashRotation());
-
-                    statemachineController.core.dashDirectionIndicator.gameObject.SetActive(false);
-                    PlaceAfterImage();
-                }
-            }
+                DashCharge();
             else
-            {
-                //  ANIMATION STATE INFO
-                GameManager.instance.PlayerStats.GetSetAnimatorStateInfo = 
-                    PlayerStats.AnimatorStateInfo.DASHBURST;
-
-                //  AFTER IMAGE EFFECTS
-                CheckIfShouldPlaceAfterImage();
-
-                //  DONE ABILITY IF TIME IS GREATER THAN DASH TIME
-                if ((Time.time >= startTime + movementData.dashTime))
-                {
-                    statemachineController.core.childPlayer.rotation = Quaternion.Euler(0f,
-                        statemachineController.core.childPlayer.eulerAngles.y,
-                        lastDirection.z);
-
-                    GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("burstDash", false);
-                    statemachineController.core.playerRB.drag = 0f;
-                    isAbilityDone = true;
-                    canDash = true;
-
-                    lastDashTime = Time.time;
-
-                }
-                //  DONE ABILITY IF TOUCHING WALL
-                else if (isTouchingWall || isTouchingClimbWall)
-                {
-                    statemachineController.core.childPlayer.rotation = Quaternion.Euler(0f,
-                        statemachineController.core.childPlayer.eulerAngles.y,
-                        lastDirection.z);
-
-                    GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("burstDash", false);
-                    statemachineController.core.playerRB.drag = 0f;
-                    isAbilityDone = true;
-                    canDash = true;
-
-                    lastDashTime = Time.time;
-
-                    if (!isTouchingLedge && isSameHeightToPlatform &&
-                        GameManager.instance.PlayerStats.GetSetCurrentStamina
-                        >= movementData.ledgeStamina)
-                        statemachineChanger.ChangeState(statemachineController.ledgeClimbState);
-                }
-            }
+                DashBurst();
         }
     }
+
+    private void ChangeAnimationBaseOnVelocity()
+    {
+        GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetFloat("yVelocity",
+            statemachineController.core.GetCurrentVelocity.y);
+        GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetFloat("xVelocity",
+            Mathf.Abs(statemachineController.core.GetCurrentVelocity.x));
+    }
+
+    #endregion
+
+    #region DASH MECHANICS
 
     private void PlayerDashMove()
     {
@@ -175,16 +110,143 @@ public class PlayerDashState : PlayerAbilityState
         }
     }
 
-    private void CheckIfShouldPlaceAfterImage()
+    private void SetPositionAfterTick()
     {
-        if (Vector2.Distance(statemachineController.transform.position, lastAfterImagePosition) >= movementData.distanceBetweenAfterImages)
-            PlaceAfterImage();
+        if (!isHolding)
+        {
+            Vector2 feetOffset = new Vector2(0f, statemachineController.core.feetOffsetCollider.bounds.min.y -
+                statemachineController.core.playerRB.position.y);
+            Vector2 feetPosAfterTick = (Vector2)statemachineController.transform.position + feetOffset +
+                statemachineController.core.GetCurrentVelocity * Time.deltaTime;
+
+            Debug.Log(feetOffset);
+
+            float maxFloorCheckDist = 1.0f;
+
+            RaycastHit2D groundCheckAfterTick = Physics2D.Raycast(feetPosAfterTick + Vector2.up *
+                maxFloorCheckDist, Vector2.down, maxFloorCheckDist * movementData.slopeCheckDistance, 
+                statemachineController.core.groundPlayerController.whatIsGround);
+
+
+            if (groundCheckAfterTick)
+            {
+                Vector2 wantedFeetPosAfterTick = groundCheckAfterTick.point;
+
+                Debug.Log("ground check after tick true");
+
+                Debug.Log(wantedFeetPosAfterTick == feetPosAfterTick);
+
+                if (wantedFeetPosAfterTick != feetPosAfterTick)
+                {
+                    //statemachineController.core.SetVelocityZero();
+
+                    // look for corner of ramp+landing. 
+                    // Offsets ensure we don't raycast from inside/above it
+                    float floorCheckOffsetHeight = 0.01f;
+                    float floorCheckOffsetWidth = 0.5f;
+                    RaycastHit2D rampCornerCheck = Physics2D.Raycast(
+                            wantedFeetPosAfterTick
+                            - floorCheckOffsetHeight * Vector2.up
+                            - floorCheckOffsetWidth * Mathf.Sign(statemachineController.core.GetCurrentVelocity.x) * Vector2.right,
+                            Mathf.Sign(statemachineController.core.GetCurrentVelocity.x) * Vector2.right,
+                            statemachineController.core.groundPlayerController.whatIsGround);
+
+                    if (rampCornerCheck.collider != null)
+                    {
+                        // put feet at x=corner position
+                        Vector2 cornerPos = new Vector2(rampCornerCheck.point.x,
+                                wantedFeetPosAfterTick.y);
+
+                        // adjust velocity so that physics will take them from corner 
+                        // to landing position
+                        Vector2 wantedVelocity = (wantedFeetPosAfterTick - cornerPos)
+                                / Time.fixedDeltaTime;
+
+                        statemachineController.core.SetVelocityDash(wantedVelocity.x * statemachineController.core.GetFacingDirection, dashIndirection);
+                    }
+                }
+            }
+        }
     }
 
-    private void PlaceAfterImage()
+    private void DashCharge()
     {
-        GameManager.instance.afterImagePooler.GetFromPool();
-        lastAfterImagePosition = statemachineController.transform.position;
+        //  ANIMATION STATE INFO
+        GameManager.instance.PlayerStats.GetSetAnimatorStateInfo = PlayerStats.AnimatorStateInfo.DASHCHARGE;
+
+        if (GameManager.instance.gameInputController.rawDashDirectionInput != Vector2.zero)
+        {
+            dashIndirection = GameManager.instance.gameInputController.dashDirectionInput;
+        }
+
+        //  Rotation of arrow and direction of dash
+        angle = Vector2.SignedAngle(Vector2.right, dashIndirection);
+        statemachineController.core.dashDirectionIndicator.rotation = Quaternion.Euler(0f, 0f, angle);
+
+        if (GameManager.instance.gameInputController.dashInputStop || Time.time >= startTime + movementData.maxHoldTime)
+        {
+
+            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("chargeDash", false);
+            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("burstDash", true);
+            isHolding = false;
+            startTime = Time.time;
+            statemachineController.core.CheckIfShouldFlip(Mathf.RoundToInt(dashIndirection.x));
+            statemachineController.core.playerRB.drag = movementData.drag;
+            statemachineController.core.SetVelocityDash(movementData.dashVelocity, dashIndirection);
+
+            lastDirection = statemachineController.transform.eulerAngles;
+
+            statemachineController.core.childPlayer.Rotate(0f, statemachineController.transform.rotation.y,
+                 DashRotation());
+
+            statemachineController.core.dashDirectionIndicator.gameObject.SetActive(false);
+            PlaceAfterImage();
+        }
+    }
+
+    private void DashBurst()
+    {
+        //  ANIMATION STATE INFO
+        GameManager.instance.PlayerStats.GetSetAnimatorStateInfo =
+            PlayerStats.AnimatorStateInfo.DASHBURST;
+
+        //  AFTER IMAGE EFFECTS
+        CheckIfShouldPlaceAfterImage();
+
+        //  DONE ABILITY IF TIME IS GREATER THAN DASH TIME
+        if ((Time.time >= startTime + movementData.dashTime))
+        {
+            statemachineController.core.childPlayer.rotation = Quaternion.Euler(0f,
+                statemachineController.core.childPlayer.eulerAngles.y,
+                lastDirection.z);
+
+            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("burstDash", false);
+            statemachineController.core.playerRB.drag = 0f;
+            isAbilityDone = true;
+            canDash = true;
+
+            lastDashTime = Time.time;
+
+        }
+        //  DONE ABILITY IF TOUCHING WALL
+        else if (isTouchingWall || isTouchingClimbWall)
+        {
+            statemachineController.core.childPlayer.rotation = Quaternion.Euler(0f,
+                statemachineController.core.childPlayer.eulerAngles.y,
+                lastDirection.z);
+
+            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("burstDash", false);
+            statemachineController.core.playerRB.drag = 0f;
+            isAbilityDone = true;
+            canDash = true;
+
+            lastDashTime = Time.time;
+
+            if (!isTouchingLedge && isSameHeightToPlatform &&
+                GameManager.instance.PlayerStats.GetSetCurrentStamina
+                >= movementData.ledgeStamina)
+                statemachineChanger.ChangeState(statemachineController.ledgeClimbState);
+        }
     }
 
     public bool CheckIfCanDash()
@@ -211,6 +273,22 @@ public class PlayerDashState : PlayerAbilityState
             default:
                 return angle;
         }
+    }
+
+    #endregion
+
+    #region DASH EFFECTS
+
+    private void CheckIfShouldPlaceAfterImage()
+    {
+        if (Vector2.Distance(statemachineController.transform.position, lastAfterImagePosition) >= movementData.distanceBetweenAfterImages)
+            PlaceAfterImage();
+    }
+
+    private void PlaceAfterImage()
+    {
+        GameManager.instance.afterImagePooler.GetFromPool();
+        lastAfterImagePosition = statemachineController.transform.position;
     }
 
     #endregion
