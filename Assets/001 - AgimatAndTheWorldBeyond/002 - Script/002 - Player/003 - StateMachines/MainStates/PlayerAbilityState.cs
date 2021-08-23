@@ -64,15 +64,9 @@ public class PlayerAbilityState : PlayerStatesController
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-    }
 
-    //private void WallJump()
-    //{
-    //    if (isTouchingWall && !isGrounded)
-    //    {
-    //        isAbilityDone = true;
-    //        statemachineController.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
-    //        statemachineChanger.ChangeState(statemachineController.WallJumpState);
-    //    }
-    //}
+        //  Slope Calculation
+        statemachineController.core.groundPlayerController.CalculateSlopeForward();
+        statemachineController.core.groundPlayerController.CalculateGroundAngle();
+    }
 }

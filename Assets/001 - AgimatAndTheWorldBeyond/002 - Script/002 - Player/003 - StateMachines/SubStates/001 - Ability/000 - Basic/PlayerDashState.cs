@@ -26,6 +26,15 @@ public class PlayerDashState : PlayerAbilityState
         SettingsSetter();
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+
+        if (statemachineController.core.GetCurrentVelocity.y > 0)
+            statemachineController.core.SetVelocityY(statemachineController.core.GetCurrentVelocity.y *
+            movementData.dashEndYMultiplier);
+    }
+
     public override void DoChecks()
     {
         base.DoChecks();
@@ -109,7 +118,7 @@ public class PlayerDashState : PlayerAbilityState
 
     private void SetPositionAfterTick()
     {
-        if (!isHolding)
+        if (!isHolding && DashRotation() == 0)
         {
             Vector2 feetOffset = new Vector2(0f, statemachineController.core.feetOffsetCollider.bounds.min.y -
                 statemachineController.core.playerRB.position.y);
@@ -147,8 +156,6 @@ public class PlayerDashState : PlayerAbilityState
                         // put feet at x=corner position
                         Vector2 cornerPos = new Vector2(rampCornerCheck.point.x,
                                 wantedFeetPosAfterTick.y);
-
-                        Debug.Log(cornerPos);
 
                         statemachineController.core.playerRB.position = cornerPos
                             - feetOffset;
@@ -223,6 +230,22 @@ public class PlayerDashState : PlayerAbilityState
             lastDashTime = Time.time;
 
 
+        }
+        //  SLOPE SLIDE
+        else if (!statemachineController.core.groundPlayerController.canWalkOnSlope)
+        {
+            statemachineController.core.childPlayer.rotation = Quaternion.Euler(0f,
+                   statemachineController.core.childPlayer.eulerAngles.y,
+                   lastDirection.z);
+
+            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("burstDash", false);
+            statemachineController.core.playerRB.drag = 0f;
+            isAbilityDone = true;
+            canDash = true;
+
+            lastDashTime = Time.time;
+
+            statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
         }
         //  DONE ABILITY IF TOUCHING WALL
         else if (isTouchingWall || isTouchingClimbWall)
