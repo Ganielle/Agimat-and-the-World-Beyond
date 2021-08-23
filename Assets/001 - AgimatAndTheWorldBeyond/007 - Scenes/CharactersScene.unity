@@ -1175,7 +1175,7 @@ MonoBehaviour:
   playerRawData: {fileID: 11400000, guid: b61596a2012f74b488f6a4b87c9c37df, type: 2}
   playerRB: {fileID: 1129014554}
   maxSlopeAngle: 135
-  minimumSlopeAngle: 160
+  minimumSlopeAngle: 140
   whatIsGround:
     serializedVersion: 2
     m_Bits: 512
@@ -1204,7 +1204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c33c9ab387ad2c5419b40873c71340b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  core: {fileID: 0}
+  core: {fileID: 1129014556}
   lastShowWeaponSlotsTime: 0
 --- !u!1 &1149911407
 GameObject:

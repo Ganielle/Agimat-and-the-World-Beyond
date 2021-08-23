@@ -24,16 +24,13 @@ public class PlayerSteepSlopeSlideState : PlayerGroundState
 
         if (!isExitingState)
         {
-            if (statemachineController.core.groundPlayerController.isOnSlope)
+            if (statemachineController.core.groundPlayerController.canWalkOnSlope)
             {
-                if (statemachineController.core.groundPlayerController.canWalkOnSlope)
-                {
-                    if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0f)
-                        statemachineChanger.ChangeState(statemachineController.idleState);
+                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0f)
+                    statemachineChanger.ChangeState(statemachineController.idleState);
 
-                    else if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0f)
-                        statemachineChanger.ChangeState(statemachineController.moveState);
-                }
+                else if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0f)
+                    statemachineChanger.ChangeState(statemachineController.moveState);
 
 
                 //  TODO: SLOPE ASCEND MOVEMENT

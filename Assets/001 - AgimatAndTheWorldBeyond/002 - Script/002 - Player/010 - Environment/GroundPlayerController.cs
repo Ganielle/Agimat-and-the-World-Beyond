@@ -89,6 +89,13 @@ public class GroundPlayerController : MonoBehaviour
             whatIsGround);
     }
 
+    public bool CheckIfFrontTouchingSlope
+    {
+        get => Physics2D.Raycast(new Vector2(groundFrontFootCheck.position.x, 0f) * 
+            core.GetFacingDirection, Vector2.down, playerRawData.slopeCheckDistance,
+            whatIsGround);
+    }
+
     public bool CheckIfBackFootTouchGround
     {
         get => Physics2D.OverlapCircle(groundBackFootCheck.position, playerRawData.groundCheckRadius,
@@ -146,23 +153,14 @@ public class GroundPlayerController : MonoBehaviour
     {
         //  Higher slope, on slope but cannot move
         if (groundAngle <= maxSlopeAngle)
-        {
-            isOnSlope = true;
             canWalkOnSlope = false;
-        }
 
         //  On flat surface or walkable slope, on slope but can move
         else if (groundAngle > minimumSlopeAngle)
-        {
-            isOnSlope = true;
             canWalkOnSlope = true;
-        }
 
         else if (groundAngle == 0)
-        {
-            isOnSlope = false;
             canWalkOnSlope = false;
-        }
     }
 
     public void SlopeMovement()
@@ -212,6 +210,10 @@ public class GroundPlayerController : MonoBehaviour
             playerRawData.slopeCheckDistance, Color.blue);
         Debug.DrawLine(transform.position, (Vector2) transform.position + Vector2.down * 
             playerRawData.slopeCheckDistance, Color.yellow);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(new Vector2(groundFrontFootCheck.position.x, 0f) *
+            core.GetFacingDirection, Vector2.down);
 
         //  Wall Climbing
         Gizmos.color = Color.red;

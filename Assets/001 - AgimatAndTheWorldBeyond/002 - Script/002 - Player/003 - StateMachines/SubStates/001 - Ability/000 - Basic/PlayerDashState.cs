@@ -82,7 +82,6 @@ public class PlayerDashState : PlayerAbilityState
         {
             ChangeAnimationBaseOnVelocity();
 
-
             if (isAbilityDone)
                 statemachineController.core.SetVelocityZero();
             else
@@ -216,56 +215,39 @@ public class PlayerDashState : PlayerAbilityState
         CheckIfShouldPlaceAfterImage();
 
         //  DONE ABILITY IF TIME IS GREATER THAN DASH TIME
-        if ((Time.time >= startTime + movementData.dashTime))
-        {
-            statemachineController.core.childPlayer.rotation = Quaternion.Euler(0f,
-                statemachineController.core.childPlayer.eulerAngles.y,
-                lastDirection.z);
-
-            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("burstDash", false);
-            statemachineController.core.playerRB.drag = 0f;
-            isAbilityDone = true;
-            canDash = true;
-
-            lastDashTime = Time.time;
-
-
-        }
+        if (Time.time >= startTime + movementData.dashTime)
+            DoneDashingState();
         //  SLOPE SLIDE
         else if (!statemachineController.core.groundPlayerController.canWalkOnSlope)
         {
-            statemachineController.core.childPlayer.rotation = Quaternion.Euler(0f,
-                   statemachineController.core.childPlayer.eulerAngles.y,
-                   lastDirection.z);
+            statemachineController.core.SetVelocityZero();
 
-            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("burstDash", false);
-            statemachineController.core.playerRB.drag = 0f;
-            isAbilityDone = true;
-            canDash = true;
-
-            lastDashTime = Time.time;
+            DoneDashingState();
 
             statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
         }
         //  DONE ABILITY IF TOUCHING WALL
         else if (isTouchingWall || isTouchingClimbWall)
         {
-            statemachineController.core.childPlayer.rotation = Quaternion.Euler(0f,
-                statemachineController.core.childPlayer.eulerAngles.y,
-                lastDirection.z);
-
-            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("burstDash", false);
-            statemachineController.core.playerRB.drag = 0f;
-            isAbilityDone = true;
-            canDash = true;
-
-            lastDashTime = Time.time;
+            DoneDashingState();
 
             if (!isTouchingLedge && isSameHeightToPlatform &&
                 GameManager.instance.PlayerStats.GetSetCurrentStamina
                 >= movementData.ledgeStamina)
                 statemachineChanger.ChangeState(statemachineController.ledgeClimbState);
         }
+    }
+
+    private void DoneDashingState()
+    {
+        statemachineController.core.childPlayer.rotation = Quaternion.Euler(0f,
+                statemachineController.core.childPlayer.eulerAngles.y,
+                lastDirection.z);
+
+        GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("burstDash", false);
+        statemachineController.core.playerRB.drag = 0f;
+        isAbilityDone = true;
+        canDash = true;
     }
 
     public bool CheckIfCanDash()

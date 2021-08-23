@@ -32,8 +32,7 @@ public class PlayerLowLandState : PlayerGroundState
                     statemachineChanger.ChangeState(statemachineController.moveState);
 
                 //Slope slide
-                if (statemachineController.core.groundPlayerController.isOnSlope &&
-                    !statemachineController.core.groundPlayerController.canWalkOnSlope)
+                if (!statemachineController.core.groundPlayerController.canWalkOnSlope)
                     statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
             }
             else

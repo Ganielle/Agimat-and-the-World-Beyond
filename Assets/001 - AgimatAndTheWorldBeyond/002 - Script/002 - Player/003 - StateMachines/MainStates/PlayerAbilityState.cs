@@ -30,6 +30,8 @@ public class PlayerAbilityState : PlayerStatesController
         isFootTouchGround = statemachineController.core.groundPlayerController.CheckIfFrontFootTouchGround;
         checkSlopePos = statemachineController.transform.position - (Vector3)(new Vector2(0f,
             statemachineController.core.colliderSize.y / 2));
+
+        statemachineController.core.groundPlayerController.SlopeChecker();
     }
 
     public override void Enter()

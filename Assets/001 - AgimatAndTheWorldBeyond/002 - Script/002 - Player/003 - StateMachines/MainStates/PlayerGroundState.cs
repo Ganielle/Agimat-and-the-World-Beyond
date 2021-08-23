@@ -7,6 +7,7 @@ public class PlayerGroundState : PlayerStatesController
     protected bool isGrounded;
     protected bool isTouchingWall;
     protected bool isFootTouchGround;
+    protected bool isFrontFootTouchSlope;
     protected Vector2 checkPos;
 
     private bool isTouchingLedge;
@@ -23,12 +24,11 @@ public class PlayerGroundState : PlayerStatesController
 
         isGrounded = statemachineController.core.groundPlayerController.CheckIfTouchGround;
         isFootTouchGround = statemachineController.core.groundPlayerController.CheckIfFrontFootTouchGround;
+        isFrontFootTouchSlope = statemachineController.core.groundPlayerController.CheckIfFrontTouchingSlope;
         isTouchingWall = statemachineController.core.groundPlayerController.CheckIfTouchClimbWall;
         isTouchingLedge = statemachineController.core.groundPlayerController.CheckIfTouchingLedge;
         checkPos = statemachineController.transform.position - (Vector3)(new Vector2(0f,
             statemachineController.core.colliderSize.y / 2));
-
-        statemachineController.core.groundPlayerController.SlopeChecker();
     }
 
     public override void LogicUpdate()
@@ -49,6 +49,7 @@ public class PlayerGroundState : PlayerStatesController
         statemachineController.core.groundPlayerController.CalculateSlopeForward();
         statemachineController.core.groundPlayerController.CalculateGroundAngle();
 
+        statemachineController.core.groundPlayerController.SlopeChecker();
     }
 
     private void AnimationChanger()
