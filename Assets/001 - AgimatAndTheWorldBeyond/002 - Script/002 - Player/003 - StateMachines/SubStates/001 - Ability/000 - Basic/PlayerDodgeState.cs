@@ -99,16 +99,7 @@ public class PlayerDodgeState : PlayerNormalAbilityState
                 }
                 else
                 {
-                    if (!statemachineController.core.groundPlayerController.canWalkOnSlope &&
-                        isFrontFootTouchSlope)
-                    {
-                        Debug.Log("hello");
-                        statemachineController.core.SetVelocityZero();
-
-                        statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
-                    }
-
-                    else if (GameManager.instance.gameplayController.jumpInput)
+                    if (GameManager.instance.gameplayController.jumpInput)
                     {
                         statemachineChanger.ChangeState(statemachineController.jumpState);
                         GameManager.instance.gameplayController.UseJumpInput();
@@ -124,6 +115,19 @@ public class PlayerDodgeState : PlayerNormalAbilityState
                 }
 
                 lastDodgeTime = Time.time;
+            }
+            else
+            {
+                if (isGrounded)
+                {
+                    if (!statemachineController.core.groundPlayerController.canWalkOnSlope &&
+                        isFrontFootTouchSlope)
+                    {
+                        statemachineController.core.SetVelocityZero();
+
+                        statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
+                    }
+                }
             }
         }
     }
