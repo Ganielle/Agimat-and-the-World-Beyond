@@ -72,8 +72,11 @@ public class GameManager : MonoBehaviour
     {
         yield return StartCoroutine(sceneDataLoading.DebugInsertWeapons());
 
-        SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
-        SceneManager.LoadSceneAsync("CharactersScene", LoadSceneMode.Additive);
+        if (!debugMode)
+        {
+            SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync("CharactersScene", LoadSceneMode.Additive);
+        }
     }
 
 
