@@ -56,58 +56,56 @@ public class PlayerIdleState : PlayerGroundState
         if (!isExitingState)
         {
             //  Slope slide
-            if (!statemachineController.core.groundPlayerController.canWalkOnSlope)
+            if (!statemachineController.core.groundPlayerController.canWalkOnSlope &&
+                isFrontFootTouchSlope)
                 statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
 
-            else if (statemachineController.core.groundPlayerController.canWalkOnSlope)
+            else if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0f)
             {
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0f)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX !=
+                    statemachineController.core.GetFacingDirection)
                 {
-                    if (GameManager.instance.gameInputController.GetSetMovementNormalizeX !=
-                        statemachineController.core.GetFacingDirection)
-                    {
-                        statemachineController.changeIdleDirectionState.SpriteDirectionAfterAnimation(
-                            GameManager.instance.gameInputController.GetSetMovementNormalizeX);
-                        statemachineChanger.ChangeState(statemachineController.changeIdleDirectionState);
-                    }
-
-                    else
-                        statemachineChanger.ChangeState(statemachineController.moveState);
+                    statemachineController.changeIdleDirectionState.SpriteDirectionAfterAnimation(
+                        GameManager.instance.gameplayController.GetSetMovementNormalizeX);
+                    statemachineChanger.ChangeState(statemachineController.changeIdleDirectionState);
                 }
 
-                else if (GameManager.instance.gameInputController.jumpInput &&
-                    statemachineController.core.groundPlayerController.canWalkOnSlope)
-                {
-                    statemachineChanger.ChangeState(statemachineController.jumpState);
-                    GameManager.instance.gameInputController.UseJumpInput();
-                }
+                else
+                    statemachineChanger.ChangeState(statemachineController.moveState);
+            }
 
-                else if (canTauntIdle)
-                    statemachineChanger.ChangeState(statemachineController.tauntIdleState);
+            else if (GameManager.instance.gameplayController.jumpInput &&
+                statemachineController.core.groundPlayerController.canWalkOnSlope)
+            {
+                statemachineChanger.ChangeState(statemachineController.jumpState);
+                GameManager.instance.gameplayController.UseJumpInput();
+            }
 
-                else if (!isAnimationFinished &&
-                    GameManager.instance.gameInputController.movementNormalizeY == 1f)
-                    statemachineChanger.ChangeState(statemachineController.lookingUpState);
+            else if (canTauntIdle)
+                statemachineChanger.ChangeState(statemachineController.tauntIdleState);
 
-                else if (!isAnimationFinished &&
-                    GameManager.instance.gameInputController.movementNormalizeY == -1)
-                    statemachineChanger.ChangeState(statemachineController.lookingDownState);
+            else if (!isAnimationFinished &&
+                GameManager.instance.gameplayController.movementNormalizeY == 1f)
+                statemachineChanger.ChangeState(statemachineController.lookingUpState);
 
-                else if (GameManager.instance.gameInputController.dodgeInput &&
-                    statemachineController.playerDodgeState.CheckIfCanDodge())
-                    statemachineChanger.ChangeState(statemachineController.playerDodgeState);
+            else if (!isAnimationFinished &&
+                GameManager.instance.gameplayController.movementNormalizeY == -1)
+                statemachineChanger.ChangeState(statemachineController.lookingDownState);
 
-                else if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0 &&
-                    GameManager.instance.gameInputController.switchPlayerLeftInput &&
-                    GameManager.instance.gameInputController.switchPlayerRightInput &&
-                    statemachineController.switchPlayerState.CheckIfCanSwitch())
-                    statemachineChanger.ChangeState(statemachineController.switchPlayerState);
+            else if (GameManager.instance.gameplayController.dodgeInput &&
+                statemachineController.playerDodgeState.CheckIfCanDodge())
+                statemachineChanger.ChangeState(statemachineController.playerDodgeState);
 
-                else if (!isFootTouchGround)
-                {
-                    statemachineController.nearLedgeState.SetLastDirection(statemachineController.core.GetFacingDirection);
-                    statemachineChanger.ChangeState(statemachineController.nearLedgeState);
-                }
+            else if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0 &&
+                GameManager.instance.gameplayController.switchPlayerLeftInput &&
+                GameManager.instance.gameplayController.switchPlayerRightInput &&
+                statemachineController.switchPlayerState.CheckIfCanSwitch())
+                statemachineChanger.ChangeState(statemachineController.switchPlayerState);
+
+            else if (!isFootTouchGround && !isFrontFootTouchSlope)
+            {
+                statemachineController.nearLedgeState.SetLastDirection(statemachineController.core.GetFacingDirection);
+                statemachineChanger.ChangeState(statemachineController.nearLedgeState);
             }
         }
     }

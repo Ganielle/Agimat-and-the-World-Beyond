@@ -40,16 +40,16 @@ public class PlayerRopeClimbDownState : PlayerRopeState
 
         if (!isExitingState)
         {
-            if (GameManager.instance.gameInputController.ropeInput)
+            if (GameManager.instance.gameplayController.ropeInput)
             {
 
-                if (GameManager.instance.gameInputController.jumpInput)
+                if (GameManager.instance.gameplayController.jumpInput)
                 {
                     ExitRopeState();
                     statemachineChanger.ChangeState(statemachineController.ropeJumpState);
                 }
 
-                else if (GameManager.instance.gameInputController.movementNormalizeY == 0 ||
+                else if (GameManager.instance.gameplayController.movementNormalizeY == 0 ||
                     !statemachineController.core.ropePlayerController.RopeBelowChecker)
                 {
                     statemachineController.transform.parent = null;
@@ -69,7 +69,7 @@ public class PlayerRopeClimbDownState : PlayerRopeState
 
     private void ClimbDown()
     {
-        if (!GameManager.instance.gameInputController.ropeInput)
+        if (!GameManager.instance.gameplayController.ropeInput)
             return;
 
         statemachineController.transform.parent = statemachineController.core.ropePlayerController.RopePosition();
@@ -85,7 +85,7 @@ public class PlayerRopeClimbDownState : PlayerRopeState
 
     private void ClimbDownStopForce()
     {
-        if (!GameManager.instance.gameInputController.ropeInput)
+        if (!GameManager.instance.gameplayController.ropeInput)
             return;
 
         statemachineController.core.ropePlayerController.RopePosition().GetComponent<Rigidbody2D>().velocity = Vector2.zero;

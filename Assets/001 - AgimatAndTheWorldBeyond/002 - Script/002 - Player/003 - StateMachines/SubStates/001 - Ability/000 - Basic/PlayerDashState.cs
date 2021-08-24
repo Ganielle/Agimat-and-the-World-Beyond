@@ -62,7 +62,7 @@ public class PlayerDashState : PlayerAbilityState
     {
         //  For game controller input
         canDash = false;
-        GameManager.instance.gameInputController.UseDashInput();
+        GameManager.instance.gameplayController.UseDashInput();
 
         //  For Dash
         isHolding = true;
@@ -175,16 +175,16 @@ public class PlayerDashState : PlayerAbilityState
         //  ANIMATION STATE INFO
         GameManager.instance.PlayerStats.GetSetAnimatorStateInfo = PlayerStats.AnimatorStateInfo.DASHCHARGE;
 
-        if (GameManager.instance.gameInputController.rawDashDirectionInput != Vector2.zero)
+        if (GameManager.instance.gameplayController.rawDashDirectionInput != Vector2.zero)
         {
-            dashIndirection = GameManager.instance.gameInputController.dashDirectionInput;
+            dashIndirection = GameManager.instance.gameplayController.dashDirectionInput;
         }
 
         //  Rotation of arrow and direction of dash
         angle = Vector2.SignedAngle(Vector2.right, dashIndirection);
         statemachineController.core.dashDirectionIndicator.rotation = Quaternion.Euler(0f, 0f, angle);
 
-        if (GameManager.instance.gameInputController.dashInputStop || Time.time >= startTime + movementData.maxHoldTime)
+        if (GameManager.instance.gameplayController.dashInputStop || Time.time >= startTime + movementData.maxHoldTime)
         {
 
             GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("chargeDash", false);
@@ -217,8 +217,10 @@ public class PlayerDashState : PlayerAbilityState
         //  DONE ABILITY IF TIME IS GREATER THAN DASH TIME
         if (Time.time >= startTime + movementData.dashTime)
             DoneDashingState();
+
         //  SLOPE SLIDE
-        else if (!statemachineController.core.groundPlayerController.canWalkOnSlope)
+        else if (isGrounded && !statemachineController.core.groundPlayerController.canWalkOnSlope &&
+                isFrontFootTouchSlope)
         {
             statemachineController.core.SetVelocityZero();
 
@@ -248,6 +250,8 @@ public class PlayerDashState : PlayerAbilityState
         statemachineController.core.playerRB.drag = 0f;
         isAbilityDone = true;
         canDash = true;
+
+        lastDashTime = startTime;
     }
 
     public bool CheckIfCanDash()

@@ -25,18 +25,18 @@ public class PlayerWallSlideState : PlayerTouchingWallState
 
         if (!isExitingState)
         {
-            if (GameManager.instance.gameInputController.movementNormalizeY == 1f &&
-                GameManager.instance.gameInputController.grabWallInput)
+            if (GameManager.instance.gameplayController.movementNormalizeY == 1f &&
+                GameManager.instance.gameplayController.grabWallInput)
                 statemachineChanger.ChangeState(statemachineController.wallClimbState);
 
-            else if (GameManager.instance.gameInputController.jumpInput)
+            else if (GameManager.instance.gameplayController.jumpInput)
                 statemachineChanger.ChangeState(statemachineController.wallJumpState);
 
-            else if (GameManager.instance.gameInputController.grabWallInput &&
-                GameManager.instance.gameInputController.movementNormalizeY == 0f)
+            else if (GameManager.instance.gameplayController.grabWallInput &&
+                GameManager.instance.gameplayController.movementNormalizeY == 0f)
                 statemachineChanger.ChangeState(statemachineController.wallGrabState);
 
-            else if (isGrounded && !GameManager.instance.gameInputController.grabWallInput)
+            else if (isGrounded && !GameManager.instance.gameplayController.grabWallInput)
                 statemachineChanger.ChangeState(statemachineController.idleState);
 
         }

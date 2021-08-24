@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     [ConditionalField("debugMode")] [SerializeField] private string firstScene;
 
     [Header("ScriptReferences")]
-    public GameplayController gameInputController;
+    public GameplayController gameplayController;
     public SceneDataLoadingController sceneDataLoading;
     public EffectPooler afterImagePooler;
     public EffectPooler switchEffectPooler;
@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(sceneDataLoading.DebugInsertWeapons());
 
         SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("CharactersScene", LoadSceneMode.Additive);
     }
 
 

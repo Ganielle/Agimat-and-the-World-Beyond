@@ -45,7 +45,7 @@ public class BottomUIController : MonoBehaviour
             lilyEquipWeaponSlot, GameManager.instance.PlayerInventory.GetSetWeaponLilySlotIndex);
 
         GameManager.instance.PlayerStats.onPlayerBattleStateChange += BattleStateChange;
-        GameManager.instance.gameInputController.onSwitchWeaponInputChange += SwitchWeaponInputChange;
+        GameManager.instance.gameplayController.onSwitchWeaponInputChange += SwitchWeaponInputChange;
         GameManager.instance.PlayerStats.onPlayerCharacterChange += CharacterChange;
         GameManager.instance.PlayerInventory.onLukasSlotIndexChange += LukasChangeEquipWeapon;
         GameManager.instance.PlayerInventory.onLilySlotIndexChange += LilyChangeEquipWeapon;
@@ -54,7 +54,7 @@ public class BottomUIController : MonoBehaviour
     private void OnDisable()
     {
         GameManager.instance.PlayerStats.onPlayerBattleStateChange -= BattleStateChange;
-        GameManager.instance.gameInputController.onSwitchWeaponInputChange -= SwitchWeaponInputChange;
+        GameManager.instance.gameplayController.onSwitchWeaponInputChange -= SwitchWeaponInputChange;
         GameManager.instance.PlayerStats.onPlayerCharacterChange -= CharacterChange;
         GameManager.instance.PlayerInventory.onLukasSlotIndexChange -= LukasChangeEquipWeapon;
         GameManager.instance.PlayerInventory.onLilySlotIndexChange -= LilyChangeEquipWeapon;
@@ -106,12 +106,12 @@ public class BottomUIController : MonoBehaviour
         if (GameManager.instance.PlayerStats.GetSetBattleState ==
             PlayerStats.PlayerBattleState.ADVENTURING)
         {
-            if (GameManager.instance.gameInputController.GetWeaponSwitchInput == 0)
+            if (GameManager.instance.gameplayController.GetWeaponSwitchInput == 0)
             {
                 fadeAnimation.CanvasGroupAnimation(easeType,
                     showAnimSpeed, hideAnimDelay, 0f);
             }
-            else if (GameManager.instance.gameInputController.GetWeaponSwitchInput == 1)
+            else if (GameManager.instance.gameplayController.GetWeaponSwitchInput == 1)
             {
                 fadeAnimation.CanvasGroupAnimation(easeType,
                     showAnimSpeed, 0f, 1f);

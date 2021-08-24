@@ -87,9 +87,9 @@ public class PlayerLedgeClimbState : PlayerStatesController
             statemachineController.transform.position = startPostion;
 
             //  To ledge Climb
-            if ((GameManager.instance.gameInputController.GetSetMovementNormalizeX ==
+            if ((GameManager.instance.gameplayController.GetSetMovementNormalizeX ==
                 statemachineController.core.GetFacingDirection ||
-                GameManager.instance.gameInputController.movementNormalizeY == 1)
+                GameManager.instance.gameplayController.movementNormalizeY == 1)
                 && isHanging && !isClimbing &&
                 GameManager.instance.PlayerStats.GetSetCurrentStamina >=
                 0f)
@@ -99,7 +99,7 @@ public class PlayerLedgeClimbState : PlayerStatesController
             }
 
             //  Wall Jump
-            else if (GameManager.instance.gameInputController.jumpInput && !isClimbing)
+            else if (GameManager.instance.gameplayController.jumpInput && !isClimbing)
             {
                 //  Setting back to old Position to fix the collider between
                 // ground and player
@@ -110,19 +110,19 @@ public class PlayerLedgeClimbState : PlayerStatesController
             }
 
             //  To cancel ledge climb with x input
-            else if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0 &&
-                GameManager.instance.gameInputController.GetSetMovementNormalizeX !=
+            else if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0 &&
+                GameManager.instance.gameplayController.GetSetMovementNormalizeX !=
                 statemachineController.core.GetFacingDirection && isHanging &&
                 !isClimbing)
             {
-                statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameInputController.GetSetMovementNormalizeX);
+                statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameplayController.GetSetMovementNormalizeX);
                 statemachineChanger.ChangeState(statemachineController.inAirState);
                 statemachineController.core.SetVelocityX(10f,
                     statemachineController.core.GetCurrentVelocity.y);
             }
 
             //  To Cancel ledge climb with y input
-            else if (GameManager.instance.gameInputController.movementNormalizeY == -1 &&
+            else if (GameManager.instance.gameplayController.movementNormalizeY == -1 &&
                 isHanging && !isClimbing)
                 statemachineChanger.ChangeState(statemachineController.inAirState);
         }

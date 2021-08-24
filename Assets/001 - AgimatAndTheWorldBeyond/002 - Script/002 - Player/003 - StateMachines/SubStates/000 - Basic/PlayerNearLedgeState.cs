@@ -22,7 +22,7 @@ public class PlayerNearLedgeState : PlayerGroundState
 
         if (!isExitingState)
         {
-            if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0)
+            if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0)
                 statemachineChanger.ChangeState(statemachineController.moveState);
 
             else if (isFootTouchGround)

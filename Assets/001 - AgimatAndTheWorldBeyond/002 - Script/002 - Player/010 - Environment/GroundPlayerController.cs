@@ -91,8 +91,7 @@ public class GroundPlayerController : MonoBehaviour
 
     public bool CheckIfFrontTouchingSlope
     {
-        get => Physics2D.Raycast(new Vector2(groundFrontFootCheck.position.x, 0f) * 
-            core.GetFacingDirection, Vector2.down, playerRawData.slopeCheckDistance,
+        get => Physics2D.Raycast(groundFrontFootCheck.position, Vector2.down, playerRawData.slopeCheckDistance,
             whatIsGround);
     }
 
@@ -165,11 +164,12 @@ public class GroundPlayerController : MonoBehaviour
 
     public void SlopeMovement()
     {
-        if (CheckIfTouchGround)
+        if (CheckIfTouchGround && canWalkOnSlope &&
+            CheckIfFrontTouchingSlope)
         {
             if (groundAngle <= minimumSlopeAngle)
             {
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0f)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0f)
                     core.playerRB.sharedMaterial = playerRawData.noFriction;
                 else
                     core.playerRB.sharedMaterial = playerRawData.lessFriction;
@@ -211,9 +211,8 @@ public class GroundPlayerController : MonoBehaviour
         Debug.DrawLine(transform.position, (Vector2) transform.position + Vector2.down * 
             playerRawData.slopeCheckDistance, Color.yellow);
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawRay(new Vector2(groundFrontFootCheck.position.x, 0f) *
-            core.GetFacingDirection, Vector2.down);
+        Debug.DrawLine(groundFrontFootCheck.position, (Vector2)groundFrontFootCheck.position +
+            Vector2.down * playerRawData.slopeCheckDistance);
 
         //  Wall Climbing
         Gizmos.color = Color.red;

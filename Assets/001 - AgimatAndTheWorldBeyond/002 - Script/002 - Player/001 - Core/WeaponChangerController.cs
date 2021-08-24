@@ -14,17 +14,17 @@ public class WeaponChangerController : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.instance.gameInputController.onSwitchWeaponInputChange += WeaponInputChange;
+        GameManager.instance.gameplayController.onSwitchWeaponInputChange += WeaponInputChange;
     }
 
     private void OnDisable()
     {
-        GameManager.instance.gameInputController.onSwitchWeaponInputChange -= WeaponInputChange;
+        GameManager.instance.gameplayController.onSwitchWeaponInputChange -= WeaponInputChange;
     }
 
     private void WeaponInputChange(object sender, EventArgs e)
     {
-        if (GameManager.instance.gameInputController.GetWeaponSwitchInput > 0)
+        if (GameManager.instance.gameplayController.GetWeaponSwitchInput > 0)
             lastShowWeaponSlotsTime = Time.time;
     }
 
@@ -35,8 +35,8 @@ public class WeaponChangerController : MonoBehaviour
         {
             if (GameManager.instance.PlayerInventory.GetLukasWeapons.Count > 1)
             {
-                if (GameManager.instance.gameInputController.canSwitchWeapon &&
-                GameManager.instance.gameInputController.GetWeaponSwitchInput == 2)
+                if (GameManager.instance.gameplayController.canSwitchWeapon &&
+                GameManager.instance.gameplayController.GetWeaponSwitchInput == 2)
                 {
                     if (GameManager.instance.PlayerInventory.GetSetWeaponLukasSlotIndex <
                         GameManager.instance.PlayerInventory.GetLukasWeapons.Count - 1)
@@ -55,8 +55,8 @@ public class WeaponChangerController : MonoBehaviour
         {
             if (GameManager.instance.PlayerInventory.GetLilyWeapons.Count > 1)
             {
-                if (GameManager.instance.gameInputController.canSwitchWeapon &&
-                GameManager.instance.gameInputController.GetWeaponSwitchInput == 2)
+                if (GameManager.instance.gameplayController.canSwitchWeapon &&
+                GameManager.instance.gameplayController.GetWeaponSwitchInput == 2)
                 {
                     if (GameManager.instance.PlayerInventory.GetSetWeaponLilySlotIndex <
                         GameManager.instance.PlayerInventory.GetLilyWeapons.Count - 1)
@@ -90,8 +90,8 @@ public class WeaponChangerController : MonoBehaviour
     public void SwitchWeapon()
     {
         if (core.statemachineController.weaponSwitchState.CheckIfCanWeaponSwitch() &&
-            GameManager.instance.gameInputController.canSwitchWeapon &&
-            GameManager.instance.gameInputController.GetWeaponSwitchInput == 2)
+            GameManager.instance.gameplayController.canSwitchWeapon &&
+            GameManager.instance.gameplayController.GetWeaponSwitchInput == 2)
         {
             core.statemachineController.core.weaponChangerController.ChangeWeapon();
 
@@ -106,14 +106,14 @@ public class WeaponChangerController : MonoBehaviour
                 core.statemachineController.statemachineChanger.ChangeState(core.statemachineController.weaponSwitchState);
             }
 
-            GameManager.instance.gameInputController.UseCanSwitchWeaponInput();
+            GameManager.instance.gameplayController.UseCanSwitchWeaponInput();
         }
     }
 
     public void DoneSwitchingWeapon()
     {
         if (Time.time >= lastShowWeaponSlotsTime + 5f
-            && GameManager.instance.gameInputController.GetWeaponSwitchInput != 0)
-            GameManager.instance.gameInputController.ResetSwitchWeaponInput();
+            && GameManager.instance.gameplayController.GetWeaponSwitchInput != 0)
+            GameManager.instance.gameplayController.ResetSwitchWeaponInput();
     }
 }

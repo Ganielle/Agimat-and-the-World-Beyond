@@ -47,7 +47,7 @@ public class PlayerTouchingMonkeyBarState : PlayerStatesController
     {
         base.LogicUpdate();
 
-        if (!GameManager.instance.gameInputController.grabMonkeyBarInput)
+        if (!GameManager.instance.gameplayController.grabMonkeyBarInput)
             statemachineChanger.ChangeState(statemachineController.inAirState);
     }
 

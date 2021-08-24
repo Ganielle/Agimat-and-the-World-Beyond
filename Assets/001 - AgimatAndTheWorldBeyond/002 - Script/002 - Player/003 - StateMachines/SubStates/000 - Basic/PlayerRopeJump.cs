@@ -45,7 +45,7 @@ public class PlayerRopeJump : PlayerNormalAbilityState
                 isAbilityDone = true;
 
             //  Monkey bar
-            else if (GameManager.instance.gameInputController.grabMonkeyBarInput &&
+            else if (GameManager.instance.gameplayController.grabMonkeyBarInput &&
                 statemachineController.core.CheckIfTouchingMonkeyBar)
             {
                 isAbilityDone = true;
@@ -53,7 +53,7 @@ public class PlayerRopeJump : PlayerNormalAbilityState
             }
 
             //  Rope
-            else if (GameManager.instance.gameInputController.ropeInput &&
+            else if (GameManager.instance.gameplayController.ropeInput &&
                 statemachineController.core.ropePlayerController.CheckIfTouchingRope &&
                 Time.time >= startTime + 0.25f)
             {
@@ -62,7 +62,7 @@ public class PlayerRopeJump : PlayerNormalAbilityState
             }
 
             //  For Dash State
-            else if (GameManager.instance.gameInputController.dashInput &&
+            else if (GameManager.instance.gameplayController.dashInput &&
                 statemachineController.playerDashState.CheckIfCanDash())
             {
                 isAbilityDone = true;

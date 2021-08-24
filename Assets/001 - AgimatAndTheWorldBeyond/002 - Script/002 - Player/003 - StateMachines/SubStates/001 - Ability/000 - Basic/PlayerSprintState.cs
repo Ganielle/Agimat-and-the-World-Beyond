@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSprintState : PlayerAbilityState
+public class PlayerSprintState : PlayerNormalAbilityState
 {
     private float facingDirection;
 
@@ -34,7 +34,7 @@ public class PlayerSprintState : PlayerAbilityState
     {
         base.LogicUpdate();
 
-        statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameInputController.GetSetMovementNormalizeX);
+        statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameplayController.GetSetMovementNormalizeX);
 
         AnimationChanger();
     }
@@ -62,21 +62,29 @@ public class PlayerSprintState : PlayerAbilityState
                 !isGrounded)
                 statemachineChanger.ChangeState(statemachineController.inAirState);
 
-            else if (isGrounded && GameManager.instance.gameInputController.jumpInput)
+            else if (isGrounded && !statemachineController.core.groundPlayerController.canWalkOnSlope &&
+                        isFrontFootTouchSlope)
             {
-                GameManager.instance.gameInputController.UseJumpInput();
+                statemachineController.core.SetVelocityZero();
+
+                statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
+            }
+
+            else if (isGrounded && GameManager.instance.gameplayController.jumpInput)
+            {
+                GameManager.instance.gameplayController.UseJumpInput();
                 statemachineChanger.ChangeState(statemachineController.jumpState);
             }
 
-            else if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0 &&
-                GameManager.instance.gameInputController.GetSetMovementNormalizeX != facingDirection)
+            else if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0 &&
+                GameManager.instance.gameplayController.GetSetMovementNormalizeX != facingDirection)
             {
-                GameManager.instance.gameInputController.sprintTapCount = 0;
+                GameManager.instance.gameplayController.sprintTapCount = 0;
                 statemachineChanger.ChangeState(statemachineController.moveState);
             }
 
-            else if (GameManager.instance.gameInputController.sprintTapCount == 0
-                && GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0)
+            else if (GameManager.instance.gameplayController.sprintTapCount == 0
+                && GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0)
                 statemachineChanger.ChangeState(statemachineController.idleState);
 
         }
@@ -86,9 +94,9 @@ public class PlayerSprintState : PlayerAbilityState
     {
         if (!isExitingState)
         {
-            if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == facingDirection)
+            if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == facingDirection)
                 statemachineController.core.SetVelocityX(movementData.sprintSpeed *
-                GameManager.instance.gameInputController.GetSetMovementNormalizeX,
+                GameManager.instance.gameplayController.GetSetMovementNormalizeX,
                     statemachineController.core.GetCurrentVelocity.y);
         }
     }

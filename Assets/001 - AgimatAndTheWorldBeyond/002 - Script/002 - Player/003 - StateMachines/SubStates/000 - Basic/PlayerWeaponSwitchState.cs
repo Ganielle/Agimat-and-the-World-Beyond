@@ -63,24 +63,24 @@ public class PlayerWeaponSwitchState : PlayerGroundState
                  * animations that can do animation cancel
                  */
 
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0f)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0f)
                     statemachineChanger.ChangeState(statemachineController.moveState);
 
-                else if (GameManager.instance.gameInputController.jumpInput)
+                else if (GameManager.instance.gameplayController.jumpInput)
                 {
                     statemachineChanger.ChangeState(statemachineController.jumpState);
-                    GameManager.instance.gameInputController.UseJumpInput();
+                    GameManager.instance.gameplayController.UseJumpInput();
                 }
 
-                else if (GameManager.instance.gameInputController.dodgeInput &&
+                else if (GameManager.instance.gameplayController.dodgeInput &&
                     statemachineController.playerDodgeState.CheckIfCanDodge() &&
                     GameManager.instance.PlayerStats.GetSetCurrentStamina >=
                     statemachineController.core.staminaController.dodgeStaminaPercentage)
                     statemachineChanger.ChangeState(statemachineController.playerDodgeState);
 
-                else if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0 &&
-                    GameManager.instance.gameInputController.switchPlayerLeftInput &&
-                    GameManager.instance.gameInputController.switchPlayerRightInput &&
+                else if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0 &&
+                    GameManager.instance.gameplayController.switchPlayerLeftInput &&
+                    GameManager.instance.gameplayController.switchPlayerRightInput &&
                     statemachineController.switchPlayerState.CheckIfCanSwitch())
                     statemachineChanger.ChangeState(statemachineController.switchPlayerState);
             }
@@ -90,7 +90,7 @@ public class PlayerWeaponSwitchState : PlayerGroundState
                  * animation that can't do animation cancel 
                  */
 
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0)
                     statemachineChanger.ChangeState(statemachineController.idleState);
             }
         }

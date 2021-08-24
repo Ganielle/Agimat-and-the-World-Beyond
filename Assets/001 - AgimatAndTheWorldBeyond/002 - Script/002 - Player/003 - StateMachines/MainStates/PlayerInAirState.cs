@@ -59,6 +59,9 @@ public class PlayerInAirState : PlayerStatesController
     {
         base.LogicUpdate();
 
+        statemachineController.core.weaponChangerController.DoneSwitchingWeapon();
+        statemachineController.core.weaponChangerController.SwitchWeapon();
+
         AnimationChanger();
         CheckAnimationState();
         CheckIfReachMaxVelocity();
@@ -113,39 +116,39 @@ public class PlayerInAirState : PlayerStatesController
             statemachineChanger.ChangeState(statemachineController.ledgeClimbState);
 
         else if (isTouchingClimbWall && isSameHeightToPlatform &&
-            GameManager.instance.gameInputController.GetSetMovementNormalizeX ==
+            GameManager.instance.gameplayController.GetSetMovementNormalizeX ==
                 statemachineController.core.GetFacingDirection &&
-                !GameManager.instance.gameInputController.jumpInput &&
+                !GameManager.instance.gameplayController.jumpInput &&
                 statemachineController.core.GetCurrentVelocity.y < 0.01f)
             statemachineChanger.ChangeState(statemachineController.wallSlideState);
         else if (isTouchingClimbWall && isSameHeightToPlatform &&
-            GameManager.instance.gameInputController.grabWallInput)
+            GameManager.instance.gameplayController.grabWallInput)
             statemachineChanger.ChangeState(statemachineController.wallGrabState);
 
         //  Monkey Bar
         else if (isTouchingMonkeyBar &&
-            GameManager.instance.gameInputController.grabMonkeyBarInput)
+            GameManager.instance.gameplayController.grabMonkeyBarInput)
             statemachineChanger.ChangeState(statemachineController.monkeyBarGrab);
 
         //  Rope
         else if (isTouchingRope &&
-            GameManager.instance.gameInputController.ropeInput)
+            GameManager.instance.gameplayController.ropeInput)
             statemachineChanger.ChangeState(statemachineController.ropeStartGrab);
 
         //  Dash
-        else if (GameManager.instance.gameInputController.dashInput &&
+        else if (GameManager.instance.gameplayController.dashInput &&
             statemachineController.playerDashState.CheckIfCanDash())
             statemachineChanger.ChangeState(statemachineController.playerDashState);
 
         else
-            statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameInputController.GetSetMovementNormalizeX);
+            statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameplayController.GetSetMovementNormalizeX);
     }
 
     private void HighLowJump()
     {
         if (isJumping)
         {
-            if (GameManager.instance.gameInputController.jumpInputStop)
+            if (GameManager.instance.gameplayController.jumpInputStop)
             {
                 statemachineController.core.SetVelocityY(statemachineController
                     .core.GetCurrentVelocity.y *
@@ -163,7 +166,7 @@ public class PlayerInAirState : PlayerStatesController
             return;
 
         statemachineController.core.SetVelocityX(movementData.movementSpeed *
-            GameManager.instance.gameInputController.GetSetMovementNormalizeX,
+            GameManager.instance.gameplayController.GetSetMovementNormalizeX,
                     statemachineController.core.GetCurrentVelocity.y);
 
         GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetFloat("yVelocity",

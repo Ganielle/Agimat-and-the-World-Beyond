@@ -11,6 +11,7 @@ public class PlayerAbilityState : PlayerStatesController
     protected bool isTouchingLedge;
     protected bool isSameHeightToPlatform;
     protected bool isFootTouchGround;
+    protected bool isFrontFootTouchSlope;
     protected Vector2 checkSlopePos;
 
     public PlayerAbilityState(PlayerStateMachinesController movementController, 
@@ -28,10 +29,9 @@ public class PlayerAbilityState : PlayerStatesController
         isTouchingClimbWall = statemachineController.core.groundPlayerController.CheckIfTouchClimbWall;
         isTouchingLedge = statemachineController.core.groundPlayerController.CheckIfTouchingLedge;
         isFootTouchGround = statemachineController.core.groundPlayerController.CheckIfFrontFootTouchGround;
+        isFrontFootTouchSlope = statemachineController.core.groundPlayerController.CheckIfFrontTouchingSlope;
         checkSlopePos = statemachineController.transform.position - (Vector3)(new Vector2(0f,
             statemachineController.core.colliderSize.y / 2));
-
-        statemachineController.core.groundPlayerController.SlopeChecker();
     }
 
     public override void Enter()
@@ -70,5 +70,7 @@ public class PlayerAbilityState : PlayerStatesController
         //  Slope Calculation
         statemachineController.core.groundPlayerController.CalculateSlopeForward();
         statemachineController.core.groundPlayerController.CalculateGroundAngle();
+
+        statemachineController.core.groundPlayerController.SlopeChecker();
     }
 }

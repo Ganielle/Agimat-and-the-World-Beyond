@@ -49,7 +49,7 @@ public class PlayerRopeStartGrabState : PlayerRopeState
 
         statemachineController.core.SetVelocityZero();
 
-        if (GameManager.instance.gameInputController.ropeInput)
+        if (GameManager.instance.gameplayController.ropeInput)
         {
 
             if (canSkipStartGrab)

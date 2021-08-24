@@ -43,25 +43,25 @@ public class PlayerMonkeyBarMove : PlayerTouchingMonkeyBarState
     {
         base.LogicUpdate();
 
-        statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameInputController.GetSetMovementNormalizeX);
+        statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameplayController.GetSetMovementNormalizeX);
 
         if (!isExitingState)
         {
             if (isTouchingMonkeyBar && isTouchingMonkeyBarFront &&
-                GameManager.instance.gameInputController.grabMonkeyBarInput)
+                GameManager.instance.gameplayController.grabMonkeyBarInput)
             {
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0)
                     statemachineChanger.ChangeState(statemachineController.monkeyBarGrab);
 
-                else if (GameManager.instance.gameInputController.jumpInput)
+                else if (GameManager.instance.gameplayController.jumpInput)
                 {
                     //GameManager.instance.gameInputController.UseGrabMonkeyBarInput();
                     statemachineChanger.ChangeState(statemachineController.monkeyBarJump);
-                    GameManager.instance.gameInputController.UseJumpInput();
+                    GameManager.instance.gameplayController.UseJumpInput();
                 }
             }
             else if (isTouchingMonkeyBar && !isTouchingMonkeyBarFront &&
-                GameManager.instance.gameInputController.grabMonkeyBarInput)
+                GameManager.instance.gameplayController.grabMonkeyBarInput)
                 statemachineChanger.ChangeState(statemachineController.monkeyBarGrab);
         }
     }
@@ -71,11 +71,11 @@ public class PlayerMonkeyBarMove : PlayerTouchingMonkeyBarState
         base.PhysicsUpdate();
 
         if (isTouchingMonkeyBar && isTouchingMonkeyBarFront &&
-            GameManager.instance.gameInputController.grabMonkeyBarInput &&
-            GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0)
+            GameManager.instance.gameplayController.grabMonkeyBarInput &&
+            GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0)
         {
             statemachineController.core.SetVelocityX(statemachineController.core.playerRawData.monkeyBarVelocity *
-                GameManager.instance.gameInputController.GetSetMovementNormalizeX,
+                GameManager.instance.gameplayController.GetSetMovementNormalizeX,
                 statemachineController.core.GetCurrentVelocity.y);
         }
     }

@@ -16,7 +16,7 @@ public class CharacterWeaponPanelController : MonoBehaviour
     {
         canShowWeapon = true;
 
-        GameManager.instance.gameInputController.onSwitchWeaponInputChange += IndexChange;
+        GameManager.instance.gameplayController.onSwitchWeaponInputChange += IndexChange;
     }
 
     private void OnDisable()
@@ -24,7 +24,7 @@ public class CharacterWeaponPanelController : MonoBehaviour
         animatorController.SetBool("showWeapon", false);
         animatorController.SetBool("hideWeapon", true);
 
-        GameManager.instance.gameInputController.onSwitchWeaponInputChange -= IndexChange;
+        GameManager.instance.gameplayController.onSwitchWeaponInputChange -= IndexChange;
     }
 
     private void IndexChange(object sender, EventArgs e)
@@ -34,7 +34,7 @@ public class CharacterWeaponPanelController : MonoBehaviour
 
     private void ChangeAnimation()
     {
-        if (GameManager.instance.gameInputController.GetWeaponSwitchInput == 0)
+        if (GameManager.instance.gameplayController.GetWeaponSwitchInput == 0)
         {
             animatorController.SetBool("showWeapon", false);
             animatorController.SetBool("hideWeapon", true);
@@ -42,7 +42,7 @@ public class CharacterWeaponPanelController : MonoBehaviour
             canShowWeapon = true;
         }
         
-        else if (GameManager.instance.gameInputController.GetWeaponSwitchInput == 1 && canShowWeapon)
+        else if (GameManager.instance.gameplayController.GetWeaponSwitchInput == 1 && canShowWeapon)
         {
             animatorController.SetBool("hideWeapon", false);
             animatorController.SetBool("showWeapon", true);
@@ -52,5 +52,5 @@ public class CharacterWeaponPanelController : MonoBehaviour
     }
 
     public void ChangeCanChangeWeapon(bool value) =>
-        GameManager.instance.gameInputController.canSwitchWeapon = value;
+        GameManager.instance.gameplayController.canSwitchWeapon = value;
 }

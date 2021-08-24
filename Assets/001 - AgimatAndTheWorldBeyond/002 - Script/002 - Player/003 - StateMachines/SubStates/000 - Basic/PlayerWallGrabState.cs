@@ -62,22 +62,22 @@ public class PlayerWallGrabState : PlayerTouchingWallState
     private void AnimationChanger()
     {
         if (isTouchingWall && !isTouchingLedge &&
-            GameManager.instance.gameInputController.grabWallInput && !isGrounded)
+            GameManager.instance.gameplayController.grabWallInput && !isGrounded)
             statemachineChanger.ChangeState(statemachineController.ledgeClimbState);
 
         if (!isExitingState)
         {
-            if (!GameManager.instance.gameInputController.grabWallInput)
+            if (!GameManager.instance.gameplayController.grabWallInput)
                 statemachineChanger.ChangeState(statemachineController.inAirState);
 
-            else if (GameManager.instance.gameInputController.movementNormalizeY == 1f)
+            else if (GameManager.instance.gameplayController.movementNormalizeY == 1f)
                 statemachineChanger.ChangeState(statemachineController.wallClimbState);
 
-            else if (GameManager.instance.gameInputController.jumpInput)
+            else if (GameManager.instance.gameplayController.jumpInput)
                 statemachineChanger.ChangeState(statemachineController.wallJumpState);
 
-            else if (GameManager.instance.gameInputController.movementNormalizeY == -1f &&
-                GameManager.instance.gameInputController.grabWallInput && !isGrounded)
+            else if (GameManager.instance.gameplayController.movementNormalizeY == -1f &&
+                GameManager.instance.gameplayController.grabWallInput && !isGrounded)
                 statemachineChanger.ChangeState(statemachineController.wallSlideState);
 
         }

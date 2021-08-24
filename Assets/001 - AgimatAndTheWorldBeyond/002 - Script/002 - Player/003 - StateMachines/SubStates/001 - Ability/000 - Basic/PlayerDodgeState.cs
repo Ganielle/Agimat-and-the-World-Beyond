@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDodgeState : PlayerAbilityState
+public class PlayerDodgeState : PlayerNormalAbilityState
 {
     private bool dodgeNow;
     private bool canDodge;
@@ -99,17 +99,26 @@ public class PlayerDodgeState : PlayerAbilityState
                 }
                 else
                 {
-                    if (GameManager.instance.gameInputController.jumpInput)
+                    if (!statemachineController.core.groundPlayerController.canWalkOnSlope &&
+                        isFrontFootTouchSlope)
                     {
-                        statemachineChanger.ChangeState(statemachineController.jumpState);
-                        GameManager.instance.gameInputController.UseJumpInput();
+                        Debug.Log("hello");
+                        statemachineController.core.SetVelocityZero();
+
+                        statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
                     }
 
-                    else if (isGrounded && GameManager.instance.gameInputController.GetSetMovementNormalizeX
+                    else if (GameManager.instance.gameplayController.jumpInput)
+                    {
+                        statemachineChanger.ChangeState(statemachineController.jumpState);
+                        GameManager.instance.gameplayController.UseJumpInput();
+                    }
+
+                    else if (isGrounded && GameManager.instance.gameplayController.GetSetMovementNormalizeX
                         == 0)
                         statemachineChanger.ChangeState(statemachineController.idleState);
 
-                    else if (isGrounded && GameManager.instance.gameInputController.GetSetMovementNormalizeX
+                    else if (isGrounded && GameManager.instance.gameplayController.GetSetMovementNormalizeX
                         != 0)
                         statemachineChanger.ChangeState(statemachineController.moveState);
                 }

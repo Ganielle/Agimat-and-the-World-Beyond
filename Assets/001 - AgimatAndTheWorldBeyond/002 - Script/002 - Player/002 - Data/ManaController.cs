@@ -63,7 +63,7 @@ public class ManaController : MonoBehaviour
 
     private void ChargeSkillToUseMana()
     {
-        if (GameManager.instance.gameInputController.isSkillCurrentlyCharging)
+        if (GameManager.instance.gameplayController.isSkillCurrentlyCharging)
         {
             core.ChangeBattleState();
 
@@ -83,10 +83,10 @@ public class ManaController : MonoBehaviour
                 //  100% charge always use third skill
                 UseMana();
 
-                GameManager.instance.gameInputController.UseManaCharging();
+                GameManager.instance.gameplayController.UseManaCharging();
             }
         }
-        else if (!GameManager.instance.gameInputController.isSkillCurrentlyCharging)
+        else if (!GameManager.instance.gameplayController.isSkillCurrentlyCharging)
         {
             if (GameManager.instance.PlayerStats.GetSetChargeMana != 0f)
             {
@@ -176,7 +176,7 @@ public class ManaController : MonoBehaviour
 
     private void CheckIfSkillCanBeUsed()
     {
-        if (!GameManager.instance.gameInputController.isSkillCurrentlyCharging)
+        if (!GameManager.instance.gameplayController.isSkillCurrentlyCharging)
         {
             if (GameManager.instance.PlayerStats.GetSetCurrentMana >= 33.33f)
                 canUseFirstSkill = true;

@@ -32,7 +32,7 @@ public class PlayerRunningBreak : PlayerGroundState
         {
             if (isAnimationFinished)
             {
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0f)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0f)
                     statemachineChanger.ChangeState(statemachineController.idleState);
                 else
                     statemachineChanger.ChangeState(statemachineController.moveState);

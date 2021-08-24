@@ -52,13 +52,13 @@ public class PlayerChangeIdleDirectionState : PlayerGroundState
             {
                 statemachineController.core.CheckIfShouldFlip(direction);
 
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0)
                     statemachineChanger.ChangeState(statemachineController.idleState);
             }
 
             else if (canTransitionToOtherAnimation)
             {
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0)
                 {
                     statemachineController.core.CheckIfShouldFlip(direction);
                     statemachineChanger.ChangeState(statemachineController.moveState);

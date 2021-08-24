@@ -98,13 +98,13 @@ public class DynamicCameraPlayerGameplay : MonoBehaviour
         ChangeOffsetsCamera();
 
         GameManager.instance.PlayerStats.onAnimatorStateInfoChange += MovementDirectionChange;
-        GameManager.instance.gameInputController.onMovementNormalizeVectorXChange += MovementDirectionChange;
+        GameManager.instance.gameplayController.onMovementNormalizeVectorXChange += MovementDirectionChange;
     }
 
     private void OnDisable()
     {
         GameManager.instance.PlayerStats.onAnimatorStateInfoChange -= MovementDirectionChange;
-        GameManager.instance.gameInputController.onMovementNormalizeVectorXChange -= MovementDirectionChange;
+        GameManager.instance.gameplayController.onMovementNormalizeVectorXChange -= MovementDirectionChange;
     }
 
     private void Update()

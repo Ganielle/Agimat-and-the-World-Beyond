@@ -11,6 +11,7 @@ public class PlayerNormalAbilityState : PlayerStatesController
     protected bool isTouchingLedge;
     protected bool isSameHeightToPlatform;
     protected bool isFootTouchGround;
+    protected bool isFrontFootTouchSlope;
     protected Vector2 checkSlopePos;
 
     public PlayerNormalAbilityState(PlayerStateMachinesController movementController, PlayerStateMachineChanger stateMachine,
@@ -28,6 +29,7 @@ public class PlayerNormalAbilityState : PlayerStatesController
         isTouchingClimbWall = statemachineController.core.groundPlayerController.CheckIfTouchClimbWall;
         isTouchingLedge = statemachineController.core.groundPlayerController.CheckIfTouchingLedge;
         isFootTouchGround = statemachineController.core.groundPlayerController.CheckIfFrontFootTouchGround;
+        isFrontFootTouchSlope = statemachineController.core.groundPlayerController.CheckIfFrontTouchingSlope;
         checkSlopePos = statemachineController.transform.position - (Vector3)(new Vector2(0f,
             statemachineController.core.colliderSize.y / 2));
     }
@@ -48,6 +50,9 @@ public class PlayerNormalAbilityState : PlayerStatesController
     {
         base.LogicUpdate();
 
+        statemachineController.core.weaponChangerController.DoneSwitchingWeapon();
+        statemachineController.core.weaponChangerController.SwitchWeapon();
+
         if (isAbilityDone)
         {
             if (isGrounded && statemachineController.core.GetCurrentVelocity.y < 0.01f)
@@ -59,5 +64,16 @@ public class PlayerNormalAbilityState : PlayerStatesController
                 statemachineChanger.ChangeState(statemachineController.inAirState);
             }
         }
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+
+        //  Slope Calculation
+        statemachineController.core.groundPlayerController.CalculateSlopeForward();
+        statemachineController.core.groundPlayerController.CalculateGroundAngle();
+
+        statemachineController.core.groundPlayerController.SlopeChecker();
     }
 }

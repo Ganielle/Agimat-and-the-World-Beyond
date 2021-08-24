@@ -46,22 +46,22 @@ public class PlayerRopeGrabSwingState : PlayerRopeState
 
         if (!isExitingState)
         {
-            if (GameManager.instance.gameInputController.ropeInput)
+            if (GameManager.instance.gameplayController.ropeInput)
             {
 
-                if (GameManager.instance.gameInputController.jumpInput)
+                if (GameManager.instance.gameplayController.jumpInput)
                 {
                     ExitRopeState();
                     statemachineChanger.ChangeState(statemachineController.ropeJumpState);
                 }
 
                 else if (statemachineController.core.ropePlayerController.RopeAboveChecker && 
-                    GameManager.instance.gameInputController.movementNormalizeY > 0)
+                    GameManager.instance.gameplayController.movementNormalizeY > 0)
                     //  TODO: CLIMB UP
                     statemachineChanger.ChangeState(statemachineController.ropeClimbUp);
 
                 else if (statemachineController.core.ropePlayerController.RopeBelowChecker &&
-                    GameManager.instance.gameInputController.movementNormalizeY < 0)
+                    GameManager.instance.gameplayController.movementNormalizeY < 0)
                 {
                     //  TODO: CLIMB DOWN
 
@@ -80,10 +80,10 @@ public class PlayerRopeGrabSwingState : PlayerRopeState
 
     private void Swing()
     {
-        if (!GameManager.instance.gameInputController.ropeInput)
+        if (!GameManager.instance.gameplayController.ropeInput)
             return;
 
-        statemachineController.core.playerRB.AddRelativeForce(new Vector2(GameManager.instance.gameInputController.ropeNormalizeMovementX *
+        statemachineController.core.playerRB.AddRelativeForce(new Vector2(GameManager.instance.gameplayController.ropeNormalizeMovementX *
         movementData.ropeSwingVelocity, 0f));
     }
 }

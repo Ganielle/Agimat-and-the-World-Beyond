@@ -28,16 +28,17 @@ public class PlayerLowLandState : PlayerGroundState
         {
             if (!isAnimationFinished)
             {
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0)
                     statemachineChanger.ChangeState(statemachineController.moveState);
 
                 //Slope slide
-                if (!statemachineController.core.groundPlayerController.canWalkOnSlope)
+                if (!statemachineController.core.groundPlayerController.canWalkOnSlope &&
+                    isFrontFootTouchSlope)
                     statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
             }
             else
             {
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0)
                     statemachineChanger.ChangeState(statemachineController.idleState);
             }
         }

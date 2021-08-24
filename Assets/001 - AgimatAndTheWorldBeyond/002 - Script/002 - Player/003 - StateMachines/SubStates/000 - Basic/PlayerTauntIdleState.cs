@@ -41,27 +41,27 @@ public class PlayerTauntIdleState : PlayerGroundState
                 GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool(animBoolName, false);
             else
             {
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0 ||
-                    GameManager.instance.gameInputController.movementNormalizeY == 1 ||
-                    GameManager.instance.gameInputController.movementNormalizeY == -1 ||
-                    GameManager.instance.gameInputController.jumpInput)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0 ||
+                    GameManager.instance.gameplayController.movementNormalizeY == 1 ||
+                    GameManager.instance.gameplayController.movementNormalizeY == -1 ||
+                    GameManager.instance.gameplayController.jumpInput)
                     canCheckTime = false;
             }
 
             if (isAnimationFinished)
             {
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0)
                     statemachineChanger.ChangeState(statemachineController.idleState);
 
-                else if(GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0)
+                else if(GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0)
                 {
                     statemachineChanger.ChangeState(statemachineController.moveState);
                 }
 
-                else if (GameManager.instance.gameInputController.movementNormalizeY == 1)
+                else if (GameManager.instance.gameplayController.movementNormalizeY == 1)
                     statemachineChanger.ChangeState(statemachineController.lookingUpState);
 
-                else if (GameManager.instance.gameInputController.movementNormalizeY == 1)
+                else if (GameManager.instance.gameplayController.movementNormalizeY == 1)
                     statemachineChanger.ChangeState(statemachineController.lookingUpState);
             }
         }

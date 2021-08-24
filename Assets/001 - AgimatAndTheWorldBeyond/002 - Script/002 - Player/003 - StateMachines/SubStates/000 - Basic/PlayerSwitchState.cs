@@ -73,8 +73,8 @@ public class PlayerSwitchState : PlayerAbilityState
         if (!isExitingState)
         {
             if (Time.time < (startTime + movementData.switchTime) &&
-                (!GameManager.instance.gameInputController.switchPlayerLeftInput ||
-                !GameManager.instance.gameInputController.switchPlayerRightInput) &&
+                (!GameManager.instance.gameplayController.switchPlayerLeftInput ||
+                !GameManager.instance.gameplayController.switchPlayerRightInput) &&
                 isCurrentlySwitching)
             {
                 StopSwitchEffect();
@@ -122,7 +122,7 @@ public class PlayerSwitchState : PlayerAbilityState
         GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("doneSwitching", true);
 
         holdPosition = true;
-        GameManager.instance.gameInputController.ResetSwitchWeaponInput();
+        GameManager.instance.gameplayController.ResetSwitchWeaponInput();
     }
 
     private void FinishSwitching()

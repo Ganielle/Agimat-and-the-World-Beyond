@@ -31,11 +31,11 @@ public class PlayerMoveState : PlayerGroundState
         if (Time.time >= runStateEnterTime + 3f)
             canBreakRun = true;
 
-        if (GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0)
-            lastDirection = GameManager.instance.gameInputController.GetSetMovementNormalizeX;
+        if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0)
+            lastDirection = GameManager.instance.gameplayController.GetSetMovementNormalizeX;
 
         //  Flip Player
-        statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameInputController.GetSetMovementNormalizeX);
+        statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameplayController.GetSetMovementNormalizeX);
 
         AnimationChanger();
     }
@@ -60,13 +60,14 @@ public class PlayerMoveState : PlayerGroundState
         if (!isExitingState)
         {
             //  Slope slide
-            if (!statemachineController.core.groundPlayerController.canWalkOnSlope)
+            if (!statemachineController.core.groundPlayerController.canWalkOnSlope &&
+                isFrontFootTouchSlope)
                 statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
 
-            else
+            else if (statemachineController.core.groundPlayerController.canWalkOnSlope)
             {
                 //  Running break
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0f)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0f)
                 {
                     canReduceSpeed = true;
 
@@ -81,14 +82,14 @@ public class PlayerMoveState : PlayerGroundState
                         statemachineChanger.ChangeState(statemachineController.idleState);
                 }
 
-                else if (GameManager.instance.gameInputController.jumpInput &&
+                else if (GameManager.instance.gameplayController.jumpInput &&
                     statemachineController.core.groundPlayerController.canWalkOnSlope)
                 {
                     statemachineChanger.ChangeState(statemachineController.jumpState);
-                    GameManager.instance.gameInputController.UseJumpInput();
+                    GameManager.instance.gameplayController.UseJumpInput();
                 }
 
-                else if (GameManager.instance.gameInputController.dodgeInput
+                else if (GameManager.instance.gameplayController.dodgeInput
                     && statemachineController.playerDodgeState.CheckIfCanDodge() &&
                     GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=
                     PlayerStats.AnimatorStateInfo.HIGHLAND)
@@ -100,7 +101,7 @@ public class PlayerMoveState : PlayerGroundState
     private void MovePlayer()
     {
         statemachineController.core.SetVelocityX(movementData.movementSpeed *
-         GameManager.instance.gameInputController.GetSetMovementNormalizeX,
+         GameManager.instance.gameplayController.GetSetMovementNormalizeX,
          statemachineController.core.GetCurrentVelocity.y);
     }
 

@@ -29,20 +29,20 @@ public class PlayerMonkeyBarGrabState : PlayerTouchingMonkeyBarState
         HoldPosition(statemachineController.core.transform.position.x,
             holdPosition.y - statemachineController.core.playerRawData.mbStartOffset.y);
 
-        statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameInputController.GetSetMovementNormalizeX);
+        statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameplayController.GetSetMovementNormalizeX);
 
         if (!isExitingState)
         {
             if (isTouchingMonkeyBarFront &&
-                GameManager.instance.gameInputController.grabMonkeyBarInput &&
-                GameManager.instance.gameInputController.GetSetMovementNormalizeX != 0)
+                GameManager.instance.gameplayController.grabMonkeyBarInput &&
+                GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0)
                 statemachineChanger.ChangeState(statemachineController.monkeyBarMove);
 
-            else if (GameManager.instance.gameInputController.jumpInput)
+            else if (GameManager.instance.gameplayController.jumpInput)
             {
                 //GameManager.instance.gameInputController.UseGrabMonkeyBarInput();
                 statemachineChanger.ChangeState(statemachineController.monkeyBarJump);
-                GameManager.instance.gameInputController.UseJumpInput();
+                GameManager.instance.gameplayController.UseJumpInput();
             }
         }
     }

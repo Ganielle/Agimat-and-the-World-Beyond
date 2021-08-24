@@ -48,12 +48,12 @@ public class PlayerTouchingWallState : PlayerStatesController
     {
         base.LogicUpdate();
 
-        if (isGrounded && !GameManager.instance.gameInputController.grabWallInput)
+        if (isGrounded && !GameManager.instance.gameplayController.grabWallInput)
             statemachineChanger.ChangeState(statemachineController.idleState);
 
-        else if (!isTouchingWall || (GameManager.instance.gameInputController.GetSetMovementNormalizeX !=
+        else if (!isTouchingWall || (GameManager.instance.gameplayController.GetSetMovementNormalizeX !=
             statemachineController.core.GetFacingDirection &&
-            !GameManager.instance.gameInputController.grabWallInput))
+            !GameManager.instance.gameplayController.grabWallInput))
             statemachineChanger.ChangeState(statemachineController.inAirState);
     }
 

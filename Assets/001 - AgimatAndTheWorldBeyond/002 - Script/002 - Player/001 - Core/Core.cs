@@ -57,7 +57,7 @@ public class Core : MonoBehaviour
     {
         FlipCheckerOnStart();
 
-        //Time.timeScale = 0.5f;
+        //Time.timeScale = 0.25f;
     }
 
     private void Update()

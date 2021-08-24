@@ -37,8 +37,8 @@ public class PlayerGroundState : PlayerStatesController
 
         AnimationChanger();
 
-        //statemachineController.core.weaponChangerController.DoneSwitchingWeapon();
-        //statemachineController.core.weaponChangerController.SwitchWeapon();
+        statemachineController.core.weaponChangerController.DoneSwitchingWeapon();
+        statemachineController.core.weaponChangerController.SwitchWeapon();
     }
 
     public override void PhysicsUpdate()
@@ -59,24 +59,25 @@ public class PlayerGroundState : PlayerStatesController
             if (!isGrounded)
                 statemachineChanger.ChangeState(statemachineController.inAirState);
 
-            else if (isGrounded && GameManager.instance.gameInputController.sprintTapCount == 2
+            else if (isGrounded && GameManager.instance.gameplayController.sprintTapCount == 2
                 && GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=
                 PlayerStats.AnimatorStateInfo.HIGHLAND &&
                 GameManager.instance.PlayerStats.GetSetCurrentStamina > 0f)
                 statemachineChanger.ChangeState(statemachineController.playerSprintState);
 
             // TODO: coyote time for JumpState
-            else if (isTouchingWall && GameManager.instance.gameInputController.grabWallInput &&
+            else if (isTouchingWall && GameManager.instance.gameplayController.grabWallInput &&
                 GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=
                 PlayerStats.AnimatorStateInfo.HIGHLAND && isTouchingLedge &&
                 GameManager.instance.PlayerStats.GetSetCurrentStamina >=
                 movementData.wallGrabHoldStamina)
                 statemachineChanger.ChangeState(statemachineController.wallGrabState);
 
-            else if (statemachineController.core.groundPlayerController.canWalkOnSlope &&
-                GameManager.instance.gameInputController.dashInput &&
-                !GameManager.instance.gameInputController.switchPlayerLeftInput &&
-                statemachineController.playerDashState.CheckIfCanDash() && (GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=
+            else if (statemachineController.playerDashState.CheckIfCanDash() &&
+                statemachineController.core.groundPlayerController.canWalkOnSlope &&
+                GameManager.instance.gameplayController.dashInput &&
+                !GameManager.instance.gameplayController.switchPlayerLeftInput &&
+                (GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=
                 PlayerStats.AnimatorStateInfo.HIGHLAND && GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=
                 PlayerStats.AnimatorStateInfo.LOOKINGDOWN && GameManager.instance.PlayerStats.GetSetAnimatorStateInfo !=
                 PlayerStats.AnimatorStateInfo.LOOKINGUP))

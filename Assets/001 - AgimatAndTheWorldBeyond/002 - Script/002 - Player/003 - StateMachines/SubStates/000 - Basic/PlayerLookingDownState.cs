@@ -23,14 +23,14 @@ public class PlayerLookingDownState : PlayerGroundState
 
         statemachineController.core.SetVelocityZero();
 
-        if (GameManager.instance.gameInputController.movementNormalizeY == 0)
+        if (GameManager.instance.gameplayController.movementNormalizeY == 0)
             GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool(animBoolName, false);
 
         if (!isExitingState)
         {
             if (isAnimationFinished)
             {
-                if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == 0)
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0)
                     statemachineChanger.ChangeState(statemachineController.idleState);
                 else
                     statemachineChanger.ChangeState(statemachineController.moveState);

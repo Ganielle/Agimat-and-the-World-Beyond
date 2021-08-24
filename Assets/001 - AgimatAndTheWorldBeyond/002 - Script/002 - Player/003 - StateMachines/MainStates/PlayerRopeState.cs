@@ -33,7 +33,7 @@ public class PlayerRopeState : PlayerStatesController
         base.LogicUpdate();
 
 
-        if (!GameManager.instance.gameInputController.ropeInput)
+        if (!GameManager.instance.gameplayController.ropeInput)
         {
             statemachineController.core.ChangePlayerColliderOffsetY(movementData.colliderNormalOffsetY);
             ExitRopeState();

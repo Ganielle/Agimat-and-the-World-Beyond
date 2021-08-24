@@ -45,7 +45,7 @@ public class PlayerWallJumpState : PlayerNormalAbilityState
                 isAbilityDone = true;
 
             //  Monkey bar
-            else if (GameManager.instance.gameInputController.grabMonkeyBarInput &&
+            else if (GameManager.instance.gameplayController.grabMonkeyBarInput &&
                 statemachineController.core.CheckIfTouchingMonkeyBar)
             {
                 isAbilityDone = true;
@@ -53,7 +53,7 @@ public class PlayerWallJumpState : PlayerNormalAbilityState
             }
 
             //  Rope
-            else if (GameManager.instance.gameInputController.ropeInput &&
+            else if (GameManager.instance.gameplayController.ropeInput &&
                 statemachineController.core.ropePlayerController.CheckIfTouchingRope)
             {
                 isAbilityDone = true;
@@ -61,7 +61,7 @@ public class PlayerWallJumpState : PlayerNormalAbilityState
             }
 
             //  For Dash State
-            else if (GameManager.instance.gameInputController.dashInput &&
+            else if (GameManager.instance.gameplayController.dashInput &&
                 statemachineController.playerDashState.CheckIfCanDash() &&
                 Time.time >= startTime + movementData.delayToUseDash)
             {
