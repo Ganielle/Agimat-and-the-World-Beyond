@@ -102,7 +102,6 @@ public class PlayerDodgeState : PlayerNormalAbilityState
                     if (!statemachineController.core.groundPlayerController.canWalkOnSlope &&
                         isFrontFootTouchSlope)
                     {
-                        Debug.Log("hello");
                         statemachineController.core.SetVelocityZero();
 
                         statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
