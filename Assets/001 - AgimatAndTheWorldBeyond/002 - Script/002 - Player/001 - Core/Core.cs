@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Core : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("SETTINGS")]
     public PlayerRawData playerRawData;
     public Rigidbody2D playerRB;
     public Collider2D playerCollider;
@@ -15,33 +15,34 @@ public class Core : MonoBehaviour
     public Transform childPlayer;
     public Transform envCheckerXRot;
 
-    [Header("Script References")]
+    [Header("SCRIPT REFERENCES")]
     public WeaponChangerController weaponChangerController;
     public StaminaController staminaController;
     public RopePlayerController ropePlayerController;
     public GroundPlayerController groundPlayerController;
     public PlayerStateMachinesController statemachineController;
 
+    [Space]
     public GameObject shadowPlayer;
 
     [Space]
     public Vector2 colliderSize;
 
-    [Header("Battle")]
+    [Header("BATTLE")]
     [SerializeField] private float battleStateCooldownToAdventure;
 
-    [Header("Monkey Bar")]
+    [Header("MONKEY BAR")]
     public LayerMask whatIsMonkeyBar;
     public Transform monkeyBarCheck;
     public Transform monkeyBarFrontCheck;
 
-    [Header("Dash")]
+    [Header("DASH")]
     public Transform dashDirectionIndicator;
 
-    [Header("Stamina")]
+    [Header("STAMINA")]
     [SerializeField] private Transform staminaPanel;
 
-    [Header("Debugger")]
+    [Header("DEBUGGER")]
     [ReadOnly] public Vector2 GetCurrentVelocity;
     [ReadOnly] public Vector2 GetWorkspace;
     [ReadOnly] public Vector3 GetRotationWorkspace;
@@ -49,6 +50,9 @@ public class Core : MonoBehaviour
     [ReadOnly] public float distanceToGroundRaycast;
     [ReadOnly] public float heightError;
     [ReadOnly] public float lastBattleState;
+
+    //  BATTLE ATTACK COMBO
+    [ReadOnly] public int attackComboIndex;
 
     //  PRIVATE VARIABLES
     private RaycastHit2D hitInfo;
