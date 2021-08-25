@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class HealthController : MonoBehaviour
 {
-    [SerializeField] private Core core;
+    [SerializeField] private PlayerCore core;
 
     [Header("Settings")]
     [SerializeField] private float depletionSpeed;

@@ -36,6 +36,7 @@ public class SceneDataLoadingController : MonoBehaviour
                 GameManager.instance.PlayerInventory.AddLukasWeapons(new WeaponData
                 {
                     GetSetWeaponID = data.weaponID,
+                    CurrentWeaponType = data.weaponType,
                     GetSetDamage = data.damage,
                     GetSetEquipState = false,
                     GetSetWeaponBoolNameInPlayerAnim = data.boolNameInPlayerAnimator,
@@ -47,6 +48,7 @@ public class SceneDataLoadingController : MonoBehaviour
                 GameManager.instance.PlayerInventory.AddLilyWeapons(new WeaponData
                 {
                     GetSetWeaponID = data.weaponID,
+                    CurrentWeaponType = data.weaponType,
                     GetSetDamage = data.damage,
                     GetSetEquipState = false,
                     GetSetWeaponBoolNameInPlayerAnim = data.boolNameInPlayerAnimator,

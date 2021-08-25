@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 003_SpearRawData
   m_EditorClassIdentifier: 
   weaponID: 003
+  weaponType: 3
   character: 1
   damage: 10
   boolNameInPlayerAnimator: spearSwitch

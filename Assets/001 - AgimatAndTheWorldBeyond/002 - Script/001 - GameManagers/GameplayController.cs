@@ -99,8 +99,11 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    //  ATTACK
+    [ReadOnly] public bool attackInput;
+
     //  Mana Charge
-    public bool isSkillCurrentlyCharging;
+    [ReadOnly] public bool isSkillCurrentlyCharging;
 
     private PlayerInput playerInput;
 
@@ -357,28 +360,16 @@ public class GameplayController : MonoBehaviour
     {
         if (context.started)
         {
-            // TODO ATTACK HERE
-        }
-    }
-
-    #endregion
-
-    #region SKILL
-
-    public void OnSkill(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        { 
-            isSkillCurrentlyCharging = true;
+            attackInput = true;
         }
 
         if (context.canceled)
         {
-            isSkillCurrentlyCharging = false;
+            attackInput = false;
         }
     }
 
-    public void UseManaCharging() => isSkillCurrentlyCharging = false;
+    public void UseAttackInput() => attackInput = false;
 
     #endregion
 }

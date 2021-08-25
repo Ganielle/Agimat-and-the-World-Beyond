@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerAnimatorEventController : MonoBehaviour
 {
+    [SerializeField] private PlayerCore playerCore;
     [SerializeField] private PlayerStateMachinesController movementController;
     [SerializeField] private Collider2D playerHitbox;
     [SerializeField] private SpriteRenderer sr;
@@ -24,4 +25,15 @@ public class PlayerAnimatorEventController : MonoBehaviour
         else if (GameManager.instance.PlayerStats.GetSetPlayerCharacter == PlayerStats.PlayerCharacter.LILY)
             GameManager.instance.PlayerStats.GetSetPlayerCharacter = PlayerStats.PlayerCharacter.LUKAS;
     }
+
+    public void LastAttackCombo() => playerCore.onLastAttackCombo = true;
+
+    public void CanAttackCancelAnimation() => playerCore.canCancelAnimation = true;
+
+    public void CancelAttackCancelAnimation() => playerCore.canCancelAnimation = false;
+
+    public void AxeAttackMovementVelocity() => playerCore.SetVelocityX(playerCore.playerRawData.axeAttackMovementSpeed *
+        playerCore.GetFacingDirection, playerCore.GetCurrentVelocity.y);
+
+    public void ResetVelocity() => playerCore.SetVelocityZero();
 }

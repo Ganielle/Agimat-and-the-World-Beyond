@@ -18,6 +18,8 @@ public class PlayerTauntIdleState : PlayerGroundState
     {
         base.Enter();
 
+        GameManager.instance.PlayerStats.GetSetAnimatorStateInfo = PlayerStats.AnimatorStateInfo.TAUNTIDLE;
+
         tauntIdleEnterTime = Time.time;
         canCheckTime = true;
     }
@@ -44,7 +46,8 @@ public class PlayerTauntIdleState : PlayerGroundState
                 if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0 ||
                     GameManager.instance.gameplayController.movementNormalizeY == 1 ||
                     GameManager.instance.gameplayController.movementNormalizeY == -1 ||
-                    GameManager.instance.gameplayController.jumpInput)
+                    GameManager.instance.gameplayController.jumpInput ||
+                    GameManager.instance.gameplayController.attackInput)
                     canCheckTime = false;
             }
 

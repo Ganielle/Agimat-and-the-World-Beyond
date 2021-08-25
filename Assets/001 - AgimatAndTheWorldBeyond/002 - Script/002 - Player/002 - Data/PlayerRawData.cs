@@ -122,4 +122,7 @@ public class PlayerRawData : ScriptableObject
     public float dodgePercentage = 0.25f;
     public float dashPercentage = 0.35f;
     public float wallJumpPercentage = 0.20f;
+
+    [Header("AXE ATTACK MOVEMENT")]
+    public float axeAttackMovementSpeed = 8.5f;
 }

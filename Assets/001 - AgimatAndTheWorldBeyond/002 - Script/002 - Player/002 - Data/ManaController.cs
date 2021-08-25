@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ManaController : MonoBehaviour
 {
-    [SerializeField] private Core core;
+    [SerializeField] private PlayerCore core;
     [SerializeField] private float chargeSpeed;
     [SerializeField] private float depleteSpeed;
 
@@ -83,7 +83,7 @@ public class ManaController : MonoBehaviour
                 //  100% charge always use third skill
                 UseMana();
 
-                GameManager.instance.gameplayController.UseManaCharging();
+                //GameManager.instance.gameplayController.UseManaCharging();
             }
         }
         else if (!GameManager.instance.gameplayController.isSkillCurrentlyCharging)

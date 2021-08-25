@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     public bool debugMode;
     [ConditionalField("debugMode")] public bool isLukas;
+    [ConditionalField("debugMode")] public bool debugScenes;
     [ConditionalField("debugMode")] [SerializeField] private string firstScene;
 
     [Header("ScriptReferences")]
@@ -72,7 +73,7 @@ public class GameManager : MonoBehaviour
     {
         yield return StartCoroutine(sceneDataLoading.DebugInsertWeapons());
 
-        if (!debugMode)
+        if (debugScenes)
         {
             SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
             SceneManager.LoadSceneAsync("CharactersScene", LoadSceneMode.Additive);

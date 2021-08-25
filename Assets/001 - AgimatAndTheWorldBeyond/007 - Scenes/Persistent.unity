@@ -628,6 +628,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMode: 1
   isLukas: 1
+  debugScenes: 1
   firstScene: TestScene
   gameplayController: {fileID: 704855580}
   sceneDataLoading: {fileID: 704855582}
@@ -691,6 +692,7 @@ MonoBehaviour:
   switchWeaponInput: 0
   openSwitchWeaponTime: 0
   canSwitchWeapon: 0
+  attackInput: 0
   isSkillCurrentlyCharging: 0
 --- !u!114 &704855581
 MonoBehaviour:

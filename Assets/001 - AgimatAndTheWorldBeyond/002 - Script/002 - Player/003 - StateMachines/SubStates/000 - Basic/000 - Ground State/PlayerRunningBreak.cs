@@ -15,6 +15,8 @@ public class PlayerRunningBreak : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
+
+        GameManager.instance.PlayerStats.GetSetAnimatorStateInfo = PlayerStats.AnimatorStateInfo.RUNNINGBREAK;
     }
 
     public override void Exit()

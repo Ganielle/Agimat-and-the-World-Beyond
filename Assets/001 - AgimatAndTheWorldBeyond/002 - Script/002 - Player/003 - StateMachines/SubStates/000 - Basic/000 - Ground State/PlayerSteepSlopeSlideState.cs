@@ -15,6 +15,8 @@ public class PlayerSteepSlopeSlideState : PlayerGroundState
     {
         base.Enter();
 
+        GameManager.instance.PlayerStats.GetSetAnimatorStateInfo = PlayerStats.AnimatorStateInfo.STEEPSLOPE;
+
         DirectionChecker();
     }
 

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 008_KarambitRawData
   m_EditorClassIdentifier: 
   weaponID: 008
+  weaponType: 8
   character: 2
   damage: 10
   boolNameInPlayerAnimator: karambitSwitch

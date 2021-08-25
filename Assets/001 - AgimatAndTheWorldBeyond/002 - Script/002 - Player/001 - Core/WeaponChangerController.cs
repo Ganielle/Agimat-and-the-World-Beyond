@@ -6,7 +6,7 @@ using MyBox;
 
 public class WeaponChangerController : MonoBehaviour
 {
-    [SerializeField] private Core core;
+    [SerializeField] private PlayerCore core;
 
     [Header("DEBUGGER")]
     //  Switching Weapons

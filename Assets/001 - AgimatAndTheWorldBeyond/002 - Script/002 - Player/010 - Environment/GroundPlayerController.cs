@@ -7,7 +7,7 @@ public class GroundPlayerController : MonoBehaviour
 {
     //  TODO: CHECK SLOPE CONTROLLER
 
-    [SerializeField] private Core core;
+    [SerializeField] private PlayerCore core;
     [SerializeField] private PlayerRawData playerRawData;
     [SerializeField] private Rigidbody2D playerRB;
 
@@ -32,18 +32,6 @@ public class GroundPlayerController : MonoBehaviour
     [ReadOnly] public float groundAngle;
     [ReadOnly] public bool isOnSlope;
     [ReadOnly] public bool canWalkOnSlope;
-    //[ReadOnly] public Vector2 slopeNormalPerp;
-    //[ReadOnly] public bool isOnSlope;
-    //[ReadOnly] public bool canWalkOnSlope;
-    //[ReadOnly] public float slopeDownAngle;
-    //[ReadOnly] public float slopeDownAngleOld;
-    //[ReadOnly] public float slopeSlideAngle;
-
-    //  PRIVATE VARIABLES
-    //private RaycastHit2D hitInfo;
-    //private RaycastHit2D slopeHit;
-    //private RaycastHit2D slopeHitFront;
-    //private RaycastHit2D slopeHitBack;
 
     #region PHYSICS
 

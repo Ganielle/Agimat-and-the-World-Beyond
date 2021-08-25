@@ -76,7 +76,7 @@ MonoBehaviour:
   drag: 20
   dashEndYMultiplier: 0.2
   distanceBetweenAfterImages: 0.5
-  dodgeVelocity: 25
+  dodgeVelocity: 15
   dodgeCooldown: 0.5
   healthRecoveryDelay: 2
   startingHealthRecoverPerSecond: 2.5
@@ -95,3 +95,4 @@ MonoBehaviour:
   dodgePercentage: 0.2
   dashPercentage: 0.3
   wallJumpPercentage: 0.2
+  axeAttackMovementSpeed: 8.5

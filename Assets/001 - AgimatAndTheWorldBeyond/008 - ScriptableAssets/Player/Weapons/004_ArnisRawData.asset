@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 004_ArnisRawData
   m_EditorClassIdentifier: 
   weaponID: 004
+  weaponType: 4
   character: 1
   damage: 10
   boolNameInPlayerAnimator: arnisSwitch

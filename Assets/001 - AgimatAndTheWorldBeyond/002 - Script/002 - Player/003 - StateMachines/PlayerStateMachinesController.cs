@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerStateMachinesController : MonoBehaviour
 {
-    public Core core;
+    public PlayerCore core;
 
     //  StateMachines
     public PlayerStateMachineChanger statemachineChanger;
@@ -41,6 +41,7 @@ public class PlayerStateMachinesController : MonoBehaviour
     public PlayerSprintState playerSprintState;
     public PlayerDodgeState playerDodgeState;
     public PlayerWeaponSwitchState weaponSwitchState;
+    public AxeBasicAttackState axeAttackState;
 
     private void Awake()
     {
@@ -78,6 +79,7 @@ public class PlayerStateMachinesController : MonoBehaviour
         playerDodgeState = new PlayerDodgeState(this, statemachineChanger, core.playerRawData, "dodge");
         weaponSwitchState = new PlayerWeaponSwitchState(this, statemachineChanger, core.playerRawData,
             GameManager.instance.PlayerStats.GetSetWeaponEquipBoolInPlayerAnim);
+        axeAttackState = new AxeBasicAttackState(this, statemachineChanger, core.playerRawData, "axeAttackCombo");
 
         switchPlayerState.ResetSwitch();
         weaponSwitchState.ResetWeaponSwitch();

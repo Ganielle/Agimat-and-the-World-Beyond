@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 001_AxeRawData
   m_EditorClassIdentifier: 
   weaponID: 001
+  weaponType: 1
   character: 1
   damage: 10
   boolNameInPlayerAnimator: axeSwitch

@@ -30,7 +30,7 @@ public class StaminaController : MonoBehaviour
 
     //  =================================================
 
-    [SerializeField] private Core core;
+    [SerializeField] private PlayerCore core;
 
     [Space]
     [SerializeField] private LeanTweenType easeType;

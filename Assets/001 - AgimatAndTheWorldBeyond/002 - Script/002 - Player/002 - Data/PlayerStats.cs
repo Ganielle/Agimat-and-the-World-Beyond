@@ -253,9 +253,11 @@ public class PlayerStats
     {
         NONE,
         IDLE,
+        TAUNTIDLE,
         LOOKINGUP,
         LOOKINGDOWN,
         RUNNING,
+        RUNNINGBREAK,
         JUMPING,
         FALLING,
         LOWLAND,
@@ -281,6 +283,9 @@ public class PlayerStats
         SWITCHING,
         SWITCHWEAPON,
         CHANGEIDLEDIRECTION,
+        NEARLEDGE,
+        STEEPSLOPE,
+        AXEATTACK
     }
     AnimatorStateInfo animStateInfo, lastAnimStateInfo;
     private event EventHandler animatorStateInfoChange;

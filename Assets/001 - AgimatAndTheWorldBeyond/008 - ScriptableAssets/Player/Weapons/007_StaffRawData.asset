@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 007_StaffRawData
   m_EditorClassIdentifier: 
   weaponID: 007
+  weaponType: 7
   character: 2
   damage: 10
   boolNameInPlayerAnimator: staffSwitch

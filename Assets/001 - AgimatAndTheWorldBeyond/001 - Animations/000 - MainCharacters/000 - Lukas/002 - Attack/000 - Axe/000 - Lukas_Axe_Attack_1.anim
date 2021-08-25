@@ -17,26 +17,74 @@ AnimationClip:
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves: []
-  m_PPtrCurves: []
-  m_SampleRate: 60
+  m_PPtrCurves:
+  - curve:
+    - time: 0
+      value: {fileID: 21300000, guid: d1c32d4be3ba4c64a9f99d06ccd815f2, type: 3}
+    - time: 0.071428575
+      value: {fileID: 21300000, guid: 035ddf024f137d448a0511d3dd5880f4, type: 3}
+    - time: 0.14285715
+      value: {fileID: 21300000, guid: e13f6e3ca4d51fd4e8332b7cc4b692bb, type: 3}
+    - time: 0.21428572
+      value: {fileID: 21300000, guid: e4f1c0f9d474d6548ae9c44b65323511, type: 3}
+    - time: 0.2857143
+      value: {fileID: 21300000, guid: fa53ffc6222ad4842b5bf9dfffd31599, type: 3}
+    - time: 0.35714287
+      value: {fileID: 21300000, guid: 37c16a88d12533a4badb990b5a6ca5b1, type: 3}
+    - time: 0.42857143
+      value: {fileID: 21300000, guid: 253eb3f432af8f94c9b59c30d1c59f61, type: 3}
+    - time: 0.5
+      value: {fileID: 21300000, guid: ff54ec9abc1843246b15e48b7600c419, type: 3}
+    - time: 0.5714286
+      value: {fileID: 21300000, guid: 0fa17e7c75d398948b50e79554d33354, type: 3}
+    - time: 0.64285713
+      value: {fileID: 21300000, guid: 0874983a2e175504e9c01b1b563ac5f1, type: 3}
+    - time: 0.71428573
+      value: {fileID: 21300000, guid: 8080d61d6bae0ac419abe404b9519e54, type: 3}
+    - time: 0.78571427
+      value: {fileID: 21300000, guid: b84604c4453a8f24083412f710d3b24d, type: 3}
+    attribute: m_Sprite
+    path: 
+    classID: 212
+    script: {fileID: 0}
+  m_SampleRate: 14
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings: []
-    pptrCurveMapping: []
+    genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+    pptrCurveMapping:
+    - {fileID: 21300000, guid: d1c32d4be3ba4c64a9f99d06ccd815f2, type: 3}
+    - {fileID: 21300000, guid: 035ddf024f137d448a0511d3dd5880f4, type: 3}
+    - {fileID: 21300000, guid: e13f6e3ca4d51fd4e8332b7cc4b692bb, type: 3}
+    - {fileID: 21300000, guid: e4f1c0f9d474d6548ae9c44b65323511, type: 3}
+    - {fileID: 21300000, guid: fa53ffc6222ad4842b5bf9dfffd31599, type: 3}
+    - {fileID: 21300000, guid: 37c16a88d12533a4badb990b5a6ca5b1, type: 3}
+    - {fileID: 21300000, guid: 253eb3f432af8f94c9b59c30d1c59f61, type: 3}
+    - {fileID: 21300000, guid: ff54ec9abc1843246b15e48b7600c419, type: 3}
+    - {fileID: 21300000, guid: 0fa17e7c75d398948b50e79554d33354, type: 3}
+    - {fileID: 21300000, guid: 0874983a2e175504e9c01b1b563ac5f1, type: 3}
+    - {fileID: 21300000, guid: 8080d61d6bae0ac419abe404b9519e54, type: 3}
+    - {fileID: 21300000, guid: b84604c4453a8f24083412f710d3b24d, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 0.85714287
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -50,4 +98,32 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: AnimationTrigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.64285713
+    functionName: CanAttackCancelAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.71428573
+    functionName: CancelAttackCancelAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.78571427
+    functionName: AnimationFinishTrigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

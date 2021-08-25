@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 000 - Lukas_Axe_Attack_2
+  m_Name: 001 - Lukas_Axe_Attack_2
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -17,26 +17,92 @@ AnimationClip:
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves: []
-  m_PPtrCurves: []
-  m_SampleRate: 60
+  m_PPtrCurves:
+  - curve:
+    - time: 0
+      value: {fileID: 21300000, guid: 1c4734c79eee9b14e8349476b3a3000a, type: 3}
+    - time: 0.071428575
+      value: {fileID: 21300000, guid: d929408cb90a5e34885e5a40ebc73e1a, type: 3}
+    - time: 0.14285715
+      value: {fileID: 21300000, guid: 9e1ba674d71b45c46bfe624c2e6030c6, type: 3}
+    - time: 0.21428572
+      value: {fileID: 21300000, guid: c64dee209ad0baf4c9d159911ea7e2b1, type: 3}
+    - time: 0.2857143
+      value: {fileID: 21300000, guid: d1471426b3921a94b91cebed9f318e3d, type: 3}
+    - time: 0.35714287
+      value: {fileID: 21300000, guid: ada441a6bcbaf9c4cb78f39bb993ab63, type: 3}
+    - time: 0.42857143
+      value: {fileID: 21300000, guid: 0a97da5f8ec848e4bb7a379cd89a8eea, type: 3}
+    - time: 0.5
+      value: {fileID: 21300000, guid: ea70ac2b7ec809e4dbb15da103676804, type: 3}
+    - time: 0.5714286
+      value: {fileID: 21300000, guid: c0667a5c5a4905842b248c361397ed3a, type: 3}
+    - time: 0.64285713
+      value: {fileID: 21300000, guid: d623b1458bfb9da459e1a6b0c7bb86db, type: 3}
+    - time: 0.71428573
+      value: {fileID: 21300000, guid: b4ed29a3dce7ca94aaf01107c683d881, type: 3}
+    - time: 0.78571427
+      value: {fileID: 21300000, guid: cf8aaf9ce3a907640aeae27b612dc85c, type: 3}
+    - time: 0.85714287
+      value: {fileID: 21300000, guid: e859056ee8caa2d459862c3865221603, type: 3}
+    - time: 0.9285714
+      value: {fileID: 21300000, guid: c236a8d86805ff046af95851a2c61e3a, type: 3}
+    - time: 1
+      value: {fileID: 21300000, guid: e5fc6a7242ce53d4e8c60f20d9547f9c, type: 3}
+    - time: 1.0714285
+      value: {fileID: 21300000, guid: 3c1d9d9e0d63d884e8ed6f67eef10ab9, type: 3}
+    - time: 1.1428572
+      value: {fileID: 21300000, guid: 7f9f00c58107b344989cd307c3ae683c, type: 3}
+    - time: 1.2142857
+      value: {fileID: 21300000, guid: 77ce6e528d0094f40ad5d4f4a1074a28, type: 3}
+    attribute: m_Sprite
+    path: 
+    classID: 212
+    script: {fileID: 0}
+  m_SampleRate: 14
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings: []
-    pptrCurveMapping: []
+    genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+    pptrCurveMapping:
+    - {fileID: 21300000, guid: 1c4734c79eee9b14e8349476b3a3000a, type: 3}
+    - {fileID: 21300000, guid: d929408cb90a5e34885e5a40ebc73e1a, type: 3}
+    - {fileID: 21300000, guid: 9e1ba674d71b45c46bfe624c2e6030c6, type: 3}
+    - {fileID: 21300000, guid: c64dee209ad0baf4c9d159911ea7e2b1, type: 3}
+    - {fileID: 21300000, guid: d1471426b3921a94b91cebed9f318e3d, type: 3}
+    - {fileID: 21300000, guid: ada441a6bcbaf9c4cb78f39bb993ab63, type: 3}
+    - {fileID: 21300000, guid: 0a97da5f8ec848e4bb7a379cd89a8eea, type: 3}
+    - {fileID: 21300000, guid: ea70ac2b7ec809e4dbb15da103676804, type: 3}
+    - {fileID: 21300000, guid: c0667a5c5a4905842b248c361397ed3a, type: 3}
+    - {fileID: 21300000, guid: d623b1458bfb9da459e1a6b0c7bb86db, type: 3}
+    - {fileID: 21300000, guid: b4ed29a3dce7ca94aaf01107c683d881, type: 3}
+    - {fileID: 21300000, guid: cf8aaf9ce3a907640aeae27b612dc85c, type: 3}
+    - {fileID: 21300000, guid: e859056ee8caa2d459862c3865221603, type: 3}
+    - {fileID: 21300000, guid: c236a8d86805ff046af95851a2c61e3a, type: 3}
+    - {fileID: 21300000, guid: e5fc6a7242ce53d4e8c60f20d9547f9c, type: 3}
+    - {fileID: 21300000, guid: 3c1d9d9e0d63d884e8ed6f67eef10ab9, type: 3}
+    - {fileID: 21300000, guid: 7f9f00c58107b344989cd307c3ae683c, type: 3}
+    - {fileID: 21300000, guid: 77ce6e528d0094f40ad5d4f4a1074a28, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 1.2857143
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -50,4 +116,60 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: AnimationTrigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.071428575
+    functionName: AxeAttackMovementVelocity
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.35714287
+    functionName: ResetVelocity
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5
+    functionName: AxeAttackMovementVelocity
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.9285714
+    functionName: ResetVelocity
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1
+    functionName: CanAttackCancelAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.1428572
+    functionName: CancelAttackCancelAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.2142857
+    functionName: AnimationFinishTrigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

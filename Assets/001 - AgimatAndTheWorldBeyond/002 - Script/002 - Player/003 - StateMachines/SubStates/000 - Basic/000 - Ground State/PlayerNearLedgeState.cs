@@ -14,6 +14,8 @@ public class PlayerNearLedgeState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
+
+        GameManager.instance.PlayerStats.GetSetAnimatorStateInfo = PlayerStats.AnimatorStateInfo.NEARLEDGE;
     }
 
     public override void LogicUpdate()

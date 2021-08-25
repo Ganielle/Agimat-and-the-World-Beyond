@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RopePlayerController : MonoBehaviour
 {
-    [SerializeField] private Core core;
+    [SerializeField] private PlayerCore core;
     [SerializeField] private PlayerRawData playerRawData;
 
     [Space]

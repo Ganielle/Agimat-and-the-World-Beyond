@@ -8,7 +8,7 @@ public class DynamicCameraPlayerGameplay : MonoBehaviour
 {
     [SerializeField] private CinemachineCameraOffset cinemachineOffsetter;
     [SerializeField] private CinemachineVirtualCamera VirtualCamera;
-    [SerializeField] private Core playerCore;
+    [SerializeField] private PlayerCore playerCore;
 
 
     [Header("Idle")]

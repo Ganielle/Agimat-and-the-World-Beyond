@@ -13,6 +13,13 @@ public class WeaponData
         set { weapID = "weapon_ID_" + value; }
     }
 
+    PlayerWeaponRawData.WeaponType weaponType;
+    public PlayerWeaponRawData.WeaponType CurrentWeaponType
+    {
+        get => weaponType;
+        set => weaponType = value;
+    }
+
     private event EventHandler equipStateChange;
     public event EventHandler onEquipStateChange
     {

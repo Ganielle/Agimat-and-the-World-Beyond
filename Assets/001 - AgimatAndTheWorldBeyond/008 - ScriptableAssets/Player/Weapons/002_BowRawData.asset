@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 002_BowRawData
   m_EditorClassIdentifier: 
   weaponID: 002
+  weaponType: 2
   character: 1
   damage: 10
   boolNameInPlayerAnimator: bowSwitch

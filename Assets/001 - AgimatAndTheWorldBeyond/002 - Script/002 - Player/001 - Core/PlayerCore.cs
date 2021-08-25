@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Core : MonoBehaviour
+public class PlayerCore : MonoBehaviour
 {
     [Header("SETTINGS")]
     public PlayerRawData playerRawData;
@@ -53,6 +53,8 @@ public class Core : MonoBehaviour
 
     //  BATTLE ATTACK COMBO
     [ReadOnly] public int attackComboIndex;
+    [ReadOnly] public bool onLastAttackCombo;
+    [ReadOnly] public bool canCancelAnimation;
 
     //  PRIVATE VARIABLES
     private RaycastHit2D hitInfo;

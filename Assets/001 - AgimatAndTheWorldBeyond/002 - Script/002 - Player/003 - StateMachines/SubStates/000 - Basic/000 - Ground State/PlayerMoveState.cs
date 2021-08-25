@@ -20,8 +20,6 @@ public class PlayerMoveState : PlayerGroundState
         base.Enter();
 
         SettingsSetter();
-
-        runStateEnterTime = Time.time;
     }
 
     public override void LogicUpdate()
@@ -53,6 +51,8 @@ public class PlayerMoveState : PlayerGroundState
     private void SettingsSetter()
     {
         GameManager.instance.PlayerStats.GetSetAnimatorStateInfo = PlayerStats.AnimatorStateInfo.RUNNING;
+
+        runStateEnterTime = Time.time;
     }
 
     private void AnimationChanger()

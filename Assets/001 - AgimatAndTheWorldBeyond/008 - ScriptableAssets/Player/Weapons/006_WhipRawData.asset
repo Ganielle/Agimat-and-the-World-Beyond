@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 006_WhipRawData
   m_EditorClassIdentifier: 
   weaponID: 006
+  weaponType: 6
   character: 2
   damage: 10
   boolNameInPlayerAnimator: whipSwitch
