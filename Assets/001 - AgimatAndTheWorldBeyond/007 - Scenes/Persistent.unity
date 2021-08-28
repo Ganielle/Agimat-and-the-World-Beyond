@@ -629,7 +629,7 @@ MonoBehaviour:
   debugMode: 1
   isLukas: 1
   debugScenes: 1
-  firstScene: TestScene
+  firstScene: PrototypingScene
   gameplayController: {fileID: 704855580}
   sceneDataLoading: {fileID: 704855582}
   afterImagePooler: {fileID: 614935818}
