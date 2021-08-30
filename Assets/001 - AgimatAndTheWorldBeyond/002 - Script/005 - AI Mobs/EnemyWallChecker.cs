@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class EnemyWallChecker : MonoBehaviour
 {
-    //global references
-    [SerializeField] private GameObject mainPlayer;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Ground")
@@ -22,7 +19,7 @@ public class EnemyWallChecker : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    /*private void OnTriggerExit2D(Collider2D collision)
     {
         if (transform.parent.GetComponent<AIPatrol>().hasClimbingFeature)
         {
@@ -35,5 +32,5 @@ public class EnemyWallChecker : MonoBehaviour
             }    
                 
         }       
-    }
+    }*/
 }
