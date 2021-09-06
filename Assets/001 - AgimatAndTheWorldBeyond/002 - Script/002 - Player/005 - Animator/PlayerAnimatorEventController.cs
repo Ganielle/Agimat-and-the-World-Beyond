@@ -32,7 +32,7 @@ public class PlayerAnimatorEventController : MonoBehaviour
 
     public void CancelAttackCancelAnimation() => playerCore.canCancelAnimation = false;
 
-    public void AxeAttackMovementVelocity() => playerCore.SetVelocityX(playerCore.playerRawData.axeAttackMovementSpeed *
+    public void GroundAttackMovementVelocity(float value) => playerCore.SetVelocityX(value *
         playerCore.GetFacingDirection, playerCore.GetCurrentVelocity.y);
 
     public void ResetVelocity() => playerCore.SetVelocityZero();

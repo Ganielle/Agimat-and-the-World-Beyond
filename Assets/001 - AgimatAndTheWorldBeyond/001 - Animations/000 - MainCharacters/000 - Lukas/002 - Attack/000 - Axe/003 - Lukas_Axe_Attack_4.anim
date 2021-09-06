@@ -122,10 +122,10 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.055555556
-    functionName: AxeAttackMovementVelocity
+    functionName: GroundAttackMovementVelocity
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
+    floatParameter: 10
     intParameter: 0
     messageOptions: 0
   - time: 0.22222222
@@ -136,17 +136,17 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.33333334
-    functionName: AxeAttackMovementVelocity
+    functionName: GroundAttackMovementVelocity
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
+    floatParameter: 10
     intParameter: 0
     messageOptions: 0
   - time: 0.5
-    functionName: AxeAttackMovementVelocity
+    functionName: GroundAttackMovementVelocity
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
+    floatParameter: 10
     intParameter: 0
     messageOptions: 0
   - time: 0.6111111

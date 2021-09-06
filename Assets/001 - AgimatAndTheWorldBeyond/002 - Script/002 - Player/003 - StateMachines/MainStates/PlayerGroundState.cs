@@ -57,25 +57,36 @@ public class PlayerGroundState : PlayerStatesController
         if (!isExitingState)
         {
             #region ATTACK COMBOS
-            if (GameManager.instance.PlayerStats.GetSetPlayerCharacter == PlayerStats.PlayerCharacter.LUKAS)
-            {
-                if (GameManager.instance.PlayerInventory.GetLukasWeapons[GameManager.instance.PlayerInventory.GetSetWeaponLukasSlotIndex].CurrentWeaponType
-                    == PlayerWeaponRawData.WeaponType.AXE && GameManager.instance.gameplayController.attackInput &&
-                GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.LOOKINGUP &&
+            if (GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.LOOKINGUP &&
                 GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.LOOKINGDOWN &&
                 GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.SWITCHING &&
                 GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.DASHCHARGE &&
                 GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.DASHBURST &&
                 GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.HIGHLAND)
-                {
-                    statemachineController.core.attackComboIndex++;
-                    statemachineChanger.ChangeState(statemachineController.axeAttackState);
-                    GameManager.instance.gameplayController.UseAttackInput();
-                }
-            }
-            else if (GameManager.instance.PlayerStats.GetSetPlayerCharacter == PlayerStats.PlayerCharacter.LILY)
             {
-                //  TODO LILY ATTACK COMBO
+                if (GameManager.instance.PlayerStats.GetSetPlayerCharacter == PlayerStats.PlayerCharacter.LUKAS)
+                {
+                    if (GameManager.instance.PlayerInventory.GetLukasWeapons[GameManager.instance.PlayerInventory.GetSetWeaponLukasSlotIndex].CurrentWeaponType
+                        == PlayerWeaponRawData.WeaponType.AXE && GameManager.instance.gameplayController.attackInput)
+                    {
+                        statemachineController.core.attackComboIndex++;
+                        statemachineController.normalAttackState.SetComboIndexParameter("axeAttackCombo");
+                        statemachineChanger.ChangeState(statemachineController.normalAttackState);
+                        GameManager.instance.gameplayController.UseAttackInput();
+                    }
+                }
+                else if (GameManager.instance.PlayerStats.GetSetPlayerCharacter == PlayerStats.PlayerCharacter.LILY)
+                {
+                    //  TODO LILY ATTACK COMBO
+                    if (GameManager.instance.PlayerInventory.GetLilyWeapons[GameManager.instance.PlayerInventory.GetSetWeaponLilySlotIndex].CurrentWeaponType ==
+                        PlayerWeaponRawData.WeaponType.WHIP && GameManager.instance.gameplayController.attackInput)
+                    {
+                        statemachineController.core.attackComboIndex++;
+                        statemachineController.normalAttackState.SetComboIndexParameter("whipAttackCombo");
+                        statemachineChanger.ChangeState(statemachineController.normalAttackState);
+                        GameManager.instance.gameplayController.UseAttackInput();
+                    }
+                }
             }
 
             #endregion

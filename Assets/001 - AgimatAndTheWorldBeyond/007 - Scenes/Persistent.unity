@@ -627,9 +627,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 1
-  isLukas: 1
-  debugScenes: 1
-  firstScene: PrototypingScene
+  isLukas: 0
+  debugScenes: 0
+  firstScene: 
   gameplayController: {fileID: 704855580}
   sceneDataLoading: {fileID: 704855582}
   afterImagePooler: {fileID: 614935818}

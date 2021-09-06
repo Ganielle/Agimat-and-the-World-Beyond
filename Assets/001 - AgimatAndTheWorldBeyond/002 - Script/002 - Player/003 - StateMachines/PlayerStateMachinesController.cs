@@ -41,7 +41,7 @@ public class PlayerStateMachinesController : MonoBehaviour
     public PlayerSprintState playerSprintState;
     public PlayerDodgeState playerDodgeState;
     public PlayerWeaponSwitchState weaponSwitchState;
-    public AxeBasicAttackState axeAttackState;
+    public NormalAttackCombo normalAttackState;
 
     private void Awake()
     {
@@ -79,7 +79,7 @@ public class PlayerStateMachinesController : MonoBehaviour
         playerDodgeState = new PlayerDodgeState(this, statemachineChanger, core.playerRawData, "dodge");
         weaponSwitchState = new PlayerWeaponSwitchState(this, statemachineChanger, core.playerRawData,
             GameManager.instance.PlayerStats.GetSetWeaponEquipBoolInPlayerAnim);
-        axeAttackState = new AxeBasicAttackState(this, statemachineChanger, core.playerRawData, "axeAttackCombo");
+        normalAttackState = new NormalAttackCombo(this, statemachineChanger, core.playerRawData, "axeAttackCombo");
 
         switchPlayerState.ResetSwitch();
         weaponSwitchState.ResetWeaponSwitch();

@@ -7509,7 +7509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &817734487
 Transform:
   m_ObjectHideFlags: 0
@@ -9228,7 +9228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1149911408
 Animator:
   serializedVersion: 3
@@ -9239,7 +9239,7 @@ Animator:
   m_GameObject: {fileID: 1149911407}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d8b1f3b47f5af6f4ab1019f178483120, type: 2}
+  m_Controller: {fileID: 9100000, guid: 91b61729cea3cda4290f88ee552f8665, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -9324,7 +9324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3d14b592eeebf64ea5fac8fc13b1496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCore: {fileID: 0}
+  playerCore: {fileID: 1129014556}
   movementController: {fileID: 1129014555}
   playerHitbox: {fileID: 0}
   sr: {fileID: 1616810333}
