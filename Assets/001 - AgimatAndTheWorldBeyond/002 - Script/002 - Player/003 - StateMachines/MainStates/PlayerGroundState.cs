@@ -18,6 +18,11 @@ public class PlayerGroundState : PlayerStatesController
     {
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
     public override void DoChecks()
     {
         base.DoChecks();
@@ -39,17 +44,6 @@ public class PlayerGroundState : PlayerStatesController
 
         statemachineController.core.weaponChangerController.DoneSwitchingWeapon();
         statemachineController.core.weaponChangerController.SwitchWeapon();
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-
-        //  Slope Calculation
-        statemachineController.core.groundPlayerController.CalculateSlopeForward();
-        statemachineController.core.groundPlayerController.CalculateGroundAngle();
-
-        statemachineController.core.groundPlayerController.SlopeChecker();
     }
 
     private void AnimationChanger()

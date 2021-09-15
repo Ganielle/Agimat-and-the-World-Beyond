@@ -26,17 +26,15 @@ public class PlayerLowLandState : PlayerGroundState
 
         if (!isExitingState)
         {
-            if (!isAnimationFinished)
-            {
-                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0)
-                    statemachineChanger.ChangeState(statemachineController.moveState);
+            if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0)
+                statemachineChanger.ChangeState(statemachineController.moveState);
 
-                //Slope slide
-                if (!statemachineController.core.groundPlayerController.canWalkOnSlope &&
-                    isFrontFootTouchSlope)
-                    statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
-            }
-            else
+            //Slope slide
+            if (!statemachineController.core.groundPlayerController.canWalkOnSlope &&
+                isFrontFootTouchSlope)
+                statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
+
+            if (isAnimationFinished)
             {
                 if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0)
                     statemachineChanger.ChangeState(statemachineController.idleState);

@@ -138,15 +138,13 @@ public class GroundPlayerController : MonoBehaviour
 
     public void SlopeChecker()
     {
-        //  Higher slope, on slope but cannot move
-        if (groundAngle <= maxSlopeAngle)
-            canWalkOnSlope = false;
-
         //  On flat surface or walkable slope, on slope but can move
-        else if (groundAngle > minimumSlopeAngle)
+        if (groundAngle < minimumSlopeAngle && groundAngle >= maxSlopeAngle)
             canWalkOnSlope = true;
-
-        else if (groundAngle == 0)
+        //  Higher slope, on slope but cannot move
+        else if (groundAngle < maxSlopeAngle)
+            canWalkOnSlope = false;
+        else
             canWalkOnSlope = false;
     }
 
@@ -167,7 +165,7 @@ public class GroundPlayerController : MonoBehaviour
                 float verticalOnSlope = Mathf.Sin(groundAngle * Mathf.Deg2Rad) * moveDistance;
 
                 if (horizontalOnSlope != 0)
-                    core.SetVelocityX(-horizontalOnSlope , core.GetCurrentVelocity.y);
+                    core.SetVelocityX(-horizontalOnSlope + (core.GetFacingDirection * 1f) , core.GetCurrentVelocity.y);
 
                 if (CheckIfTouchGround && verticalOnSlope != 0)
                     core.SetVelocityY(-verticalOnSlope);

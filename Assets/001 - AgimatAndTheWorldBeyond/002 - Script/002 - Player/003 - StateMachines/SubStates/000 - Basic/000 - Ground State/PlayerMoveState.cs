@@ -67,6 +67,9 @@ public class PlayerMoveState : PlayerGroundState
             else if (statemachineController.core.groundPlayerController.canWalkOnSlope)
             {
                 //  Running break
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0f)
+                    canReduceSpeed = false;
+
                 if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0f)
                 {
                     canReduceSpeed = true;
@@ -78,7 +81,7 @@ public class PlayerMoveState : PlayerGroundState
                         canBreakRun = false;
                     }
 
-                    else if (statemachineController.core.GetCurrentVelocity.x == 0)
+                    else if (statemachineController.core.GetCurrentVelocity.x == 0 && !canBreakRun)
                         statemachineChanger.ChangeState(statemachineController.idleState);
                 }
 
@@ -105,6 +108,7 @@ public class PlayerMoveState : PlayerGroundState
          statemachineController.core.GetCurrentVelocity.y);
     }
 
+    //  TODO: REDUCE VELOCITY THEN RESET WHEN RUN AGAIN TO NORMAL RUN VELOCITY
     private void ReduceVelocity()
     {
         if (canReduceSpeed)
@@ -114,7 +118,7 @@ public class PlayerMoveState : PlayerGroundState
             {
                 statemachineController.core.GetCurrentVelocity.x -= 100f * Time.deltaTime;
 
-                if (statemachineController.core.GetCurrentVelocity.x <= 0)
+                if (statemachineController.core.GetCurrentVelocity.x <= 1f)
                 {
                     statemachineController.core.GetCurrentVelocity.x = 0f;
                     canReduceSpeed = false;
@@ -125,14 +129,15 @@ public class PlayerMoveState : PlayerGroundState
             {
                 statemachineController.core.GetCurrentVelocity.x += 100f * Time.deltaTime;
 
-                if (statemachineController.core.GetCurrentVelocity.x >= 0)
+
+                if (statemachineController.core.GetCurrentVelocity.x >= -1f)
                 {
                     statemachineController.core.GetCurrentVelocity.x = 0f;
                     canReduceSpeed = false;
                 }
             }
             statemachineController.core.SetVelocityX(statemachineController.core.GetCurrentVelocity.x,
-                statemachineController.core.GetCurrentVelocity.y);
+                0f);
         }
     }
 }

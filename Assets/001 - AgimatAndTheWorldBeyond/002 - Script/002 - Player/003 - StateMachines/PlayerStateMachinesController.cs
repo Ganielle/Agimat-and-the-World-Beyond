@@ -97,11 +97,16 @@ public class PlayerStateMachinesController : MonoBehaviour
     private void Update()
     {
         core.CurrentVelocitySetter();
+        core.groundPlayerController.SlopeChecker();
         statemachineChanger.CurrentState.LogicUpdate();
     }
 
     private void FixedUpdate()
     {
+        //  Slope Calculation
+        core.groundPlayerController.CalculateSlopeForward();
+        core.groundPlayerController.CalculateGroundAngle();
+
         statemachineChanger.CurrentState.PhysicsUpdate();
 
     }

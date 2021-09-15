@@ -121,6 +121,7 @@ public class PlayerInAirState : PlayerStatesController
                 !GameManager.instance.gameplayController.jumpInput &&
                 statemachineController.core.GetCurrentVelocity.y < 0.01f)
             statemachineChanger.ChangeState(statemachineController.wallSlideState);
+       
         else if (isTouchingClimbWall && isSameHeightToPlatform &&
             GameManager.instance.gameplayController.grabWallInput)
             statemachineChanger.ChangeState(statemachineController.wallGrabState);

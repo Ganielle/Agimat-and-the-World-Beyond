@@ -117,7 +117,7 @@ public class PlayerDashState : PlayerAbilityState
 
     private void SetPositionAfterTick()
     {
-        if (!isHolding && DashRotation() == 0)
+        if (!isHolding && DashRotation() == 0 && isGrounded)
         {
             Vector2 feetOffset = new Vector2(0f, statemachineController.core.feetOffsetCollider.bounds.min.y -
                 statemachineController.core.playerRB.position.y);
@@ -161,7 +161,7 @@ public class PlayerDashState : PlayerAbilityState
                         // adjust velocity so that physics will take them from corner 
                         // to landing position
                         Vector2 wantedVelocity = (wantedFeetPosAfterTick - cornerPos)
-                                / Time.deltaTime;
+                                / Time.fixedDeltaTime;
 
                         statemachineController.core.playerRB.velocity = wantedVelocity;
                     }
@@ -186,7 +186,6 @@ public class PlayerDashState : PlayerAbilityState
 
         if (GameManager.instance.gameplayController.dashInputStop || Time.time >= startTime + movementData.maxHoldTime)
         {
-
             GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("chargeDash", false);
             GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool("burstDash", true);
             isHolding = false;
@@ -218,16 +217,6 @@ public class PlayerDashState : PlayerAbilityState
         if (Time.time >= startTime + movementData.dashTime)
             DoneDashingState();
 
-        //  SLOPE SLIDE
-        else if (isGrounded && !statemachineController.core.groundPlayerController.canWalkOnSlope &&
-                isFrontFootTouchSlope)
-        {
-            statemachineController.core.SetVelocityZero();
-
-            DoneDashingState();
-
-            statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
-        }
         //  DONE ABILITY IF TOUCHING WALL
         else if (isTouchingWall || isTouchingClimbWall)
         {
@@ -237,6 +226,16 @@ public class PlayerDashState : PlayerAbilityState
                 GameManager.instance.PlayerStats.GetSetCurrentStamina
                 >= movementData.ledgeStamina)
                 statemachineChanger.ChangeState(statemachineController.ledgeClimbState);
+        }
+        //  SLOPE SLIDE
+        else if (isGrounded && isFrontFootTouchSlope &&
+            !statemachineController.core.groundPlayerController.canWalkOnSlope)
+        {
+            statemachineController.core.SetVelocityZero();
+
+            DoneDashingState();
+
+            statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
         }
     }
 
