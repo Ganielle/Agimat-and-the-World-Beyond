@@ -26,14 +26,33 @@ public class PlayerAnimatorEventController : MonoBehaviour
             GameManager.instance.PlayerStats.GetSetPlayerCharacter = PlayerStats.PlayerCharacter.LUKAS;
     }
 
-    public void LastAttackCombo() => playerCore.onLastAttackCombo = true;
+    public void LastAttackCombo() => playerCore.attackController.onLastAttackCombo = true;
 
-    public void CanAttackCancelAnimation() => playerCore.canCancelAnimation = true;
+    public void CanAttackCancelAnimation() => playerCore.attackController.canCancelAnimation = true;
 
-    public void CancelAttackCancelAnimation() => playerCore.canCancelAnimation = false;
+    public void CancelAttackCancelAnimation() => playerCore.attackController.canCancelAnimation = false;
 
-    public void GroundAttackMovementVelocity(float value) => playerCore.SetVelocityX(value *
-        playerCore.GetFacingDirection, playerCore.GetCurrentVelocity.y);
+    public void CanNextAttack()
+    {
+        Debug.Log("can next attack true" + playerCore.attackController.attackComboIndex);
+        playerCore.attackController.canNextAttack = true;
+    }
+
+    public void CanChangeDirectionAttack(int value)
+    {
+        if (value != 0) playerCore.attackController.canChangeDirectionWhileAttacking = true;
+        else playerCore.attackController.canChangeDirectionWhileAttacking = false;
+    }
+
+    public void GroundAttackMovementVelocity(float value) => playerCore.playerRB.AddForce(Vector2.right * value * playerCore.GetFacingDirection, ForceMode2D.Impulse);
 
     public void ResetVelocity() => playerCore.SetVelocityZero();
+
+    public void CanDelayNextAttack(int value)
+    {
+        if (value != 0) playerCore.attackController.canEnterDelayAttack = true;
+        else playerCore.attackController.canEnterDelayAttack = false;
+    }
+
+    public void EnterDelayAttackTime() => playerCore.attackController.enterDelayAttackTime = Time.time;
 }

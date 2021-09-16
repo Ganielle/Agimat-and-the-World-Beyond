@@ -15,8 +15,8 @@ public class PlayerLedgeClimbState : PlayerStatesController
     private bool canLedgeClimb;
 
     public PlayerLedgeClimbState(PlayerStateMachinesController movementController, 
-        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName) :
-        base(movementController, stateMachine, movementData, animBoolName)
+        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName, bool isBoolAnim) :
+        base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 

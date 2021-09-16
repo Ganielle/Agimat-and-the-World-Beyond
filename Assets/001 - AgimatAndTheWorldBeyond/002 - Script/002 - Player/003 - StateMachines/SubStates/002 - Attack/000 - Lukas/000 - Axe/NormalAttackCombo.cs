@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class NormalAttackCombo : PlayerGroundAttackState
 {
-    private bool canNextAttack;
-    private int lastCurrentAttackIndex;
-    private string parameter;
+    int currentAttackIndex;
+    int lastCurrentCheckAttackIndex;
 
     public NormalAttackCombo(PlayerStateMachinesController movementController, 
-        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName) :
-        base(movementController, stateMachine, movementData, animBoolName)
+        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName, bool isBoolAnim) :
+        base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 
@@ -18,24 +17,40 @@ public class NormalAttackCombo : PlayerGroundAttackState
     {
         base.AnimationFinishTrigger();
 
-        Debug.Log("REACHED");
+        canTransition = true;
 
-        if (lastCurrentAttackIndex == statemachineController.core.attackComboIndex || 
-            statemachineController.core.onLastAttackCombo)
+        if (statemachineController.core.attackController.onLastAttackCombo)
         {
-            statemachineController.core.onLastAttackCombo = false;
-            statemachineController.core.attackComboIndex = 0;
-            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetInteger(parameter, statemachineController.core.attackComboIndex);
-            canNextAttack = false;
+            currentAttackIndex = 0;
+            statemachineController.core.attackController.attackComboIndex = 0;
+
+            statemachineController.core.attackController.canNextAttack = true;
+            statemachineController.core.attackController.currentAttacking = false;
+            statemachineController.core.attackController.onLastAttackCombo = false;
+
+            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetInteger(statemachineController.core.attackController.parameter,
+                currentAttackIndex);
+
+            statemachineController.core.attackController.parameter = "";
+        }
+        else
+        {
+            //statemachineController.core.attackController.canNextAttack = false;
+            //statemachineController.core.attackController.currentAttacking = false;
+
+            //if (lastCurrentCheckAttackIndex == currentAttackIndex)
+            //{
+            //    currentAttackIndex = 0;
+
+            //    GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetInteger(statemachineController.core.attackController.parameter,
+            //        currentAttackIndex);
+            //}
         }
     }
 
     public override void AnimationTrigger()
     {
         base.AnimationTrigger();
-
-        canNextAttack = true;
-        lastCurrentAttackIndex = statemachineController.core.attackComboIndex;
     }
 
     public override void Enter()
@@ -44,38 +59,37 @@ public class NormalAttackCombo : PlayerGroundAttackState
 
         statemachineController.core.SetVelocityZero();
 
-        //  This is to populate the first attack combo index
-        lastCurrentAttackIndex = statemachineController.core.attackComboIndex;
+        statemachineController.core.attackController.currentAttacking = true;
+
+        currentAttackIndex = statemachineController.core.attackController.attackComboIndex;
+
+        lastCurrentCheckAttackIndex = statemachineController.core.attackController.attackComboIndex;
 
         statemachineController.core.ChangeBattleState();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-
-        canNextAttack = false;
-        statemachineController.core.onLastAttackCombo = false;
-        statemachineController.core.attackComboIndex = 0;
-        GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetInteger(parameter, statemachineController.core.attackComboIndex);
-        parameter = "";
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetInteger(parameter, statemachineController.core.attackComboIndex);
-
-        if (GameManager.instance.gameplayController.attackInput && canNextAttack)
+        if (!statemachineController.core.attackController.onLastAttackCombo)
         {
-            canNextAttack = false;
-            lastCurrentAttackIndex = statemachineController.core.attackComboIndex;
-            statemachineController.core.attackComboIndex++;
-            statemachineController.core.ChangeBattleState();
-            GameManager.instance.gameplayController.UseAttackInput();
+            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetInteger(statemachineController.core.attackController.parameter,
+                currentAttackIndex);
+
+            Debug.Log("can next attack");
+
+            if (statemachineController.core.attackController.canNextAttack && GameManager.instance.gameplayController.attackInput)
+            {
+                Debug.Log("attacking next");
+                statemachineController.core.attackController.canNextAttack = false;
+                GameManager.instance.gameplayController.UseAttackInput();
+                lastCurrentCheckAttackIndex = statemachineController.core.attackController.attackComboIndex;
+                statemachineController.core.attackController.attackComboIndex++;
+                currentAttackIndex = statemachineController.core.attackController.attackComboIndex;
+            }
         }
     }
 
-    public void SetComboIndexParameter(string parameter) => this.parameter = parameter;
+    public void SetComboIndexParameter(string parameter) => statemachineController.core.attackController.parameter = parameter;
 }

@@ -10,12 +10,11 @@ public class PlayerDashState : PlayerAbilityState
     private float angle;
 
     private Vector2 dashIndirection;
-    private Vector2 lastAfterImagePosition;
     private Vector3 lastDirection;
 
     public PlayerDashState(PlayerStateMachinesController movementController, 
-        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName) :
-        base(movementController, stateMachine, movementData, animBoolName)
+        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName, bool isBoolAnim) :
+        base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 
@@ -130,8 +129,13 @@ public class PlayerDashState : PlayerAbilityState
                 maxFloorCheckDist, Vector2.down, maxFloorCheckDist * movementData.slopeCheckDistance, 
                 statemachineController.core.groundPlayerController.whatIsGround);
 
+            float angle = Vector2.Angle(Physics2D.Raycast(feetPosAfterTick + Vector2.up *
+                maxFloorCheckDist, Vector2.down, maxFloorCheckDist * movementData.slopeCheckDistance,
+                statemachineController.core.groundPlayerController.whatIsGround).normal, -statemachineController.transform.up);
 
-            if (groundCheckAfterTick)
+
+            if (groundCheckAfterTick && angle < statemachineController.core.groundPlayerController.minimumSlopeAngle && angle >=
+                statemachineController.core.groundPlayerController.maxSlopeAngle)
             {
                 Vector2 wantedFeetPosAfterTick = groundCheckAfterTick.point;
 
@@ -200,7 +204,7 @@ public class PlayerDashState : PlayerAbilityState
                  DashRotation());
 
             statemachineController.core.dashDirectionIndicator.gameObject.SetActive(false);
-            PlaceAfterImage();
+            statemachineController.core.PlaceAfterImage();
         }
     }
 
@@ -211,7 +215,7 @@ public class PlayerDashState : PlayerAbilityState
             PlayerStats.AnimatorStateInfo.DASHBURST;
 
         //  AFTER IMAGE EFFECTS
-        CheckIfShouldPlaceAfterImage();
+        statemachineController.core.CheckIfShouldPlaceAfterImage();
 
         //  DONE ABILITY IF TIME IS GREATER THAN DASH TIME
         if (Time.time >= startTime + movementData.dashTime)
@@ -228,15 +232,17 @@ public class PlayerDashState : PlayerAbilityState
                 statemachineChanger.ChangeState(statemachineController.ledgeClimbState);
         }
         //  SLOPE SLIDE
-        else if (isGrounded && isFrontFootTouchSlope &&
-            !statemachineController.core.groundPlayerController.canWalkOnSlope)
-        {
-            statemachineController.core.SetVelocityZero();
+        //else if (isGrounded && isFrontFootTouchSlope &&
+        //    !statemachineController.core.groundPlayerController.canWalkOnSlope)
+        //{
+        //    statemachineController.core.SetVelocityZero();
 
-            DoneDashingState();
+        //    Debug.Log("can steep slope slide");
 
-            statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
-        }
+        //    DoneDashingState();
+
+        //    statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
+        //}
     }
 
     private void DoneDashingState()
@@ -281,19 +287,7 @@ public class PlayerDashState : PlayerAbilityState
 
     #endregion
 
-    #region DASH EFFECTS
-
-    private void CheckIfShouldPlaceAfterImage()
-    {
-        if (Vector2.Distance(statemachineController.transform.position, lastAfterImagePosition) >= movementData.distanceBetweenAfterImages)
-            PlaceAfterImage();
-    }
-
-    private void PlaceAfterImage()
-    {
-        GameManager.instance.afterImagePooler.GetFromPool();
-        lastAfterImagePosition = statemachineController.transform.position;
-    }
+    #region DASH EFFECT
 
     #endregion
 }

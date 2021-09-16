@@ -151,7 +151,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.6666667
-    functionName: AnimationTrigger
+    functionName: CanNextAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -180,6 +180,20 @@ AnimationClip:
     messageOptions: 0
   - time: 1.1666666
     functionName: AnimationFinishTrigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.1666666
+    functionName: CanDelayNextAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 1
+    messageOptions: 0
+  - time: 1.1666666
+    functionName: EnterDelayAttackTime
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

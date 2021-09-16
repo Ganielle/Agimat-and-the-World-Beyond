@@ -7,7 +7,8 @@ public class PlayerSprintState : PlayerNormalAbilityState
     private float facingDirection;
 
     public PlayerSprintState(PlayerStateMachinesController movementController, PlayerStateMachineChanger stateMachine,
-        PlayerRawData movementData, string animBoolName) : base(movementController, stateMachine, movementData, animBoolName)
+        PlayerRawData movementData, string animBoolName, bool isBoolAnim) :
+        base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 
@@ -95,9 +96,13 @@ public class PlayerSprintState : PlayerNormalAbilityState
         if (!isExitingState)
         {
             if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == facingDirection)
+            {
                 statemachineController.core.SetVelocityX(movementData.sprintSpeed *
                 GameManager.instance.gameplayController.GetSetMovementNormalizeX,
                     statemachineController.core.GetCurrentVelocity.y);
+
+                statemachineController.core.groundPlayerController.SlopeMovement();
+            }
         }
     }
 }

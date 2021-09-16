@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerWallClimbState : PlayerTouchingWallState
 {
     public PlayerWallClimbState(PlayerStateMachinesController movementController, PlayerStateMachineChanger stateMachine,
-        PlayerRawData movementData, string animBoolName) : 
-        base(movementController, stateMachine, movementData, animBoolName)
+        PlayerRawData movementData, string animBoolName, bool isBoolAnim) :
+        base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 

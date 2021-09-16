@@ -6,8 +6,8 @@ public class PlayerSteepSlopeSlideState : PlayerGroundState
 {
     public PlayerSteepSlopeSlideState(PlayerStateMachinesController movementController,
         PlayerStateMachineChanger stateMachine, PlayerRawData movementData,
-        string animBoolName) : base(movementController, stateMachine, movementData, 
-            animBoolName)
+        string animBoolName, bool isBoolAnim) :
+        base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 

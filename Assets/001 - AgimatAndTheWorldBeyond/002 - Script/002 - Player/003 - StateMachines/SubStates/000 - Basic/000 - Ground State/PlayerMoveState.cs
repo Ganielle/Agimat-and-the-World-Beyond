@@ -11,7 +11,8 @@ public class PlayerMoveState : PlayerGroundState
 
     public PlayerMoveState(PlayerStateMachinesController movementController,
         PlayerStateMachineChanger stateMachine, PlayerRawData movementData,
-        string animBoolName) : base(movementController, stateMachine, movementData, animBoolName)
+        string animBoolName, bool isBoolAnim) :
+        base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 
@@ -43,7 +44,6 @@ public class PlayerMoveState : PlayerGroundState
         base.PhysicsUpdate();
 
         MovePlayer();
-        statemachineController.core.groundPlayerController.SlopeMovement();
 
         ReduceVelocity();
     }
@@ -106,6 +106,8 @@ public class PlayerMoveState : PlayerGroundState
         statemachineController.core.SetVelocityX(movementData.movementSpeed *
          GameManager.instance.gameplayController.GetSetMovementNormalizeX,
          statemachineController.core.GetCurrentVelocity.y);
+
+        statemachineController.core.groundPlayerController.SlopeMovement();
     }
 
     //  TODO: REDUCE VELOCITY THEN RESET WHEN RUN AGAIN TO NORMAL RUN VELOCITY

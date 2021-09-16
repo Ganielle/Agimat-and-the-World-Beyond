@@ -11,8 +11,8 @@ public class PlayerSwitchState : PlayerAbilityState
     private Transform switchEffect;
 
     public PlayerSwitchState(PlayerStateMachinesController movementController,
-        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName) :
-        base(movementController, stateMachine, movementData, animBoolName)
+        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName, bool isBoolAnim) :
+        base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 

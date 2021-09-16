@@ -7,10 +7,13 @@ public class PlayerGroundAttackState : PlayerStatesController
     protected bool isGrounded;
     protected bool canWalkOnSlope;
     protected bool isFrontFootTouchSlope;
+    protected bool canTransition;
+
+    protected int lastFacingDirection;
 
     public PlayerGroundAttackState(PlayerStateMachinesController movementController, 
         PlayerStateMachineChanger stateMachine, PlayerRawData movementData,
-        string animBoolName) : base(movementController, stateMachine, movementData, animBoolName)
+        string animBoolName, bool isBoolAnim) : base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 
@@ -33,41 +36,62 @@ public class PlayerGroundAttackState : PlayerStatesController
             //  In air not grounded or falling
             if (!isGrounded)
             {
-                statemachineController.core.attackComboIndex = 0;
+                statemachineController.core.attackController.attackComboIndex = 0;
                 statemachineChanger.ChangeState(statemachineController.inAirState);
             }
 
             //  Slope slide
             else if (!canWalkOnSlope && isFrontFootTouchSlope)
             {
-                statemachineController.core.attackComboIndex = 0;
+                statemachineController.core.attackController.attackComboIndex = 0;
                 statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
             }
 
-            else if (statemachineController.core.attackComboIndex == 0)
+            else if (canTransition)
             {
                 if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == 0)
+                {
+                    canTransition = false;
                     statemachineChanger.ChangeState(statemachineController.idleState);
+                }
 
                 else if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0)
+                {
+                    if (lastFacingDirection != GameManager.instance.gameplayController.GetSetMovementNormalizeX)
+                     statemachineController.core.attackController.attackComboIndex = 0;
+
                     statemachineChanger.ChangeState(statemachineController.moveState);
+                    canTransition = false;
+                }
+            }
+
+            else if (statemachineController.core.attackController.canChangeDirectionWhileAttacking)
+            {
+                if (GameManager.instance.gameplayController.GetSetMovementNormalizeX != 0)
+                {
+                    if (lastFacingDirection != GameManager.instance.gameplayController.GetSetMovementNormalizeX)
+                        statemachineController.core.attackController.attackComboIndex = 0;
+
+                    statemachineController.core.attackController.canChangeDirectionWhileAttacking = false;
+                    statemachineController.core.CheckIfShouldFlip(GameManager.instance.gameplayController.GetSetMovementNormalizeX);
+                }
             }
 
             //  For cancel animation gameplay
-            if (statemachineController.core.canCancelAnimation)
+            else if (statemachineController.core.attackController.canCancelAnimation)
             {
                 if (GameManager.instance.gameplayController.jumpInput)
                 {
-                    statemachineController.core.canCancelAnimation = false;
-                    statemachineController.core.attackComboIndex = 0;
+                    statemachineController.core.attackController.canCancelAnimation = false;
+                    statemachineController.core.attackController.attackComboIndex = 0;
                     statemachineChanger.ChangeState(statemachineController.jumpState);
                     GameManager.instance.gameplayController.UseJumpInput();
                 }
 
                 else if (GameManager.instance.gameplayController.dodgeInput)
                 {
-                    statemachineController.core.canCancelAnimation = false;
-                    statemachineController.core.attackComboIndex = 0;
+                    statemachineController.core.attackController.canCancelAnimation = false;
+                    statemachineController.core.attackController.attackComboIndex = 0;
                     statemachineChanger.ChangeState(statemachineController.playerDodgeState);
                 }
 
@@ -76,8 +100,8 @@ public class PlayerGroundAttackState : PlayerStatesController
                 GameManager.instance.gameplayController.dashInput &&
                 !GameManager.instance.gameplayController.switchPlayerLeftInput)
                 {
-                    statemachineController.core.canCancelAnimation = false;
-                    statemachineController.core.attackComboIndex = 0;
+                    statemachineController.core.attackController.canCancelAnimation = false;
+                    statemachineController.core.attackController.attackComboIndex = 0;
                     statemachineChanger.ChangeState(statemachineController.playerDashState);
                 }
             }

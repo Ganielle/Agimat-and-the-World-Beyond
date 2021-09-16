@@ -21,6 +21,7 @@ public class PlayerCore : MonoBehaviour
     public RopePlayerController ropePlayerController;
     public GroundPlayerController groundPlayerController;
     public PlayerStateMachinesController statemachineController;
+    public AttackController attackController;
 
     [Space]
     public GameObject shadowPlayer;
@@ -46,15 +47,11 @@ public class PlayerCore : MonoBehaviour
     [ReadOnly] public Vector2 GetCurrentVelocity;
     [ReadOnly] public Vector2 GetWorkspace;
     [ReadOnly] public Vector3 GetRotationWorkspace;
+    [ReadOnly] public Vector2 lastAfterImagePosition;
     [ReadOnly] public int GetFacingDirection;
     [ReadOnly] public float distanceToGroundRaycast;
     [ReadOnly] public float heightError;
     [ReadOnly] public float lastBattleState;
-
-    //  BATTLE ATTACK COMBO
-    [ReadOnly] public int attackComboIndex;
-    [ReadOnly] public bool onLastAttackCombo;
-    [ReadOnly] public bool canCancelAnimation;
 
     //  PRIVATE VARIABLES
     private RaycastHit2D hitInfo;
@@ -226,6 +223,19 @@ public class PlayerCore : MonoBehaviour
             GetFacingDirection = 1;
         else
             GetFacingDirection = -1;
+    }
+
+    //  AURA EFFECT
+    public void CheckIfShouldPlaceAfterImage()
+    {
+        if (Vector2.Distance(statemachineController.transform.position, lastAfterImagePosition) >= playerRawData.distanceBetweenAfterImages)
+            PlaceAfterImage();
+    }
+
+    public void PlaceAfterImage()
+    {
+        GameManager.instance.afterImagePooler.GetFromPool();
+        lastAfterImagePosition = statemachineController.transform.position;
     }
 
     #endregion

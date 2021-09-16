@@ -14,7 +14,7 @@ public class PlayerGroundState : PlayerStatesController
 
     public PlayerGroundState(PlayerStateMachinesController movementController, 
         PlayerStateMachineChanger stateMachine, PlayerRawData movementData, 
-        string animBoolName) : base(movementController, stateMachine, movementData, animBoolName)
+        string animBoolName, bool isBoolAnim) : base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 
@@ -63,7 +63,7 @@ public class PlayerGroundState : PlayerStatesController
                     if (GameManager.instance.PlayerInventory.GetLukasWeapons[GameManager.instance.PlayerInventory.GetSetWeaponLukasSlotIndex].CurrentWeaponType
                         == PlayerWeaponRawData.WeaponType.AXE && GameManager.instance.gameplayController.attackInput)
                     {
-                        statemachineController.core.attackComboIndex++;
+                        statemachineController.core.attackController.attackComboIndex++;
                         statemachineController.normalAttackState.SetComboIndexParameter("axeAttackCombo");
                         statemachineChanger.ChangeState(statemachineController.normalAttackState);
                         GameManager.instance.gameplayController.UseAttackInput();
@@ -75,7 +75,7 @@ public class PlayerGroundState : PlayerStatesController
                     if (GameManager.instance.PlayerInventory.GetLilyWeapons[GameManager.instance.PlayerInventory.GetSetWeaponLilySlotIndex].CurrentWeaponType ==
                         PlayerWeaponRawData.WeaponType.WHIP && GameManager.instance.gameplayController.attackInput)
                     {
-                        statemachineController.core.attackComboIndex++;
+                        statemachineController.core.attackController.attackComboIndex++;
                         statemachineController.normalAttackState.SetComboIndexParameter("whipAttackCombo");
                         statemachineChanger.ChangeState(statemachineController.normalAttackState);
                         GameManager.instance.gameplayController.UseAttackInput();

@@ -9,8 +9,8 @@ public class PlayerChangeIdleDirectionState : PlayerGroundState
     public int direction;
 
     public PlayerChangeIdleDirectionState(PlayerStateMachinesController movementController, 
-        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName) :
-        base(movementController, stateMachine, movementData, animBoolName)
+        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName, bool isBoolAnim) : 
+        base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 

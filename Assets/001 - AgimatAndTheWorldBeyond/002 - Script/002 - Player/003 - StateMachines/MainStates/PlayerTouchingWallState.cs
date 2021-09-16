@@ -10,8 +10,8 @@ public class PlayerTouchingWallState : PlayerStatesController
     protected bool isTouchingLedge;
 
     public PlayerTouchingWallState(PlayerStateMachinesController movementController,
-        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName) :
-        base(movementController, stateMachine, movementData, animBoolName)
+        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName, bool isBoolAnim) : 
+        base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 

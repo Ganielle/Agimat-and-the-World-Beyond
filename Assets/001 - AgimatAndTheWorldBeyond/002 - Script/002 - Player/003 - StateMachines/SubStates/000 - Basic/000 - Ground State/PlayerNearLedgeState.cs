@@ -7,7 +7,8 @@ public class PlayerNearLedgeState : PlayerGroundState
     private int lastDirection;
 
     public PlayerNearLedgeState(PlayerStateMachinesController movementController, PlayerStateMachineChanger stateMachine,
-        PlayerRawData movementData, string animBoolName) : base(movementController, stateMachine, movementData, animBoolName)
+        PlayerRawData movementData, string animBoolName, bool isBoolAnim) :
+        base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 

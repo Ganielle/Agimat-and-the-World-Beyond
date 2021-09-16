@@ -7,8 +7,8 @@ public class PlayerRunningBreak : PlayerGroundState
     private int currentDirection;
 
     public PlayerRunningBreak(PlayerStateMachinesController movementController, 
-        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName) :
-        base(movementController, stateMachine, movementData, animBoolName)
+        PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName, bool isBoolAnim) :
+        base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
     {
     }
 

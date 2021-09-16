@@ -17,19 +17,25 @@ public class PlayerStatesController
 
     public string animBoolName;
 
+    protected bool isBoolAnim;
+
     public PlayerStatesController(PlayerStateMachinesController movementController, PlayerStateMachineChanger stateMachine,
-        PlayerRawData movementData, string animBoolName)
+        PlayerRawData movementData, string animBoolName , bool isBoolAnim)
     {
         this.statemachineController = movementController;
         this.statemachineChanger = stateMachine;
         this.movementData = movementData;
         this.animBoolName = animBoolName;
+        this.isBoolAnim = isBoolAnim;
     }
 
     public virtual void Enter()
     {
         DoChecks();
-        GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool(animBoolName, true);
+
+        if (isBoolAnim)
+            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool(animBoolName, true);
+
         startTime = Time.time;
         isAnimationFinished = false;
         isExitingState = false;
@@ -37,7 +43,9 @@ public class PlayerStatesController
 
     public virtual void Exit()
     {
-        GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool(animBoolName, false);
+        if (isBoolAnim)
+            GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetBool(animBoolName, false);
+
         isExitingState = true;
     }
 
