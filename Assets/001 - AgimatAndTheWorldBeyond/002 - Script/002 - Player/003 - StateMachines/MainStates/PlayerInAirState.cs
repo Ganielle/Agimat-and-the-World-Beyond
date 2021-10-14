@@ -14,6 +14,7 @@ public class PlayerInAirState : PlayerStatesController
     private bool isTouchingWall;
     private bool isTouchingMonkeyBar;
     private bool isTouchingRope;
+    private bool isTouchingGroundWhileInAir;
 
     /// <summary>
     /// TODO : Coyote time when you finish the 
@@ -38,6 +39,8 @@ public class PlayerInAirState : PlayerStatesController
         isTouchingWall = statemachineController.core.groundPlayerController.CheckIfTouchWall;
         isTouchingMonkeyBar = statemachineController.core.CheckIfTouchingMonkeyBar;
         isTouchingRope = statemachineController.core.ropePlayerController.CheckIfTouchingRope;
+        isTouchingGroundWhileInAir = statemachineController.core.groundPlayerController.CheckIfInAirTouchGround;
+        
 
         statemachineController.core.groundPlayerController.PhysicsMaterialChanger(movementData.noFriction);
 
@@ -163,7 +166,7 @@ public class PlayerInAirState : PlayerStatesController
 
     private void MovePlayerWhileInAir()
     {
-        if (isGrounded || isTouchingWall || isTouchingGroundFrontFoot)
+        if (isGrounded || isTouchingWall || isTouchingGroundFrontFoot || isTouchingGroundWhileInAir)
             return;
 
         statemachineController.core.SetVelocityX(movementData.movementSpeed *

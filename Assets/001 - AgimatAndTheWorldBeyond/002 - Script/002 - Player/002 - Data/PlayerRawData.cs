@@ -39,6 +39,7 @@ public class PlayerRawData : ScriptableObject
     public float floorCheckOffsetHeight = 0.01f;
     public float floorCheckOffsetWidth = 0.5f;
     public float maxFloorCheckDist = 1.0f;
+    public float pushForceNearLedge = 30f;
 
     [Header("SLOPE MOVEMENT")]
     public float slopeCheckDistance;

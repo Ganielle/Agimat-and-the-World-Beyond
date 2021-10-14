@@ -133,25 +133,25 @@ AnimationClip:
     functionName: GroundAttackMovementVelocity
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 10
+    floatParameter: 20
     intParameter: 0
     messageOptions: 0
   - time: 0.5
     functionName: GroundAttackMovementVelocity
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 10
+    floatParameter: 20
     intParameter: 0
     messageOptions: 0
   - time: 0.6111111
     functionName: GroundAttackMovementVelocity
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 10
+    floatParameter: 20
     intParameter: 0
     messageOptions: 0
   - time: 0.6666667
-    functionName: CanNextAttack
+    functionName: AnimationTrigger
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

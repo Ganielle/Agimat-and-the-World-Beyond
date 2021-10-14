@@ -38,10 +38,6 @@ public class PlayerNearLedgeState : PlayerGroundState
         base.PhysicsUpdate();
 
         statemachineController.core.SetVelocityZero();
-
-        //if (GameManager.instance.gameInputController.GetSetMovementNormalizeX == lastDirection)
-        //    statemachineController.core.SetVelocityX(movementData.pushForcePlayerWhenFootNotTouchingGround *
-        //        statemachineController.core.GetFacingDirection, statemachineController.core.GetCurrentVelocity.y);
     }
 
     public void SetLastDirection(int direction) => lastDirection = direction;

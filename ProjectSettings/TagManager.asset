@@ -7,6 +7,9 @@ TagManager:
   - Ground
   - Enemy
   - Rope
+  - GroundPavement
+  - GroundGrass
+  - GroundWood
   layers:
   - Default
   - TransparentFX
@@ -24,7 +27,7 @@ TagManager:
   - Foreground
   - PostProcessingEffect
   - AI Mobs
-  - 
+  - GroundUnwalkable
   - 
   - 
   - 

@@ -209,7 +209,12 @@ public class PlayerCore : MonoBehaviour
     private void PlayerFlip()
     {
         GetFacingDirection *= -1;
-        childPlayer.Rotate(0f, 180f, 0f);
+        //childPlayer.Rotate(0f, 180f, 0f);
+
+        if (GetFacingDirection == 1) GameManager.instance.PlayerStats.GetSetPlayerSR.flipX = false;
+        else GameManager.instance.PlayerStats.GetSetPlayerSR.flipX = true;
+
+
         envCheckerXRot.Rotate(0f, 180f, 0f);
         //staminaPanel.Rotate(0f, 180f, 0f);
     }
@@ -219,7 +224,7 @@ public class PlayerCore : MonoBehaviour
     //  FACING LEFT = -1
     public void FlipCheckerOnStart()
     {
-        if (childPlayer.rotation.x == 0)
+        if (!GameManager.instance.PlayerStats.GetSetPlayerSR.flipX)
             GetFacingDirection = 1;
         else
             GetFacingDirection = -1;

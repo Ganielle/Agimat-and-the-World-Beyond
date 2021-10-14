@@ -48,6 +48,9 @@ public class PlayerChangeIdleDirectionState : PlayerGroundState
 
         if (!isExitingState)
         {
+            //  Attack
+            AttackInitiate();
+
             if (doneAnimation)
             {
                 statemachineController.core.CheckIfShouldFlip(direction);

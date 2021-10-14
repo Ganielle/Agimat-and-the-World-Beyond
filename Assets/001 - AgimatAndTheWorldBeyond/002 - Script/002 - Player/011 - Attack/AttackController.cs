@@ -22,7 +22,7 @@ public class AttackController : MonoBehaviour
 
     private void Update()
     {
-        //DelayNextAttackCounter();
+        DelayNextAttackCounter();
     }
 
     private void DelayNextAttackCounter()
@@ -36,6 +36,7 @@ public class AttackController : MonoBehaviour
                 GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetInteger(parameter, attackComboIndex);
                 parameter = "";
                 canEnterDelayAttack = false;
+                canChangeDirectionWhileAttacking = false;
             }
         }
     }

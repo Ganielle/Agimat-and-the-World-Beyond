@@ -61,4 +61,35 @@ public class PlayerStatesController
     public virtual void AnimationTrigger() { }
 
     public virtual void AnimationFinishTrigger() => isAnimationFinished = true;
+
+    public void AttackInitiate()
+    {
+        if (GameManager.instance.gameplayController.attackInput)
+        {
+            if (GameManager.instance.PlayerStats.GetSetPlayerCharacter == PlayerStats.PlayerCharacter.LUKAS)
+            {
+                if (GameManager.instance.PlayerInventory.GetLukasWeapons[GameManager.instance.PlayerInventory.GetSetWeaponLukasSlotIndex].CurrentWeaponType
+                    == PlayerWeaponRawData.WeaponType.AXE)
+                {
+                    Debug.Log("attack index plus plus ground to attack");
+                    statemachineController.core.attackController.attackComboIndex++;
+                    statemachineController.normalAttackState.SetComboIndexParameter("axeAttackCombo");
+                    statemachineChanger.ChangeState(statemachineController.normalAttackState);
+                    GameManager.instance.gameplayController.UseAttackInput();
+                }
+            }
+            else if (GameManager.instance.PlayerStats.GetSetPlayerCharacter == PlayerStats.PlayerCharacter.LILY)
+            {
+                //  TODO LILY ATTACK COMBO
+                if (GameManager.instance.PlayerInventory.GetLilyWeapons[GameManager.instance.PlayerInventory.GetSetWeaponLilySlotIndex].CurrentWeaponType ==
+                    PlayerWeaponRawData.WeaponType.WHIP)
+                {
+                    statemachineController.core.attackController.attackComboIndex++;
+                    statemachineController.normalAttackState.SetComboIndexParameter("whipAttackCombo");
+                    statemachineChanger.ChangeState(statemachineController.normalAttackState);
+                    GameManager.instance.gameplayController.UseAttackInput();
+                }
+            }
+        }
+    }
 }

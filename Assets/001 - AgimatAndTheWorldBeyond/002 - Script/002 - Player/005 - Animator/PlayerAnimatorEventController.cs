@@ -32,12 +32,6 @@ public class PlayerAnimatorEventController : MonoBehaviour
 
     public void CancelAttackCancelAnimation() => playerCore.attackController.canCancelAnimation = false;
 
-    public void CanNextAttack()
-    {
-        Debug.Log("can next attack true" + playerCore.attackController.attackComboIndex);
-        playerCore.attackController.canNextAttack = true;
-    }
-
     public void CanChangeDirectionAttack(int value)
     {
         if (value != 0) playerCore.attackController.canChangeDirectionWhileAttacking = true;
@@ -55,4 +49,6 @@ public class PlayerAnimatorEventController : MonoBehaviour
     }
 
     public void EnterDelayAttackTime() => playerCore.attackController.enterDelayAttackTime = Time.time;
+
+
 }

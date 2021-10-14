@@ -59,6 +59,8 @@ public class PlayerMoveState : PlayerGroundState
     {
         if (!isExitingState)
         {
+            AttackInitiate();
+
             //  Slope slide
             if (!statemachineController.core.groundPlayerController.canWalkOnSlope &&
                 isFrontFootTouchSlope)
@@ -103,6 +105,10 @@ public class PlayerMoveState : PlayerGroundState
 
     private void MovePlayer()
     {
+        if (statemachineController.core.GetFacingDirection == GameManager.instance.gameplayController.GetSetMovementNormalizeX &&
+            isFrontFootTouchDefaultGround)
+            return;
+
         statemachineController.core.SetVelocityX(movementData.movementSpeed *
          GameManager.instance.gameplayController.GetSetMovementNormalizeX,
          statemachineController.core.GetCurrentVelocity.y);
@@ -110,7 +116,6 @@ public class PlayerMoveState : PlayerGroundState
         statemachineController.core.groundPlayerController.SlopeMovement();
     }
 
-    //  TODO: REDUCE VELOCITY THEN RESET WHEN RUN AGAIN TO NORMAL RUN VELOCITY
     private void ReduceVelocity()
     {
         if (canReduceSpeed)

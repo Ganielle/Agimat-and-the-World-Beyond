@@ -57,6 +57,8 @@ public class PlayerWeaponSwitchState : PlayerGroundState
 
         if (!isExitingState)
         {
+            AttackInitiate();
+
             if (!doneAnimation)
             {
                 /*

@@ -11,7 +11,6 @@ public class GameplayController : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float inputHoldTime = 0.2f;
     [SerializeField] private float sprintDoubleTapTime = 0.15f;
-    [SerializeField] private float openWeaponSwitchCooldown = 0.15f;
     [SerializeField] private Camera mainCamera;
 
     [Header("Debugger")]

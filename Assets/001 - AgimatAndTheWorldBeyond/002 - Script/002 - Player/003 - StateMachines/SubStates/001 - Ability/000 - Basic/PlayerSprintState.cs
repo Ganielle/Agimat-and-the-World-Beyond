@@ -67,7 +67,6 @@ public class PlayerSprintState : PlayerNormalAbilityState
                         isFrontFootTouchSlope)
             {
                 statemachineController.core.SetVelocityZero();
-
                 statemachineChanger.ChangeState(statemachineController.steepSlopeSlide);
             }
 
@@ -93,16 +92,18 @@ public class PlayerSprintState : PlayerNormalAbilityState
 
     private void SprintingMove()
     {
-        if (!isExitingState)
-        {
-            if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == facingDirection)
-            {
-                statemachineController.core.SetVelocityX(movementData.sprintSpeed *
-                GameManager.instance.gameplayController.GetSetMovementNormalizeX,
-                    statemachineController.core.GetCurrentVelocity.y);
+        if (statemachineController.core.GetFacingDirection == GameManager.instance.gameplayController.GetSetMovementNormalizeX &&
+            isFrontFootTouchDefaultGround)
+            return;
 
-                statemachineController.core.groundPlayerController.SlopeMovement();
-            }
+
+        if (GameManager.instance.gameplayController.GetSetMovementNormalizeX == facingDirection)
+        {
+            statemachineController.core.SetVelocityX(movementData.sprintSpeed *
+            GameManager.instance.gameplayController.GetSetMovementNormalizeX,
+                statemachineController.core.GetCurrentVelocity.y);
+
+            statemachineController.core.groundPlayerController.SlopeMovement();
         }
     }
 }

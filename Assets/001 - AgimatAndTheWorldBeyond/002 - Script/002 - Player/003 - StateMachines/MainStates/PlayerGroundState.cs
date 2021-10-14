@@ -8,6 +8,7 @@ public class PlayerGroundState : PlayerStatesController
     protected bool isTouchingWall;
     protected bool isFootTouchGround;
     protected bool isFrontFootTouchSlope;
+    protected bool isFrontFootTouchDefaultGround;
     protected Vector2 checkPos;
 
     private bool isTouchingLedge;
@@ -28,6 +29,7 @@ public class PlayerGroundState : PlayerStatesController
         base.DoChecks();
 
         isGrounded = statemachineController.core.groundPlayerController.CheckIfTouchGround;
+        isFrontFootTouchDefaultGround = statemachineController.core.groundPlayerController.CheckIfFrontFootTouchDefaultGround;
         isFootTouchGround = statemachineController.core.groundPlayerController.CheckIfFrontFootTouchGround;
         isFrontFootTouchSlope = statemachineController.core.groundPlayerController.CheckIfFrontTouchingSlope;
         isTouchingWall = statemachineController.core.groundPlayerController.CheckIfTouchClimbWall;
@@ -50,41 +52,6 @@ public class PlayerGroundState : PlayerStatesController
     {
         if (!isExitingState)
         {
-            #region ATTACK COMBOS
-            if (GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.LOOKINGUP &&
-                GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.LOOKINGDOWN &&
-                GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.SWITCHING &&
-                GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.DASHCHARGE &&
-                GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.DASHBURST &&
-                GameManager.instance.PlayerStats.GetSetAnimatorStateInfo != PlayerStats.AnimatorStateInfo.HIGHLAND)
-            {
-                if (GameManager.instance.PlayerStats.GetSetPlayerCharacter == PlayerStats.PlayerCharacter.LUKAS)
-                {
-                    if (GameManager.instance.PlayerInventory.GetLukasWeapons[GameManager.instance.PlayerInventory.GetSetWeaponLukasSlotIndex].CurrentWeaponType
-                        == PlayerWeaponRawData.WeaponType.AXE && GameManager.instance.gameplayController.attackInput)
-                    {
-                        statemachineController.core.attackController.attackComboIndex++;
-                        statemachineController.normalAttackState.SetComboIndexParameter("axeAttackCombo");
-                        statemachineChanger.ChangeState(statemachineController.normalAttackState);
-                        GameManager.instance.gameplayController.UseAttackInput();
-                    }
-                }
-                else if (GameManager.instance.PlayerStats.GetSetPlayerCharacter == PlayerStats.PlayerCharacter.LILY)
-                {
-                    //  TODO LILY ATTACK COMBO
-                    if (GameManager.instance.PlayerInventory.GetLilyWeapons[GameManager.instance.PlayerInventory.GetSetWeaponLilySlotIndex].CurrentWeaponType ==
-                        PlayerWeaponRawData.WeaponType.WHIP && GameManager.instance.gameplayController.attackInput)
-                    {
-                        statemachineController.core.attackController.attackComboIndex++;
-                        statemachineController.normalAttackState.SetComboIndexParameter("whipAttackCombo");
-                        statemachineChanger.ChangeState(statemachineController.normalAttackState);
-                        GameManager.instance.gameplayController.UseAttackInput();
-                    }
-                }
-            }
-
-            #endregion
-
             if (!isGrounded)
                 statemachineChanger.ChangeState(statemachineController.inAirState);
 

@@ -15,8 +15,10 @@ public class GroundPlayerController : MonoBehaviour
     public float maxSlopeAngle;
     public float minimumSlopeAngle;
     public LayerMask whatIsGround;
+    public LayerMask groundDefault;
     public Transform playerPlatformHeightCheck;
     public Transform groundCheck;
+    public Transform groundUnwalkableCheck;
     public Transform groundFrontFootCheck;
     public Transform groundBackFootCheck;
     public Transform slopeCheck;
@@ -77,6 +79,12 @@ public class GroundPlayerController : MonoBehaviour
             whatIsGround);
     }
 
+    public bool CheckIfFrontFootTouchDefaultGround
+    {
+        get => Physics2D.OverlapCircle(groundFrontFootCheck.position, playerRawData.groundCheckRadius,
+            groundDefault);
+    }
+
     public bool CheckIfFrontTouchingSlope
     {
         get => Physics2D.Raycast(groundFrontFootCheck.position, Vector2.down, playerRawData.slopeCheckDistance,
@@ -87,6 +95,25 @@ public class GroundPlayerController : MonoBehaviour
     {
         get => Physics2D.OverlapCircle(groundBackFootCheck.position, playerRawData.groundCheckRadius,
             whatIsGround);
+    }
+
+    public bool CheckIfInAirTouchGround
+    {
+        get => Physics2D.OverlapCircle(groundUnwalkableCheck.position, playerRawData.groundCheckRadius,
+               groundDefault);
+    }
+
+    public string GetGroundTag
+    {
+        get
+        {
+            Debug.Log(Physics2D.Raycast(groundCheck.position, Vector2.down, playerRawData.groundCheckRadius,
+                whatIsGround).transform.tag);
+
+            return Physics2D.Raycast(groundCheck.position, Vector2.down, playerRawData.groundCheckRadius,
+                whatIsGround).transform.tag;
+        }
+
     }
 
     public Vector2 DetermineCornerPosition()
@@ -138,13 +165,14 @@ public class GroundPlayerController : MonoBehaviour
 
     public void SlopeChecker()
     {
+        //  To prevent slope animation on in air while ground
+        if (groundAngle == 90f)
+            canWalkOnSlope = true;
         //  On flat surface or walkable slope, on slope but can move
-        if (groundAngle < minimumSlopeAngle && groundAngle >= maxSlopeAngle)
+        else if (groundAngle < minimumSlopeAngle && groundAngle >= maxSlopeAngle)
             canWalkOnSlope = true;
         //  Higher slope, on slope but cannot move
         else if (groundAngle < maxSlopeAngle)
-            canWalkOnSlope = false;
-        else
             canWalkOnSlope = false;
     }
 
@@ -165,7 +193,7 @@ public class GroundPlayerController : MonoBehaviour
                 float verticalOnSlope = Mathf.Sin(groundAngle * Mathf.Deg2Rad) * moveDistance;
 
                 if (horizontalOnSlope != 0)
-                    core.SetVelocityX(-horizontalOnSlope + (core.GetFacingDirection * 1f) , core.GetCurrentVelocity.y);
+                    core.SetVelocityX(-horizontalOnSlope + (1 + core.GetFacingDirection * 1f) , core.GetCurrentVelocity.y);
 
                 if (CheckIfTouchGround && verticalOnSlope != 0)
                     core.SetVelocityY(-verticalOnSlope);
@@ -180,6 +208,9 @@ public class GroundPlayerController : MonoBehaviour
         //  Ground
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(groundCheck.position, playerRawData.groundCheckRadius);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(groundUnwalkableCheck.position, playerRawData.groundCheckRadius);
 
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(groundFrontFootCheck.position, playerRawData.groundCheckRadius);

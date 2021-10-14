@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public SceneDataLoadingController sceneDataLoading;
     public EffectPooler afterImagePooler;
     public EffectPooler switchEffectPooler;
+    public SoundManager soundManager;
 
     [Header("Camera")]
     public Camera mainCamera;

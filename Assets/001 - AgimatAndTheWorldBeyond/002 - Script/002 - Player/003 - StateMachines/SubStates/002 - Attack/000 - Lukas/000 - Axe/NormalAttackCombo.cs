@@ -7,6 +7,8 @@ public class NormalAttackCombo : PlayerGroundAttackState
     int currentAttackIndex;
     int lastCurrentCheckAttackIndex;
 
+    //  TO FIX COMBO SYSTEM
+
     public NormalAttackCombo(PlayerStateMachinesController movementController, 
         PlayerStateMachineChanger stateMachine, PlayerRawData movementData, string animBoolName, bool isBoolAnim) :
         base(movementController, stateMachine, movementData, animBoolName, isBoolAnim)
@@ -24,7 +26,7 @@ public class NormalAttackCombo : PlayerGroundAttackState
             currentAttackIndex = 0;
             statemachineController.core.attackController.attackComboIndex = 0;
 
-            statemachineController.core.attackController.canNextAttack = true;
+            statemachineController.core.attackController.canNextAttack = false;
             statemachineController.core.attackController.currentAttacking = false;
             statemachineController.core.attackController.onLastAttackCombo = false;
 
@@ -35,22 +37,28 @@ public class NormalAttackCombo : PlayerGroundAttackState
         }
         else
         {
-            //statemachineController.core.attackController.canNextAttack = false;
-            //statemachineController.core.attackController.currentAttacking = false;
+            statemachineController.core.attackController.canNextAttack = false;
+            statemachineController.core.attackController.currentAttacking = false;
 
-            //if (lastCurrentCheckAttackIndex == currentAttackIndex)
-            //{
-            //    currentAttackIndex = 0;
+            if (lastCurrentCheckAttackIndex == currentAttackIndex)
+            {
+                currentAttackIndex = 0;
 
-            //    GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetInteger(statemachineController.core.attackController.parameter,
-            //        currentAttackIndex);
-            //}
+                GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetInteger(statemachineController.core.attackController.parameter,
+                    currentAttackIndex);
+            }
+            else
+            {
+                lastCurrentCheckAttackIndex++;
+            }
         }
     }
 
     public override void AnimationTrigger()
     {
         base.AnimationTrigger();
+
+        statemachineController.core.attackController.canNextAttack = true;
     }
 
     public override void Enter()
@@ -72,22 +80,21 @@ public class NormalAttackCombo : PlayerGroundAttackState
     {
         base.LogicUpdate();
 
+        if (statemachineController.core.attackController.canNextAttack && GameManager.instance.gameplayController.attackInput)
+        {
+            statemachineController.core.attackController.canNextAttack = false;
+            statemachineController.core.attackController.currentAttacking = true;
+            lastCurrentCheckAttackIndex = statemachineController.core.attackController.attackComboIndex;
+            statemachineController.core.attackController.attackComboIndex++;
+            Debug.Log("Attack index plus plus can next attack");
+            currentAttackIndex = statemachineController.core.attackController.attackComboIndex;
+            GameManager.instance.gameplayController.UseAttackInput();
+        }
+
         if (!statemachineController.core.attackController.onLastAttackCombo)
         {
             GameManager.instance.PlayerStats.GetSetPlayerAnimator.SetInteger(statemachineController.core.attackController.parameter,
                 currentAttackIndex);
-
-            Debug.Log("can next attack");
-
-            if (statemachineController.core.attackController.canNextAttack && GameManager.instance.gameplayController.attackInput)
-            {
-                Debug.Log("attacking next");
-                statemachineController.core.attackController.canNextAttack = false;
-                GameManager.instance.gameplayController.UseAttackInput();
-                lastCurrentCheckAttackIndex = statemachineController.core.attackController.attackComboIndex;
-                statemachineController.core.attackController.attackComboIndex++;
-                currentAttackIndex = statemachineController.core.attackController.attackComboIndex;
-            }
         }
     }
 

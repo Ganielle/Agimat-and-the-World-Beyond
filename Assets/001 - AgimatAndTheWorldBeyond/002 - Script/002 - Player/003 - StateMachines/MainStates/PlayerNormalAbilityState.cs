@@ -12,6 +12,7 @@ public class PlayerNormalAbilityState : PlayerStatesController
     protected bool isSameHeightToPlatform;
     protected bool isFootTouchGround;
     protected bool isFrontFootTouchSlope;
+    protected bool isFrontFootTouchDefaultGround;
     protected Vector2 checkSlopePos;
 
     public PlayerNormalAbilityState(PlayerStateMachinesController movementController, PlayerStateMachineChanger stateMachine,
@@ -32,6 +33,7 @@ public class PlayerNormalAbilityState : PlayerStatesController
         isFrontFootTouchSlope = statemachineController.core.groundPlayerController.CheckIfFrontTouchingSlope;
         checkSlopePos = statemachineController.transform.position - (Vector3)(new Vector2(0f,
             statemachineController.core.colliderSize.y / 2));
+        isFrontFootTouchDefaultGround = statemachineController.core.groundPlayerController.CheckIfFrontFootTouchDefaultGround;
     }
 
     public override void Enter()

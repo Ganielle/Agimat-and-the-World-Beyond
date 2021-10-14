@@ -56,6 +56,9 @@ public class PlayerIdleState : PlayerGroundState
     {
         if (!isExitingState)
         {
+            //  Attack
+            AttackInitiate();
+
             //  Slope slide
             if (!statemachineController.core.groundPlayerController.canWalkOnSlope &&
                 isFrontFootTouchSlope)
